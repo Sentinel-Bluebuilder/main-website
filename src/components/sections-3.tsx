@@ -13,6 +13,9 @@ const { atomStyles: A3, SentinelMark, BtnPrimary } = window;
 const { useState: useS } = React;
 const useIsMobileO = window.useIsMobile;
 
+/* i18n: translate at render time (window.T is reassigned per request/locale). */
+const tr = (k, f) => (typeof window !== 'undefined' && window.T ? window.T(k, f) : (f != null ? f : k));
+
 /* ── Primary community card — brand-colored logo ─────────── */
 function CommunityCard({ icon, name, handle, color, href }) {
   const [hovered, setHovered] = useS(false);
@@ -150,8 +153,8 @@ function ContactSection() {
           {/* LEFT — Community (centered while the contact form is hidden) */}
           <div style={{ display:'flex', flexDirection:'column', gap:28 }}>
             <div style={{ display:'flex', flexDirection:'column', gap:10, textAlign:SHOW_CONTACT_FORM?'left':'center' }}>
-              <h2 style={{ fontFamily:T3.fontHeading, fontWeight:700, fontSize:'clamp(31px,6vw,48px)', lineHeight:1.12, color:'rgba(0,0,0,0.8)', margin:0, letterSpacing:'-0.005em' }}>Join the Community</h2>
-              <p style={{ fontFamily:T3.fontBody, fontSize:16, lineHeight:'22px', color:'rgba(0,0,0,0.5)', margin:0 }}>The Sentinel community goes beyond the chain.</p>
+              <h2 style={{ fontFamily:T3.fontHeading, fontWeight:700, fontSize:'clamp(31px,6vw,48px)', lineHeight:1.12, color:'rgba(0,0,0,0.8)', margin:0, letterSpacing:'-0.005em' }}>{tr('community.heading', 'Join the Community')}</h2>
+              <p style={{ fontFamily:T3.fontBody, fontSize:16, lineHeight:'22px', color:'rgba(0,0,0,0.5)', margin:0 }}>{tr('community.subtitle', 'The Sentinel community goes beyond the chain.')}</p>
             </div>
             {/* primary networks — Telegram / X / Discord / GitHub */}
             <div style={{ display:'grid', gridTemplateColumns:isMobile?'1fr':'1fr 1fr', gap:12 }}>
@@ -161,7 +164,7 @@ function ContactSection() {
             </div>
             {/* secondary channels */}
             <div style={{ display:'flex', flexDirection:'column', gap:12, alignItems:SHOW_CONTACT_FORM?'flex-start':'center' }}>
-              <span style={{ fontFamily:T3.fontBody, fontWeight:600, fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(0,0,0,0.35)' }}>More from the community</span>
+              <span style={{ fontFamily:T3.fontBody, fontWeight:600, fontSize:11, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(0,0,0,0.35)' }}>{tr('community.more', 'More from the community')}</span>
               <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:SHOW_CONTACT_FORM?'flex-start':'center' }}>
                 {secondary.map(c => (
                   <CommunityPill key={c.label} icon={c.icon} label={c.label} color={c.color} href={c.href} />
@@ -230,33 +233,33 @@ function ContactSection() {
 function Footer() {
   const isMobile = useIsMobileO();
   const cols = [
-    { head:'Explore', links:[
-      ['Network Statistics', L3.stats],
-      ['Node Dashboard',     L3.nodes],
-      ['Node Map',           L3.nodeMap],
-      ['Explorer',           L3.explorer],
+    { head:'Explore', headKey:'nav.explore', links:[
+      ['Network Statistics', L3.stats,    'footer.exploreStats'],
+      ['Node Dashboard',     L3.nodes,    'footer.exploreDashboard'],
+      ['Node Map',           L3.nodeMap,  'footer.exploreNodeMap'],
+      ['Explorer',           L3.explorer, 'footer.exploreExplorer'],
     ]},
-    { head:'dVPN', links:[
-      ['Sentinel Shield',    L3.sentinelShield],
-      ['Independent VPN',    L3.independent],
-      ['DVPN by NORSE',      L3.norse],
-      ['VALT',               L3.valt],
-      ['Ryn dVPN',           L3.rynVpn],
-      ['Meile dVPN (beta)',  L3.meile],
+    { head:'dVPN', headKey:'nav.dvpn', links:[
+      ['Sentinel Shield',    L3.sentinelShield, 'footer.dvpnShield'],
+      ['Independent VPN',    L3.independent,     'footer.dvpnIndependent'],
+      ['DVPN by NORSE',      L3.norse,           'footer.dvpnNorse'],
+      ['VALT',               L3.valt,            'footer.dvpnValt'],
+      ['Ryn dVPN',           L3.rynVpn,          'footer.dvpnRyn'],
+      ['Meile dVPN (beta)',  L3.meile,           'footer.dvpnMeile'],
     ]},
-    { head:'Build', links:[
-      ['Plan Manager',       L3.planManager],
-      ['SDKs',               L3.sdkDocs],
-      ['Configure Payment',  L3.subplanDocs],
-      ['Run a Node',         L3.hostNode],
-      ['Earn from dVPN',     L3.nodeEarnings],
-      ['Learn',              L3.docs],
+    { head:'Build', headKey:'nav.build', links:[
+      ['Plan Manager',       L3.planManager,  'footer.buildPlanManager'],
+      ['SDKs',               L3.sdkDocs,       'footer.buildSdks'],
+      ['Configure Payment',  L3.subplanDocs,   'footer.buildPayments'],
+      ['Run a Node',         L3.hostNode,      'footer.buildRunNode'],
+      ['Earn from dVPN',     L3.nodeEarnings,  'footer.buildEarn'],
+      ['Learn',              L3.docs,          'footer.buildLearn'],
     ]},
-    { head:'More', links:[
-      ['dVPN Docs',           L3.docs],
-      ['x402 Payments',       L3.x402],
-      ['Sentinel Node Tester', L3.testNode],
-      ['Contact Us',          L3.telegram],
+    { head:'More', headKey:'nav.more', links:[
+      ['dVPN Docs',           L3.docs,    'footer.moreDocs'],
+      ['x402 Payments',       L3.x402,    'footer.moreX402'],
+      ['Sentinel Node Tester', L3.testNode, 'footer.moreNodeTester'],
+      ['Contact Us',          L3.telegram, 'footer.moreContact'],
     ]},
   ];
 
@@ -275,11 +278,11 @@ function Footer() {
           <div style={{ flex:1, display:'grid', gridTemplateColumns:isMobile?'repeat(2,1fr)':'repeat(4,1fr)', gap:isMobile?'28px 20px':32 }}>
             {cols.map(c => (
               <div key={c.head}>
-                <div style={{ fontFamily:T3.fontHeading, fontWeight:500, fontSize:15, color:'rgba(234,234,234,0.9)', marginBottom:18, letterSpacing:'0.02em' }}>{c.head}</div>
-                {c.links.map(([label, url]) => (
+                <div style={{ fontFamily:T3.fontHeading, fontWeight:500, fontSize:15, color:'rgba(234,234,234,0.9)', marginBottom:18, letterSpacing:'0.02em' }}>{tr(c.headKey, c.head)}</div>
+                {c.links.map(([label, url, labelKey]) => (
                   <a key={label} href={url} target="_blank" rel="noopener" style={{ display:'block', fontFamily:T3.fontBody, fontSize:14, lineHeight:'26px', color:'rgba(234,234,234,0.55)', textDecoration:'none', padding:'3px 0', transition:'color 200ms' }}
                      onMouseEnter={e=>e.target.style.color='rgba(234,234,234,0.9)'}
-                     onMouseLeave={e=>e.target.style.color='rgba(234,234,234,0.55)'}>{label}</a>
+                     onMouseLeave={e=>e.target.style.color='rgba(234,234,234,0.55)'}>{tr(labelKey, label)}</a>
                 ))}
               </div>
             ))}
@@ -295,10 +298,10 @@ function Footer() {
         <div style={{ display:'flex', flexDirection:isMobile?'column':'row', alignItems:isMobile?'flex-start':'center', justifyContent:'space-between', gap:isMobile?16:0, paddingTop:18, borderTop:'1px solid rgba(255,255,255,0.06)', paddingBottom:28 }}>
           <div style={{ display:'flex', gap:22, alignItems:'center' }}>
             {[
-              ['Sentinel © 2026', L3.home],
-              ['Privacy Policy',  L3.privacy],
-            ].map(([label, url]) => (
-              <a key={label} href={url} target="_blank" rel="noopener" style={{ fontFamily:T3.fontBody, fontSize:13, color:'rgba(255,255,255,0.45)', textDecoration:'none' }}>{label}</a>
+              ['Sentinel © 2026', L3.home,    'footer.copyright'],
+              ['Privacy Policy',  L3.privacy, 'footer.privacyPolicy'],
+            ].map(([label, url, labelKey]) => (
+              <a key={label} href={url} target="_blank" rel="noopener" style={{ fontFamily:T3.fontBody, fontSize:13, color:'rgba(255,255,255,0.45)', textDecoration:'none' }}>{tr(labelKey, label)}</a>
             ))}
           </div>
           <div style={{ display:'flex', gap:16, alignItems:'center' }}>

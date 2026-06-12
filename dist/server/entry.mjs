@@ -1,6 +1,6 @@
 import { renderers } from './renderers.mjs';
-import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_Dk8SBPUE.mjs';
-import { manifest } from './manifest_CwjM6aUq.mjs';
+import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_DGV0wVBb.mjs';
+import { manifest } from './manifest_DNnImzm1.mjs';
 
 const serverIslandMap = new Map();;
 
@@ -16,12 +16,12 @@ const _manifest = Object.assign(manifest, {
     serverIslandMap,
     renderers,
     actions: () => import('./noop-entrypoint.mjs'),
-    middleware: () => import('./_noop-middleware.mjs')
+    middleware: () => import('./_astro-internal_middleware.mjs')
 });
 const _args = {
     "mode": "standalone",
-    "client": "file:///C:/Users/Connect/Desktop/sentinel-homepage/website/dist/client/",
-    "server": "file:///C:/Users/Connect/Desktop/sentinel-homepage/website/dist/server/",
+    "client": "file:///C:/Users/Connect/AppData/Local/Temp/main-website-pr/dist/client/",
+    "server": "file:///C:/Users/Connect/AppData/Local/Temp/main-website-pr/dist/server/",
     "host": true,
     "port": 4321,
     "assets": "_astro",

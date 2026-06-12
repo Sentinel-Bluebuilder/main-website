@@ -15,6 +15,9 @@ const { atomStyles: A, ChipDark, ChipLight, BtnPrimary, BtnGhost, CodeWindow } =
 const { useState: useS2, useEffect: useE2, useRef: useR2 } = React;
 const useIsMobile = window.useIsMobile;
 
+/* i18n: translate at render time (window.T is reassigned per request/locale). */
+const tr = (k, f) => (typeof window !== 'undefined' && window.T ? window.T(k, f) : (f != null ? f : k));
+
 /* OS targets for the node-hosting CTA buttons */
 const NH_OS = [
   { label:'Windows', icon:'windows', href:L2.nodeDeployer },
@@ -40,7 +43,7 @@ function LiveNodeTestLink({ fullWidth }) {
       <span style={{ width:40, height:40, borderRadius:12, flexShrink:0, background:T2.white, border:'1px solid rgba(255,255,255,0.45)', display:'inline-flex', alignItems:'center', justifyContent:'center' }}>
         <window.SentinelMark size={22} color="#0156FC" />
       </span>
-      <span className="sn-livetest-label" style={{ flex:1, fontFamily:T2.fontHeading, fontWeight:600, fontSize:15, lineHeight:1, color:T2.fog, whiteSpace:'nowrap', minWidth:0 }}>View Live Node Test</span>
+      <span className="sn-livetest-label" style={{ flex:1, fontFamily:T2.fontHeading, fontWeight:600, fontSize:15, lineHeight:1, color:T2.fog, whiteSpace:'nowrap', minWidth:0 }}>{tr('nodeHosting.liveTest', 'View Live Node Test')}</span>
       <span className="sn-livetest-arrow" aria-hidden="true" style={{ fontSize:15, fontWeight:600, color:'#2670FF', flexShrink:0 }}>↗</span>
     </a>
   );
@@ -49,11 +52,11 @@ function LiveNodeTestLink({ fullWidth }) {
 /* ── Node Hosting ─────────────────────────────────────────── */
 function NodeHostingSection() {
   const cards = [
-    { tab:'Install',   title:'Host a dVPN Node on Your Device',
-      body:'Run a Wireguard or V2Ray dVPN Node on your Windows, Mac, or Linux machine and start earning today!',
+    { tab:tr('nodeHosting.installTab','Install'),   title:tr('nodeHosting.card1Title','Host a dVPN Node on Your Device'),
+      body:tr('nodeHosting.card1Body','Run a Wireguard or V2Ray dVPN Node on your Windows, Mac, or Linux machine and start earning today!'),
       img:window.__resources.screenNode1 },
-    { tab:'Cloud', title:'Host dVPN Nodes on the Cloud',
-      body:'SSH into any cloud server and deploy dVPN nodes in batches — spin up, monitor, and manage your entire fleet from one place.',
+    { tab:tr('nodeHosting.cloudTab','Cloud'), title:tr('nodeHosting.card2Title','Host dVPN Nodes on the Cloud'),
+      body:tr('nodeHosting.card2Body','SSH into any cloud server and deploy dVPN nodes in batches — spin up, monitor, and manage your entire fleet from one place.'),
       img:window.__resources.screenNode2 },
   ];
 
@@ -121,8 +124,8 @@ function NodeHostingSection() {
       <div className="sn-nh-pin">
         <div style={{ ...A.container, display:'flex', flexDirection:'column', gap:isMobile?28:'clamp(12px,1.8vh,20px)', paddingTop:isMobile?0:'clamp(10px,1.4vh,16px)', paddingBottom:isMobile?0:'clamp(10px,1.4vh,16px)', height:'100%', boxSizing:'border-box', justifyContent:'center' }}>
           <div style={{ ...A.sectionHead, gap:10 }}>
-            <h2 style={{ ...A.h1Dark }}>Host a dVPN Node. Earn Bandwidth Rewards.</h2>
-            <p style={{ ...A.leadDark, maxWidth:772 }}>Run a Sentinel Node in minutes and join 1500+ operators across the world and provide your bandwidth to the future of decentralized privacy.</p>
+            <h2 style={{ ...A.h1Dark }}>{tr('nodeHosting.heading', 'Host a dVPN Node. Earn Bandwidth Rewards.')}</h2>
+            <p style={{ ...A.leadDark, maxWidth:772 }}>{tr('nodeHosting.lead', 'Run a Sentinel Node in minutes and join 1500+ operators across the world and provide your bandwidth to the future of decentralized privacy.')}</p>
           </div>
           {/* Card stack */}
           <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:14 }}>
@@ -153,7 +156,7 @@ function NodeHostingSection() {
           {/* Closing CTA — roomier placement (user request 2026-06-11): vh-fluid top margin
               separates it from the card stack, wider heading-to-chips gap, airier chip row */}
           <div style={{ position:'relative', display:'flex', flexDirection:'column', alignItems:'center', gap:isMobile?24:'clamp(18px,2.8vh,28px)', marginTop:isMobile?44:'clamp(10px,2.2vh,26px)', paddingBottom:isMobile?0:'clamp(4px,1vh,12px)' }}>
-            <h3 style={{ fontFamily:T2.fontHeading, fontWeight:500, fontSize:'clamp(23px,3vw,30px)', color:'rgb(234,234,234)', margin:0, lineHeight:1.2, letterSpacing:'-0.005em' }}>Host a dVPN Node Today!</h3>
+            <h3 style={{ fontFamily:T2.fontHeading, fontWeight:500, fontSize:'clamp(23px,3vw,30px)', color:'rgb(234,234,234)', margin:0, lineHeight:1.2, letterSpacing:'-0.005em' }}>{tr('nodeHosting.ctaHeading', 'Host a dVPN Node Today!')}</h3>
             <div style={{ position:'relative', width:'100%', display:'flex', justifyContent:'center', alignItems:'center', flexWrap:'wrap', gap:'clamp(14px,2vw,20px)' }}>
               <style>{'.sn-btn-primary:hover .sn-plat-flip * { fill:#fff; }'}</style>
               {NH_OS.map(o => (
@@ -252,16 +255,16 @@ function AgenticPaymentsSection() {
   const glow = 'radial-gradient(ellipse at 50% -10%, rgba(38,112,255,0.10), transparent 60%), radial-gradient(ellipse at 50% 110%, rgba(1,86,252,0.07), transparent 60%)';
 
   const steps = [
-    ['Request access',    'Your agent calls the connect endpoint — 1, 7 or 30 days.'],
-    ['Get the price',     'Sentinel replies with the cost: $0.033 for a full day.'],
-    ['Pay automatically', 'The agent signs the USDC payment itself. Settles in ~2 seconds.'],
-    ['Tunnel up',         'Encrypted WireGuard connection. No API keys, no accounts, no human.'],
+    [tr('agentic.step1Title','Request access'),    tr('agentic.step1Body','Your agent calls the connect endpoint — 1, 7 or 30 days.')],
+    [tr('agentic.step2Title','Get the price'),     tr('agentic.step2Body','Sentinel replies with the cost: $0.033 for a full day.')],
+    [tr('agentic.step3Title','Pay automatically'), tr('agentic.step3Body','The agent signs the USDC payment itself. Settles in ~2 seconds.')],
+    [tr('agentic.step4Title','Tunnel up'),         tr('agentic.step4Body','Encrypted WireGuard connection. No API keys, no accounts, no human.')],
   ];
 
   const agents = [
-    { key:'claude',  label:'Claude Agent'  },
-    { key:'chatgpt', label:'ChatGPT Agent' },
-    { key:'gemini',  label:'Gemini Agent'  },
+    { key:'claude',  label:tr('agentic.claudeAgent','Claude Agent')  },
+    { key:'chatgpt', label:tr('agentic.chatgptAgent','ChatGPT Agent') },
+    { key:'gemini',  label:tr('agentic.geminiAgent','Gemini Agent')  },
   ];
 
   return (
@@ -270,21 +273,21 @@ function AgenticPaymentsSection() {
       <div style={{ ...A.container, position:'relative', zIndex:1, display:'flex', flexDirection:'column', gap:isMobile?44:'clamp(32px,4vw,44px)' }}>
         <div style={{ display:'grid', gridTemplateColumns:isMobile?'1fr':'1fr 1fr', gap:isMobile?36:56, alignItems:'center' }}>
           <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
-            <h2 style={{ ...A.h1Dark, maxWidth:540, color:X.bright }}>The first decentralized VPN network for AI agents.</h2>
-            <p style={{ ...A.leadDark, maxWidth:540, color:X.muted }}>Agents get privacy and bypass geo-restrictions on their own — no API keys, no accounts, no human. A full day of VPN costs $0.033, paid autonomously in USDC.</p>
+            <h2 style={{ ...A.h1Dark, maxWidth:540, color:X.bright }}>{tr('agentic.heading','The first decentralized VPN network for AI agents.')}</h2>
+            <p style={{ ...A.leadDark, maxWidth:540, color:X.muted }}>{tr('agentic.lead','Agents get privacy and bypass geo-restrictions on their own — no API keys, no accounts, no human. A full day of VPN costs $0.033, paid autonomously in USDC.')}</p>
             <div style={isMobile?{ display:'grid', gridTemplateColumns:'repeat(2, minmax(0,1fr))', gap:10 }:{ display:'flex', gap:12, flexWrap:'wrap' }}>
               <span style={{ display:'inline-flex', alignItems:'center', justifyContent:isMobile?'center':'flex-start', gap:10, padding:isMobile?'11px 12px':'10px 18px', borderRadius:12, background:'rgba(8,16,30,0.72)', border:`1px solid ${X.borderBright}`, boxShadow:'0 0 18px -6px rgba(38,112,255,0.45)', backdropFilter:'blur(6px)' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0052FF" d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.66565 0 0.475508 4.91843 0.0244141 11.1582H15.8643V12.8418H0.0244141C0.475508 19.0816 5.66565 24 12 24Z"/></svg>
-                <span style={{ fontFamily:T2.fontMono, fontSize:12.5, fontWeight:700, color:X.bright }}>Pay on Base</span>
+                <span style={{ fontFamily:T2.fontMono, fontSize:12.5, fontWeight:700, color:X.bright }}>{tr('agentic.payOnBase','Pay on Base')}</span>
               </span>
               <span style={{ display:'inline-flex', alignItems:'center', justifyContent:isMobile?'center':'flex-start', gap:10, padding:isMobile?'11px 12px':'10px 18px', borderRadius:12, background:'rgba(8,16,30,0.5)', border:`1px solid ${X.border}`, backdropFilter:'blur(6px)' }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style={{ opacity:0.9 }}><defs><linearGradient id="agSolGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stopColor="#9945FF"/><stop offset="100%" stopColor="#14F195"/></linearGradient></defs><path fill="url(#agSolGrad)" d="M4.6 16.82c.14-.14.34-.23.54-.23h15.4c.34 0 .51.41.27.65l-3.21 3.22c-.14.14-.34.23-.54.23H1.66c-.34 0-.51-.41-.27-.65l3.21-3.22zM4.6 3.54c.14-.14.34-.23.54-.23h15.4c.34 0 .51.41.27.65L17.6 7.18c-.14.14-.34.23-.54.23H1.66c-.34 0-.51-.41-.27-.65L4.6 3.54zM17.6 10.13c-.14-.14-.34-.23-.54-.23H1.66c-.34 0-.51.41-.27.65l3.21 3.22c.14.14.34.23.54.23h15.4c.34 0 .51-.41.27-.65l-3.21-3.22z"/></svg>
                 <span style={{ fontFamily:T2.fontMono, fontSize:12.5, color:X.muted }}>Solana</span>
-                <span style={{ fontFamily:T2.fontMono, fontSize:9.5, fontWeight:700, letterSpacing:'0.08em', color:'#ffb547', border:'1px solid rgba(255,181,71,0.35)', borderRadius:6, padding:'2px 7px' }}>SOON</span>
+                <span style={{ fontFamily:T2.fontMono, fontSize:9.5, fontWeight:700, letterSpacing:'0.08em', color:'#ffb547', border:'1px solid rgba(255,181,71,0.35)', borderRadius:6, padding:'2px 7px' }}>{tr('agentic.soon','SOON')}</span>
               </span>
             </div>
             <div style={{ display:'flex', flexWrap:'wrap', gap:14, marginTop:6 }}>
-              <BtnPrimary href={L2.x402} style={isMobile?{ width:'100%', boxSizing:'border-box' }:undefined}>Launch x402.sentinel.co</BtnPrimary>
+              <BtnPrimary href={L2.x402} style={isMobile?{ width:'100%', boxSizing:'border-box' }:undefined}>{tr('agentic.launchBtn','Launch x402.sentinel.co')}</BtnPrimary>
             </div>
           </div>
 
@@ -302,7 +305,7 @@ function AgenticPaymentsSection() {
         </div>
 
         <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:16 }}>
-          <span style={{ fontFamily:T2.fontMono, fontSize:11, letterSpacing:'0.1em', fontWeight:700, color:X.dim }}>CONNECT YOUR AGENT</span>
+          <span style={{ fontFamily:T2.fontMono, fontSize:11, letterSpacing:'0.1em', fontWeight:700, color:X.dim }}>{tr('agentic.connectAgent','CONNECT YOUR AGENT')}</span>
           <div style={isMobile?{ display:'grid', gridTemplateColumns:'1fr', gap:10, width:'100%', maxWidth:300 }:{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:14 }}>
             {agents.map(a => (
               <div key={a.key} style={{ display:'flex', alignItems:'center', justifyContent:isMobile?'center':'flex-start', gap:12, padding:isMobile?'13px 22px':'12px 22px', borderRadius:14, background:X.card, border:`1px solid ${X.border}`, backdropFilter:'blur(6px)' }}>
@@ -378,46 +381,46 @@ const DVPN_COUNTRIES = [
 
 const DVPN_APPS = [
     { name:'DVPN by NORSE', logo:window.__resources.ecoNorse, featured:true,
-      desc:'A full decentralized-VPN experience wrapped into user-friendly apps for every platform.',
+      descKey:'apps.norseDesc', desc:'A full decentralized-VPN experience wrapped into user-friendly apps for every platform.',
       links: {
         'iOS':      'https://apps.apple.com/us/app/dvpn-decentralized-vpn/id6553963594',
         'Android':  'https://play.google.com/store/apps/details?hl=en_US&id=io.norselabs.dvpn',
         'Apple TV': 'https://apps.apple.com/us/app/dvpn-decentralized-vpn/id6553963594',
       } },
     { name:'Sentinel Shield', logo:window.__resources.ecoSentinelShield,
-      desc:'Flagship open-source dVPN by Sentinel P2P — WireGuard & V2Ray.',
+      descKey:'apps.shieldDesc', desc:'Flagship open-source dVPN by Sentinel P2P — WireGuard & V2Ray.',
       links: {
         'iOS':     'https://apps.apple.com/us/app/sentinel-shield-dvpn/id6657986086',
         'Android': 'https://play.google.com/store/apps/details?hl=en_US&id=co.sentinel.dvpnapp',
       } },
     { name:'Ryn VPN', logo:window.__resources.ecoRyn,
-      desc:'A clean, minimalist privacy VPN trusted by 10M+ people.',
+      descKey:'apps.rynDesc', desc:'A clean, minimalist privacy VPN trusted by 10M+ people.',
       links: {
         'iOS':     'https://apps.apple.com/ae/app/ryn-vpn-secure-vpn-master/id1493328027',
         'Android': 'https://play.google.com/store/apps/details?hl=en_US&id=com.secure.cryptovpn',
         'TV':      'https://apkpure.net/ryn-vpn-browse-blazing-fast/com.secure.cryptovpn/download/tv',
       } },
     { name:'Independent dVPN', logo:window.__resources.ecoIndependent,
-      desc:'Free decentralized VPN on Sentinel — WireGuard & V2Ray.',
+      descKey:'apps.independentDesc', desc:'Free decentralized VPN on Sentinel — WireGuard & V2Ray.',
       links: {
         'iOS':     'https://apps.apple.com/us/app/independent-dvpn/id6468454526',
         'Android': 'https://play.google.com/store/apps/details?hl=en_US&id=com.bagimsizvpn.app',
       } },
     { name:'Encrypt SIM', logo:window.__resources.ecoEncryptsim,
-      desc:'Privacy-first global eSIM — no KYC, no logs, SOC2-grade encryption.',
+      descKey:'apps.encryptsimDesc', desc:'Privacy-first global eSIM — no KYC, no logs, SOC2-grade encryption.',
       links: {
         'iOS':     'https://www.encryptsim.com/',
         'Android': 'https://www.encryptsim.com/',
       } },
     { name:'Meile dVPN', logo:window.__resources.ecoMeile,
-      desc:'Sentinel-powered desktop dVPN for macOS, Linux & Windows.',
+      descKey:'apps.meileDesc', desc:'Sentinel-powered desktop dVPN for macOS, Linux & Windows.',
       links: {
         'macOS':   'https://mathnodes.com/index.php/meile-dvpn-client-linux-os-x/',
         'Linux':   'https://mathnodes.com/index.php/meile-dvpn-client-linux-os-x/',
         'Windows': 'https://mathnodes.com/index.php/meile-dvpn-client-linux-os-x/',
       } },
     { name:'VALT', logo:window.__resources.ecoValt, imgFilter:'brightness(0)',
-      desc:'Capture and protect the data you create every day.',
+      descKey:'apps.valtDesc', desc:'Capture and protect the data you create every day.',
       links: {
         'iOS':     'https://apps.apple.com/us/app/valt-dvpn/id1630660373',
         'Android': 'https://play.google.com/store/apps/details?hl=en_NZ&id=com.hashcash.breadcrumbs',
@@ -476,7 +479,7 @@ function DvpnConsole() {
         <span style={{ fontFamily:T2.fontMono, fontSize:13, color:'rgba(234,234,234,0.62)' }}>sentinel://connect</span>
         {!isMobile && (
           <span style={{ marginLeft:'auto', display:'inline-flex', alignItems:'center', gap:8, fontFamily:T2.fontMono, fontSize:11, color:'rgba(234,234,234,0.5)' }}>
-            <span className="sn-con-dot" style={{ width:7, height:7, borderRadius:'50%', background:'#3DDC84' }} /> WIREGUARD · AES-256
+            <span className="sn-con-dot" style={{ width:7, height:7, borderRadius:'50%', background:'#3DDC84' }} /> {tr('console.wireguardBadge', 'WIREGUARD · AES-256')}
           </span>
         )}
       </div>
@@ -485,7 +488,7 @@ function DvpnConsole() {
         <div className="sn-con-steps">
           {/* 01 LOCATION */}
           <div style={fld}>
-            <span style={lbl}>01 — EXIT LOCATION</span>
+            <span style={lbl}>{tr('console.step01', '01 — EXIT LOCATION')}</span>
             <button className="sn-con-dd" onClick={() => setOpen(o => !o)} aria-haspopup="listbox" aria-expanded={open}>
               <span style={{ display:'inline-flex', alignItems:'center', gap:10 }}>
                 <span style={{ fontFamily:T2.fontMono, fontSize:11.5, color:T2.blueLight, background:'rgba(38,112,255,0.14)', padding:'2px 7px', borderRadius:6 }}>{country[0]}</span>
@@ -508,7 +511,7 @@ function DvpnConsole() {
           </div>
           {/* 02 PLATFORM */}
           <div style={fld}>
-            <span style={lbl}>02 — PLATFORM</span>
+            <span style={lbl}>{tr('console.step02', '02 — PLATFORM')}</span>
             <div style={{ display:'grid', gridTemplateColumns:isMobile?'repeat(2, 1fr)':'repeat(4, 1fr)', gap:8 }}>
               {DVPN_CON_PLATFORMS.map(p => (
                 <button key={p.key} className="sn-con-seg" data-on={platform === p.key} onClick={() => setPlatform(p.key)}>
@@ -519,7 +522,7 @@ function DvpnConsole() {
           </div>
           {/* 03 APP */}
           <div style={fld}>
-            <span style={lbl}>03 — SELECT APP</span>
+            <span style={lbl}>{tr('console.step03', '03 — SELECT APP')}</span>
             <div className="sn-con-scroll" style={{ display:'grid', gridTemplateColumns:isMobile?'1fr':'repeat(2, 1fr)', gap:8, maxHeight:188, overflowY:'auto' }}>
               {available.map(a => (
                 <button key={a.name} className="sn-con-app" data-on={selApp && a.name === selApp.name} onClick={() => setAppName(a.name)}>
@@ -538,13 +541,13 @@ function DvpnConsole() {
         {/* status + connect */}
         <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:22, flexWrap:'wrap', borderTop:'1px solid rgba(255,255,255,0.06)', paddingTop:24 }}>
           <div style={{ fontFamily:T2.fontMono, fontSize:12.5, lineHeight:'21px', color:'rgba(234,234,234,0.55)', minWidth:0, overflowWrap:'anywhere' }}>
-            <span style={{ color: connecting ? '#3DDC84' : T2.blueLight }}>{connecting ? '> establishing encrypted tunnel…' : '> ready to connect'}</span><br/>
+            <span style={{ color: connecting ? '#3DDC84' : T2.blueLight }}>{connecting ? tr('console.statusConnecting', '> establishing encrypted tunnel…') : tr('console.statusReady', '> ready to connect')}</span><br/>
             exit={country[0]} · platform={platform} · app="{selApp ? selApp.name : '—'}"
           </div>
           <button className="sn-con-connect" onClick={connect} disabled={!url || connecting}>
             {connecting
-              ? (<React.Fragment><span className="sn-con-spinner" /> Connecting…</React.Fragment>)
-              : (<React.Fragment>Connect to dVPN
+              ? (<React.Fragment><span className="sn-con-spinner" /> {tr('console.connectingBtn', 'Connecting…')}</React.Fragment>)
+              : (<React.Fragment>{tr('console.connectBtn', 'Connect to dVPN')}
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </React.Fragment>)}
           </button>
@@ -593,7 +596,7 @@ function SentinelDVPNSection() {
         </div>
         <div style={{ fontFamily:T2.fontHeading, fontWeight:500, fontSize:19, color:T2.onLight80 }}>{a.name}</div>
       </div>
-      <p style={{ fontFamily:T2.fontBody, fontSize:14, lineHeight:'21px', color:'rgba(0,0,0,0.55)', margin:0, flex:1 }}>{a.desc}</p>
+      <p style={{ fontFamily:T2.fontBody, fontSize:14, lineHeight:'21px', color:'rgba(0,0,0,0.55)', margin:0, flex:1 }}>{a.descKey ? tr(a.descKey, a.desc) : a.desc}</p>
       <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
         {Object.entries(a.links).map(([plat, url]) => (
           <PlatPill key={plat} platform={plat} href={url} />
@@ -606,8 +609,8 @@ function SentinelDVPNSection() {
     <section style={{ background:T2.paper, ...A.section }}>
       <div style={{ ...A.container, display:'flex', flexDirection:'column', gap:40 }}>
         <div style={{ ...A.sectionHead }}>
-          <h2 style={{ ...A.h1Light, maxWidth:764 }}>Use open-source decentralized VPN apps you can trust.</h2>
-          <p style={{ ...A.leadLight, maxWidth:864 }}>Pick a location, your platform and an app — then connect. Every app here ships on the Sentinel network, so no single provider owns the bandwidth you route through.</p>
+          <h2 style={{ ...A.h1Light, maxWidth:764 }}>{tr('sentinelDvpn.heading', 'Use open-source decentralized VPN apps you can trust.')}</h2>
+          <p style={{ ...A.leadLight, maxWidth:864 }}>{tr('sentinelDvpn.lead', 'Pick a location, your platform and an app — then connect. Every app here ships on the Sentinel network, so no single provider owns the bandwidth you route through.')}</p>
         </div>
 
         {/* Guided connect console */}
@@ -683,7 +686,7 @@ function CentralizedVPNSection() {
     <section id="dvpn-vs-vpn" style={{ scrollMarginTop:90, background:'radial-gradient(1100px 320px at 50% -6%, rgba(0,204,82,0.045), transparent 60%), radial-gradient(900px 480px at 88% 22%, rgba(1,86,252,0.05), transparent 60%), linear-gradient(180deg, #f3f6f5 0%, #fbfbfb 22%, #fbfbfb 100%)', ...A.section }}>
       <div style={{ ...A.container, display:'flex', flexDirection:'column', gap:'clamp(32px,4vw,48px)' }}>
         <div style={{ ...A.sectionHead, maxWidth:960, gap:16 }}>
-          <h2 style={{ ...A.h1Light, maxWidth:826 }}>You can't trust centralized VPNs.</h2>
+          <h2 style={{ ...A.h1Light, maxWidth:826 }}>{tr('centralized.heading', "You can't trust centralized VPNs.")}</h2>
           <p style={{ ...A.leadLight, maxWidth:880, fontSize:'clamp(15px,1.5vw,17px)', color:T2.onLight60 }}>A centralized VPN only moves your trust from your ISP to a VPN company — a single point of control that now sees all of your traffic, not just some of it.</p>
         </div>
 
@@ -736,33 +739,33 @@ function CompareSection() {
   const sentinel = {
     title: 'Sentinel',
     rows: [
-      ['Discovery',         'Cosmos-SDK blockchain'],
-      ['Bootstrap',         'None — any RPC endpoint'],
-      ['Entry points',      '∞ permissionless'],
-      ['Sybil resistance',  'On-chain registration TX'],
-      ['State consistency', 'Finality · ~6s blocks'],
-      ['Governance',        'On-chain validator votes'],
-      ['If org disappears', 'Validators continue'],
-      ['Verdict',           'Nothing to block'],
+      [tr('compare.rowDiscovery','Discovery'),         tr('compare.snDiscoveryVal','Cosmos-SDK blockchain')],
+      [tr('compare.rowBootstrap','Bootstrap'),         tr('compare.snBootstrapVal','None — any RPC endpoint')],
+      [tr('compare.rowEntry','Entry points'),          tr('compare.snEntryVal','∞ permissionless')],
+      [tr('compare.rowSybil','Sybil resistance'),      tr('compare.snSybilVal','On-chain registration TX')],
+      [tr('compare.rowState','State consistency'),     tr('compare.snStateVal','Finality · ~6s blocks')],
+      [tr('compare.rowGovernance','Governance'),       tr('compare.snGovVal','On-chain validator votes')],
+      [tr('compare.rowIfOrg','If org disappears'),     tr('compare.snOrgVal','Validators continue')],
+      [tr('compare.rowVerdict','Verdict'),             tr('compare.snVerdictVal','Nothing to block')],
     ],
-    callout: 'Discovery is on-chain, entry points are permissionless, and the registry lives as long as anyone runs a validator. Block the team and the network is unaffected.',
+    callout: tr('compare.sentinelCallout','Discovery is on-chain, entry points are permissionless, and the registry lives as long as anyone runs a validator. Block the team and the network is unaffected.'),
   };
   const items = [
-    { logo:CmpLogos.tor, title:'Tor', sub:'The Onion Router', fail:'Central directory',
-      rows:[['Discovery','9 Directory Authorities'],['Routing','3-hop circuit (slow)'],['Central failure','Directory Authorities'],['If org disappears','Network degrades']],
-      callout:"9 organizations control the network's directory. Compromise or block them and Tor falls." },
-    { logo:CmpLogos.nodes, title:'Other on-chain P2P networks', sub:'Cross-protocol comparison', fail:'Company servers',
-      rows:[['Discovery','Centralized API servers'],['Node registry','Company-operated'],['If company disappears','Network dies'],['Open client SDK','Proprietary or limited']],
-      callout:'Discovery and coordination still depend on company-operated servers. Not truly decentralized at the networking layer.' },
-    { logo:CmpLogos.ipfs, title:'IPFS / Filecoin', sub:'Decentralized storage', fail:'Hardcoded peers',
-      rows:[['DHT','Kademlia (libp2p)'],['Bootstrap','~6 hardcoded peers'],['Seeds','bootstrap.libp2p.io (Protocol Labs)'],['Sybil resistance','Weak']],
-      callout:"Kubo ships with ~6 hardcoded Protocol Labs bootstrap peers; block them, and fresh nodes can’t join the DHT." },
-    { logo:CmpLogos.bittorrent, title:'BitTorrent', sub:'File sharing protocol', fail:'Hardcoded hosts',
-      rows:[['DHT','Mainline Kademlia'],['Bootstrap','~5 hardcoded hosts'],['Seeds','router.bittorrent.com, dht.transmissionbt.com...'],['Sybil resistance','Weak (free to flood)']],
-      callout:"Mainline DHT relies on ~5 hardcoded bootstrap hosts; existing clients can persist peers, but blocking those hosts prevents new users from joining." },
-    { logo:(i2pSrc ? <img src={i2pSrc} alt="" style={{ height:13, width:'auto', display:'block' }}/> : null), wideLogo:true, title:'I2P', sub:'Invisible Internet Project', fail:'Reseed servers',
-      rows:[['Discovery','Hardcoded reseed URLs'],['Bootstrap','~8 reseed servers'],['Seeds','reseed.i2p-projekt.de'],['If blocked',"New users can't join"]],
-      callout:'Hardcoded reseed URLs. Block ~8 domains and new users cannot bootstrap into the network.' },
+    { logo:CmpLogos.tor, title:'Tor', sub:tr('compare.torSub','The Onion Router'), fail:tr('compare.torFail','Central directory'),
+      rows:[[tr('compare.rowDiscovery','Discovery'),tr('compare.torDiscoveryVal','9 Directory Authorities')],[tr('compare.rowRouting','Routing'),tr('compare.torRoutingVal','3-hop circuit (slow)')],[tr('compare.rowCentralFail','Central failure'),tr('compare.torCentralFailVal','Directory Authorities')],[tr('compare.rowIfOrg','If org disappears'),tr('compare.torOrgVal','Network degrades')]],
+      callout:tr('compare.torCallout',"9 organizations control the network's directory. Compromise or block them and Tor falls.") },
+    { logo:CmpLogos.nodes, title:tr('compare.otherTitle','Other on-chain P2P networks'), sub:tr('compare.otherSub','Cross-protocol comparison'), fail:tr('compare.otherFail','Company servers'),
+      rows:[[tr('compare.rowDiscovery','Discovery'),tr('compare.otherDiscoveryVal','Centralized API servers')],[tr('compare.rowRegistry','Node registry'),tr('compare.otherRegistryVal','Company-operated')],[tr('compare.rowIfCompany','If company disappears'),tr('compare.otherOrgVal','Network dies')],[tr('compare.rowOpenSdk','Open client SDK'),tr('compare.otherSdkVal','Proprietary or limited')]],
+      callout:tr('compare.otherCallout','Discovery and coordination still depend on company-operated servers. Not truly decentralized at the networking layer.') },
+    { logo:CmpLogos.ipfs, title:'IPFS / Filecoin', sub:tr('compare.ipfsSub','Decentralized storage'), fail:tr('compare.ipfsFail','Hardcoded peers'),
+      rows:[['DHT','Kademlia (libp2p)'],[tr('compare.rowBootstrap','Bootstrap'),tr('compare.ipfsBootstrapVal','~6 hardcoded peers')],[tr('compare.rowSeeds','Seeds'),'bootstrap.libp2p.io (Protocol Labs)'],[tr('compare.rowSybil','Sybil resistance'),tr('compare.ipfsSybilVal','Weak')]],
+      callout:tr('compare.ipfsCallout',"Kubo ships with ~6 hardcoded Protocol Labs bootstrap peers; block them, and fresh nodes can’t join the DHT.") },
+    { logo:CmpLogos.bittorrent, title:'BitTorrent', sub:tr('compare.btSub','File sharing protocol'), fail:tr('compare.btFail','Hardcoded hosts'),
+      rows:[['DHT','Mainline Kademlia'],[tr('compare.rowBootstrap','Bootstrap'),tr('compare.btBootstrapVal','~5 hardcoded hosts')],[tr('compare.rowSeeds','Seeds'),'router.bittorrent.com, dht.transmissionbt.com...'],[tr('compare.rowSybil','Sybil resistance'),tr('compare.btSybilVal','Weak (free to flood)')]],
+      callout:tr('compare.btCallout',"Mainline DHT relies on ~5 hardcoded bootstrap hosts; existing clients can persist peers, but blocking those hosts prevents new users from joining.") },
+    { logo:(i2pSrc ? <img src={i2pSrc} alt="" style={{ height:13, width:'auto', display:'block' }}/> : null), wideLogo:true, title:'I2P', sub:tr('compare.i2pSub','Invisible Internet Project'), fail:tr('compare.i2pFail','Reseed servers'),
+      rows:[[tr('compare.rowDiscovery','Discovery'),tr('compare.i2pDiscoveryVal','Hardcoded reseed URLs')],[tr('compare.rowBootstrap','Bootstrap'),tr('compare.i2pBootstrapVal','~8 reseed servers')],[tr('compare.rowSeeds','Seeds'),'reseed.i2p-projekt.de'],[tr('compare.rowIfBlocked','If blocked'),tr('compare.i2pBlockedVal',"New users can't join")]],
+      callout:tr('compare.i2pCallout','Hardcoded reseed URLs. Block ~8 domains and new users cannot bootstrap into the network.') },
   ];
 
   const chip = (logo, wide) => (
@@ -780,8 +783,8 @@ function CompareSection() {
       <style>{SN_CMP_CSS}</style>
       <div style={{ ...A.container, display:'flex', flexDirection:'column', gap:'clamp(28px,3.5vw,40px)' }}>
         <div style={{ ...A.sectionHead, maxWidth:940, gap:16 }}>
-          <h2 style={{ ...A.h1Light, maxWidth:940 }}>How Sentinel's architecture compares to leading P2P networks.</h2>
-          <p style={{ ...A.leadLight, maxWidth:760 }}>Take away the founding organization. Block the bootstrap servers. What keeps running?</p>
+          <h2 style={{ ...A.h1Light, maxWidth:940 }}>{tr('compare.heading',"How Sentinel's architecture compares to leading P2P networks.")}</h2>
+          <p style={{ ...A.leadLight, maxWidth:760 }}>{tr('compare.lead','Take away the founding organization. Block the bootstrap servers. What keeps running?')}</p>
         </div>
 
         {/* Sentinel — dark monolith hero card */}
@@ -798,16 +801,16 @@ function CompareSection() {
               {!isMobile && (
               <a className="sn-cmp-rpc" href="https://peers.suchnode.net/" target="_blank" rel="noopener noreferrer" style={{ marginLeft:'auto', boxSizing:'border-box', display:'inline-flex', alignItems:'center', justifyContent:'center', gap:10, padding:'11px 20px', borderRadius:999, background:'rgba(1,86,252,0.20)', border:'1px solid rgba(94,148,255,0.48)', boxShadow:'0 8px 26px -12px rgba(1,86,252,0.55)', textDecoration:'none' }}>
                 <span aria-hidden="true" style={{ width:8, height:8, borderRadius:'50%', background:'#00e05c', boxShadow:'0 0 12px rgba(0,224,92,0.9)', animation:'sn-cmp-pulse 1.8s ease-in-out infinite', flexShrink:0 }} />
-                <span style={{ fontFamily:T2.fontHeading, fontSize:13, fontWeight:800, letterSpacing:'0.08em', color:'#e2ecff', whiteSpace:'nowrap' }}>VIEW LIVE RPC LIST</span>
+                <span style={{ fontFamily:T2.fontHeading, fontSize:13, fontWeight:800, letterSpacing:'0.08em', color:'#e2ecff', whiteSpace:'nowrap' }}>{tr('compare.viewLiveRpc','VIEW LIVE RPC LIST')}</span>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#b6cdff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ flexShrink:0 }}><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
               </a>
               )}
             </div>
             <div style={{ display:'grid', gridTemplateColumns: isMobile ? 'repeat(2, minmax(0,1fr))' : 'repeat(4, minmax(0,1fr))', gap:'0 26px' }}>
-              {sentinel.rows.map(([k,v]) => (
+              {sentinel.rows.map(([k,v], ri) => (
                 <div key={k} style={{ padding:'9px 0 10px', borderTop:'1px solid rgba(255,255,255,0.08)' }}>
                   <span style={{ display:'block', ...keyDark, marginBottom:3 }}>{k}</span>
-                  <span style={ k === 'Verdict' ? { ...valDark, color:'#9dbcff', fontWeight:700 } : valDark }>{v}</span>
+                  <span style={ ri === sentinel.rows.length - 1 ? { ...valDark, color:'#9dbcff', fontWeight:700 } : valDark }>{v}</span>
                 </div>
               ))}
             </div>
@@ -847,7 +850,7 @@ function CompareSection() {
                 ))}
               </div>
               <div style={{ marginTop:'auto', borderLeft:'2px solid rgba(216,4,4,0.5)', padding:'2px 0 2px 13px' }}>
-                <span style={{ display:'block', fontFamily:T2.fontMono, fontSize:9, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:T2.danger700, marginBottom:4 }}>Failure mode · {item.fail}</span>
+                <span style={{ display:'block', fontFamily:T2.fontMono, fontSize:9, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:T2.danger700, marginBottom:4 }}>{tr('compare.failureMode','Failure mode') + ' · ' + item.fail}</span>
                 <span style={{ fontFamily:T2.fontBody, fontSize:11.5, lineHeight:'18px', color:T2.onLight60 }}>{item.callout}</span>
               </div>
             </div>
@@ -860,7 +863,7 @@ function CompareSection() {
           <div aria-hidden="true" style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage:'radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.4px)', backgroundSize:'26px 26px', maskImage:'linear-gradient(180deg, black, transparent 75%)', WebkitMaskImage:'linear-gradient(180deg, black, transparent 75%)' }} />
           <div aria-hidden="true" style={{ position:'absolute', top:0, left:30, right:30, height:1, background:'linear-gradient(90deg, transparent, rgba(94,148,255,0.7), transparent)' }} />
           <p style={{ position:'relative', fontFamily:T2.fontHeading, fontWeight:500, fontSize:'clamp(21px,2.9vw,31px)', lineHeight:1.45, letterSpacing:'-0.01em', color:'rgba(234,234,234,0.92)', margin:'0 auto', maxWidth:920 }}>
-            Most networks rely on fixed entry points that censors can block. Sentinel uses <span style={{ color:'#9dbcff', fontWeight:700 }}>permissionless RPC endpoints</span> — anyone can run one, anywhere. As long as one endpoint is reachable, <span style={{ color:'#9dbcff', fontWeight:700 }}>the network remains accessible.</span>
+            {tr('compare.closing', 'Most networks rely on fixed entry points that censors can block. Sentinel uses permissionless RPC endpoints — anyone can run one, anywhere. As long as one endpoint is reachable, the network remains accessible.')}
           </p>
         </div>
       </div>
@@ -909,13 +912,13 @@ function EcoUserCounter() {
   return (
     <div ref={wrapRef} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:6, textAlign:'center' }}>
       <style>{'@keyframes snEcoPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.35;transform:scale(0.72)}}'}</style>
-      <p style={{ ...A.leadDark, margin:0 }}>Apps built on Sentinel have been used by over</p>
+      <p style={{ ...A.leadDark, margin:0 }}>{tr('ecosystem.counterBefore', 'Apps built on Sentinel have been used by over')}</p>
       <div style={{ fontFamily:T2.fontHeading, fontWeight:600, fontSize:'clamp(46px,8vw,88px)', lineHeight:1.05, letterSpacing:'-0.02em', fontVariantNumeric:'tabular-nums', backgroundImage:'linear-gradient(180deg,#ffffff 10%,#2670ff 135%)', WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent' }}>
         {count.toLocaleString('en-US')}
       </div>
       <p style={{ ...A.leadDark, margin:0, display:'inline-flex', alignItems:'center', gap:10, justifyContent:'center' }}>
         <span aria-hidden="true" style={{ width:9, height:9, borderRadius:9999, background:'#2670ff', boxShadow:'0 0 12px rgba(38,112,255,0.9)', animation:'snEcoPulse 1.6s ease-in-out infinite', display:'inline-block', flexShrink:0 }} />
-        people — and counting
+        {tr('ecosystem.counterAfter', 'people — and counting')}
       </p>
     </div>
   );
@@ -925,13 +928,13 @@ function EcoUserCounter() {
 function TrustCompareStrip() {
   const isMobile = useIsMobile();
   const pairs = [
-    ['All user traffic passes through company infrastructure.', 'Traffic routes directly to your chosen node — no relay layer.'],
-    ['"No-log" is a legal promise, not a technical guarantee.', 'No company exists that could log your traffic.'],
-    ['Server software is proprietary and unauditable.', 'All code open source — node, client, protocol, SDK.'],
-    ['Subject to subpoenas, gag orders, FISA, NSLs.', 'No single jurisdiction governs the network.'],
-    ['Can be compelled to install logging silently.', 'On-chain session authorization — cryptographic, not corporate.'],
-    ['Auto-update is a trusted code execution path.', 'Protocol governed by validators, not a board.'],
-    ['Corporate acquisition can change policies overnight.', 'WireGuard / V2Ray end-to-end — keys never leave your device.'],
+    [tr('trustCompare.bad1','All user traffic passes through company infrastructure.'), tr('trustCompare.good1','Traffic routes directly to your chosen node — no relay layer.')],
+    [tr('trustCompare.bad2','"No-log" is a legal promise, not a technical guarantee.'), tr('trustCompare.good2','No company exists that could log your traffic.')],
+    [tr('trustCompare.bad3','Server software is proprietary and unauditable.'), tr('trustCompare.good3','All code open source — node, client, protocol, SDK.')],
+    [tr('trustCompare.bad4','Subject to subpoenas, gag orders, FISA, NSLs.'), tr('trustCompare.good4','No single jurisdiction governs the network.')],
+    [tr('trustCompare.bad5','Can be compelled to install logging silently.'), tr('trustCompare.good5','On-chain session authorization — cryptographic, not corporate.')],
+    [tr('trustCompare.bad6','Auto-update is a trusted code execution path.'), tr('trustCompare.good6','Protocol governed by validators, not a board.')],
+    [tr('trustCompare.bad7','Corporate acquisition can change policies overnight.'), tr('trustCompare.good7','WireGuard / V2Ray end-to-end — keys never leave your device.')],
   ];
   const ServerMark = () => (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e0413c" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -959,10 +962,10 @@ function TrustCompareStrip() {
           {bad ? <ServerMark/> : <window.SentinelMark size={24} color="#0156FC" />}
         </span>
         <span style={{ display:'flex', flexDirection:'column', justifyContent:'center', minWidth:0 }}>
-          <span style={{ fontFamily:T2.fontHeading, fontWeight:600, fontSize:isMobile?22:28, lineHeight:1.08, letterSpacing:'-0.01em', color: bad ? T2.fog : '#ffffff' }}>{bad ? 'Centralized VPN' : 'Sentinel dVPN'}</span>
+          <span style={{ fontFamily:T2.fontHeading, fontWeight:600, fontSize:isMobile?22:28, lineHeight:1.08, letterSpacing:'-0.01em', color: bad ? T2.fog : '#ffffff' }}>{bad ? tr('trustCompare.centralizedHead','Centralized VPN') : tr('trustCompare.sentinelHead','Sentinel dVPN')}</span>
         </span>
       </div>
-      <span style={{ display:'block', fontFamily:T2.fontHeading, fontWeight:500, fontSize:isMobile?14.5:16, lineHeight:1.45, letterSpacing:'0.005em', marginTop:isMobile?9:11, paddingLeft:isMobile?0:68, color: bad ? 'rgba(255,255,255,0.70)' : 'rgba(255,255,255,0.94)' }}>{bad ? 'One entity controls every server, every key, every log.' : 'No single entity exists that could compromise the network.'}</span>
+      <span style={{ display:'block', fontFamily:T2.fontHeading, fontWeight:500, fontSize:isMobile?14.5:16, lineHeight:1.45, letterSpacing:'0.005em', marginTop:isMobile?9:11, paddingLeft:isMobile?0:68, color: bad ? 'rgba(255,255,255,0.70)' : 'rgba(255,255,255,0.94)' }}>{bad ? tr('trustCompare.centralizedSub','One entity controls every server, every key, every log.') : tr('trustCompare.sentinelSub','No single entity exists that could compromise the network.')}</span>
     </div>
   );
   const rowL = { padding:isMobile?'12px 18px':'14px 30px', display:'flex', gap:12, alignItems:'flex-start', background:'rgba(255,255,255,0.02)', borderTop:'1px solid rgba(255,255,255,0.055)' };
@@ -973,8 +976,8 @@ function TrustCompareStrip() {
     <section id="dvpn-vs-vpn" style={{ background:'transparent', padding:'clamp(34px,4.5vw,58px) 24px 0', scrollMarginTop:90 }}>
       <div style={{ ...A.container, display:'flex', flexDirection:'column', gap:'clamp(18px,2.6vw,28px)' }}>
         <div style={{ ...A.sectionHead, gap:12 }}>
-          <h2 style={{ ...A.h1Dark, fontSize:'clamp(26px,3.4vw,40px)', maxWidth:780 }}>You can't trust centralized VPNs.</h2>
-          <p style={{ ...A.leadDark, maxWidth:860 }}>A centralized VPN only moves your trust from your ISP to a VPN company — a single point of control that now sees all of your traffic, not just some of it.</p>
+          <h2 style={{ ...A.h1Dark, fontSize:'clamp(26px,3.4vw,40px)', maxWidth:780 }}>{tr('centralized.heading', "You can't trust centralized VPNs.")}</h2>
+          <p style={{ ...A.leadDark, maxWidth:860 }}>{tr('trustCompare.lead', 'A centralized VPN only moves your trust from your ISP to a VPN company — a single point of control that now sees all of your traffic, not just some of it.')}</p>
         </div>
         {isMobile ? (
           <div style={{ border:'1px solid rgba(255,255,255,0.08)', borderRadius:20, overflow:'hidden' }}>
@@ -1016,12 +1019,12 @@ function EcoOSIcon({ k }) {
 function EcosystemGrid() {
   const isMobile = useIsMobile();
   const apps = [
-    { logo:window.__resources.ecoIndependent,     name:'Independent VPN',   body:'Free Decentralized VPN on Sentinel-WireGuard & V2Ray; Android & iOS.', href:L2.independent, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=com.bagimsizvpn.app' }, { k:'apple', label:'iOS', href:'https://apps.apple.com/us/app/independent-dvpn/id6468454526' }] },
-    { logo:window.__resources.ecoRyn,             name:'Ryn VPN',           body:'Sentinel-powered privacy VPN with a clean minimalist interface and a user base of over 10 million people.', href:L2.rynVpn, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=com.secure.cryptovpn' }, { k:'apple', label:'iOS', href:'https://apps.apple.com/app/apple-store/id1493328027' }] },
-    { logo:window.__resources.ecoSentinelShield, name:'Sentinel Shield',   body:'Flagship open-source dVPN by Sentinel P2P, WireGuard & V2Ray; Android & iOS.', href:L2.sentinelShield, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=co.sentinel.dvpnapp' }, { k:'apple', label:'iOS & macOS', href:'https://apps.apple.com/us/app/sentinel-shield-dvpn/id6657986086' }] },
-    { logo:window.__resources.ecoNorse,           name:'DVPN by NORSE',     body:'Decentralized VPN experience wrapped into user-friendly apps for all platforms.', href:L2.norse, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=io.norselabs.dvpn' }, { k:'apple', label:'iOS & macOS', href:'https://apps.apple.com/us/app/dvpn-decentralized-vpn/id6553963594' }, { k:'windows', label:'Windows', href:'https://apps.microsoft.com/detail/9ph6snjxz1v1' }, { k:'linux', label:'Linux', href:'https://norselabs.io/products/dvpn' }] },
-    { logo:window.__resources.ecoValt,            name:'VALT',              body:'VALT is the only app available that allows you to capture and protect the data you create everyday.', href:L2.valt, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=com.hashcash.breadcrumbs' }, { k:'apple', label:'iOS', href:'https://apps.apple.com/us/app/valt-dvpn/id1630660373' }] },
-    { logo:window.__resources.ecoMeile,           name:'MeileVPN',          body:'Sentinel-powered desktop dVPN for macOS, Linux & Windows.', href:L2.meile, builds:[{ k:'apple', label:'macOS', href:'https://github.com/MathNodes/meile-gui/releases' }, { k:'windows', label:'Windows', href:'https://github.com/MathNodes/meile-gui/releases' }, { k:'linux', label:'Linux', href:'https://github.com/MathNodes/meile-gui/releases' }] },
+    { logo:window.__resources.ecoIndependent,     name:'Independent VPN',   body:tr('ecosystem.independentBody','Free Decentralized VPN on Sentinel-WireGuard & V2Ray; Android & iOS.'), href:L2.independent, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=com.bagimsizvpn.app' }, { k:'apple', label:'iOS', href:'https://apps.apple.com/us/app/independent-dvpn/id6468454526' }] },
+    { logo:window.__resources.ecoRyn,             name:'Ryn VPN',           body:tr('ecosystem.rynBody','Sentinel-powered privacy VPN with a clean minimalist interface and a user base of over 10 million people.'), href:L2.rynVpn, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=com.secure.cryptovpn' }, { k:'apple', label:'iOS', href:'https://apps.apple.com/app/apple-store/id1493328027' }] },
+    { logo:window.__resources.ecoSentinelShield, name:'Sentinel Shield',   body:tr('ecosystem.shieldBody','Flagship open-source dVPN by Sentinel P2P, WireGuard & V2Ray; Android & iOS.'), href:L2.sentinelShield, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=co.sentinel.dvpnapp' }, { k:'apple', label:'iOS & macOS', href:'https://apps.apple.com/us/app/sentinel-shield-dvpn/id6657986086' }] },
+    { logo:window.__resources.ecoNorse,           name:'DVPN by NORSE',     body:tr('ecosystem.norseBody','Decentralized VPN experience wrapped into user-friendly apps for all platforms.'), href:L2.norse, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=io.norselabs.dvpn' }, { k:'apple', label:'iOS & macOS', href:'https://apps.apple.com/us/app/dvpn-decentralized-vpn/id6553963594' }, { k:'windows', label:'Windows', href:'https://apps.microsoft.com/detail/9ph6snjxz1v1' }, { k:'linux', label:'Linux', href:'https://norselabs.io/products/dvpn' }] },
+    { logo:window.__resources.ecoValt,            name:'VALT',              body:tr('ecosystem.valtBody','VALT is the only app available that allows you to capture and protect the data you create everyday.'), href:L2.valt, builds:[{ k:'android', label:'Android', href:'https://play.google.com/store/apps/details?id=com.hashcash.breadcrumbs' }, { k:'apple', label:'iOS', href:'https://apps.apple.com/us/app/valt-dvpn/id1630660373' }] },
+    { logo:window.__resources.ecoMeile,           name:'MeileVPN',          body:tr('ecosystem.meileBody','Sentinel-powered desktop dVPN for macOS, Linux & Windows.'), href:L2.meile, builds:[{ k:'apple', label:'macOS', href:'https://github.com/MathNodes/meile-gui/releases' }, { k:'windows', label:'Windows', href:'https://github.com/MathNodes/meile-gui/releases' }, { k:'linux', label:'Linux', href:'https://github.com/MathNodes/meile-gui/releases' }] },
   ];
   return (
     <section id="use-dvpn" style={{ background:'transparent', ...A.section, scrollMarginTop:90 }}>
@@ -1029,8 +1032,8 @@ function EcosystemGrid() {
       <div style={{ ...A.container, display:'flex', flexDirection:'column', gap:'clamp(36px,5vw,64px)' }}>
         <div style={{ display:'flex', flexDirection:isMobile?'column':'row', justifyContent:'space-between', alignItems:isMobile?'stretch':'flex-end', gap:isMobile?22:56 }}>
           <div style={{ ...A.sectionHead, flex:'1 1 auto', minWidth:0, marginBottom:0 }}>
-            <h2 style={{ ...A.h1Dark }}>Don't trust a centralized VPN, trust a decentralized VPN Built on Sentinel</h2>
-            <p style={{ ...A.leadDark }}>dVPN Applications built on Sentinel are used by 1.4M+ users.</p>
+            <h2 style={{ ...A.h1Dark }}>{tr('ecosystem.heading',"Don't trust a centralized VPN, trust a decentralized VPN Built on Sentinel")}</h2>
+            <p style={{ ...A.leadDark }}>{tr('ecosystem.lead','dVPN Applications built on Sentinel are used by 1.4M+ users.')}</p>
           </div>
           {/* sn-netstats-moved: network-stats CTA + its CSS relocated below StatsStrip (asset 6567a9ed, sn-stats-cta) */}
         </div>
@@ -1047,7 +1050,7 @@ function EcosystemGrid() {
               <p style={{ fontFamily:T2.fontBody, fontSize:13, lineHeight:'20px', color:T2.onDark, margin:0, flex:1 }}>{a.body}</p>
               {/* sn-eco-downloads — per-platform store links (user 2026-06-11) */}
               <div style={{ display:'flex', flexDirection:'column', gap:9, marginTop:2 }}>
-                <span style={{ fontFamily:T2.fontMono, fontSize:10, fontWeight:600, letterSpacing:'0.14em', textTransform:'uppercase', color:T2.onDark60 }}>Download App:</span>
+                <span style={{ fontFamily:T2.fontMono, fontSize:10, fontWeight:600, letterSpacing:'0.14em', textTransform:'uppercase', color:T2.onDark60 }}>{tr('ecosystem.downloadLabel','Download App:')}</span>
                 <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
                   {(a.builds || []).map(b => (
                     <a key={b.label} href={b.href} target="_blank" rel="noopener" className="sn-eco-dl" title={a.name + ' — ' + b.label} aria-label={a.name + ' for ' + b.label}
@@ -1068,10 +1071,10 @@ function EcosystemGrid() {
                 <path d="m81 16.082h-62c-5.8906 0-10.668 4.7773-10.668 10.668v46.5c0 2.8281 1.125 5.543 3.125 7.543s4.7148 3.125 7.543 3.125h62c5.8906 0 10.668-4.7773 10.668-10.668v-46.5c0-5.8906-4.7773-10.668-10.668-10.668zm4.832 57.168c0 2.668-2.1641 4.832-4.832 4.832h-62c-2.668 0-4.832-2.1641-4.832-4.832v-46.5c0-2.668 2.1641-4.832 4.832-4.832h62c1.2812 0 2.5117 0.50781 3.418 1.4141s1.4141 2.1367 1.4141 3.418zm-59.289-26.668c-1.8867 1.8867-1.8867 4.9492 0 6.8359l10 10.043v-0.003907c0.57031 0.54297 0.89062 1.2969 0.89062 2.0859 0 0.78516-0.32031 1.5391-0.89062 2.082-0.53906 0.58203-1.293 0.91406-2.0859 0.91406-0.78906 0-1.5469-0.33203-2.082-0.91406l-10.043-10c-4.1641-4.1641-4.1641-10.918 0-15.082l10.043-10c0.53516-0.58203 1.293-0.91406 2.082-0.91406 0.79297 0 1.5469 0.33203 2.0859 0.91406 0.57031 0.54297 0.89062 1.293 0.89062 2.082s-0.32031 1.5391-0.89062 2.082zm51.043-4.168-0.003907 0.003907c4.1641 4.1641 4.1641 10.918 0 15.082l-10.043 10h0.003907c-0.53906 0.58203-1.293 0.91406-2.0859 0.91406-0.78906 0-1.5469-0.33203-2.082-0.91406-0.57031-0.54297-0.89453-1.2969-0.89453-2.082 0-0.78906 0.32422-1.543 0.89453-2.0859l10-10.043v0.003907c1.8867-1.8867 1.8867-4.9492 0-6.8359l-10-10.043v0.003907c-0.57031-0.54297-0.89453-1.2969-0.89453-2.0859 0-0.78516 0.32422-1.5391 0.89453-2.082 0.53516-0.58203 1.293-0.91406 2.082-0.91406 0.79297 0 1.5469 0.33203 2.0859 0.91406z" />
               </svg>
               </div>
-              <h3 style={{ fontFamily:T2.fontHeading, fontWeight:600, fontSize:17.5, lineHeight:1.2, color:'#ffffff', letterSpacing:'-0.01em', margin:0 }}>Make your own dVPN</h3>
+              <h3 style={{ fontFamily:T2.fontHeading, fontWeight:600, fontSize:17.5, lineHeight:1.2, color:'#ffffff', letterSpacing:'-0.01em', margin:0 }}>{tr('ecosystem.ctaTitle','Make your own dVPN')}</h3>
             </div>
-            <p style={{ fontFamily:T2.fontBody, fontSize:13, lineHeight:'20px', color:T2.onDark, margin:0, flex:1 }}>Use the Sentinel SDK to ship your own decentralized VPN — your brand, your protocol, your distribution.</p>
-            <span style={{ fontFamily:T2.fontBody, fontWeight:500, fontSize:13, color:T2.onDark60 }}>Start building →</span>
+            <p style={{ fontFamily:T2.fontBody, fontSize:13, lineHeight:'20px', color:T2.onDark, margin:0, flex:1 }}>{tr('ecosystem.ctaBody','Use the Sentinel SDK to ship your own decentralized VPN — your brand, your protocol, your distribution.')}</p>
+            <span style={{ fontFamily:T2.fontBody, fontWeight:500, fontSize:13, color:T2.onDark60 }}>{tr('ecosystem.ctaStart','Start building →')}</span>
           </a>
         </div>
       </div>

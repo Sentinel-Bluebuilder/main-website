@@ -11,10 +11,15 @@ interface Props {
   description?: string;
 }
 
+// i18n: the middleware resolves the locale per request and stashes the active
+// locale, text direction, and translated head strings on Astro.locals. Props
+// can still override title/description for one-off pages.
+const i18n = Astro.locals.i18n;
 const {
-  title = 'Sentinel — Build your own decentralized VPN.',
-  description = 'Sentinel is a Layer-1 decentralized bandwidth network. Bring your protocol, your client, your distribution — we handle the network.',
+  title = i18n.title,
+  description = i18n.description,
 } = Astro.props;
+const { locale, dir, ogImageAlt } = i18n;
 
 // Canonical/social URL. Resolves against Astro.site when set; falls back to the
 // production homepage so OG tags carry an absolute URL even in static preview.
@@ -24,7 +29,7 @@ const ogImage = new URL('/assets/img/og-cover.png', Astro.site ?? SITE).toString
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={locale} dir={dir}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,7 +46,7 @@ const ogImage = new URL('/assets/img/og-cover.png', Astro.site ?? SITE).toString
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Sentinel — decentralized Layer-1 bandwidth network" />
+    <meta property="og:image:alt" content={ogImageAlt} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -51,6 +56,13 @@ const ogImage = new URL('/assets/img/og-cover.png', Astro.site ?? SITE).toString
     <meta name="twitter:image" content={ogImage} />
 
     <meta name="theme-color" content="#0156FC" />
+
+    <!-- Seed the active locale before the React island hydrates, so the client's
+         globals bootstrap (lib/globals.ts) re-applies the same locale the server
+         rendered with — keeping SSR markup and hydration in sync. -->
+    <script is:inline define:vars={{ locale }}>
+      window.__locale = locale;
+    </script>
   </head>
   <body>
     <a class="sn-skip" href="#main">Skip to content</a>
