@@ -30,7 +30,7 @@ const NH_OS = [
    identical formatting to the Ecosystem "View Network Stats" card) */
 function LiveNodeTestLink({ fullWidth }) {
   return (
-    <a href={L2.testNode} target="_blank" rel="noopener" className="sn-livetest"
+    <a href={L2.testNode} target="_blank" rel="noopener noreferrer" className="sn-livetest"
        data-mark="sn-live-clean" style={{ display:'flex', alignItems:'center', gap:12, height:60, padding:'0 20px 0 11px', width: fullWidth ? '100%' : 'auto', boxSizing:'border-box', textDecoration:'none', background:'linear-gradient(135deg, rgba(1,86,252,0.14) 0%, rgba(1,86,252,0.04) 100%)', border:'1px solid rgba(94,148,255,0.26)', borderRadius:14 }}>
       <style>{`
         .sn-livetest { transition:transform 200ms cubic-bezier(.22,.61,.36,1), border-color 220ms, background 220ms; }
@@ -498,14 +498,21 @@ function DvpnConsole() {
             </button>
             {open && <div onClick={() => setOpen(false)} style={{ position:'fixed', inset:0, zIndex:29 }} />}
             {open && (
-              <div className="sn-con-ddmenu sn-con-scroll" role="listbox">
-                {DVPN_COUNTRIES.map(c => (
-                  <div key={c[0]} className="sn-con-ddopt" data-on={c[0] === country[0]} role="option" aria-selected={c[0] === country[0]}
-                       onClick={() => { setCountry(c); setOpen(false); }}>
+              <div className="sn-con-ddmenu sn-con-scroll" role="listbox" aria-label={tr('console.step01', '01 — EXIT LOCATION')}
+                   onKeyDown={(e) => { if (e.key === 'Escape') setOpen(false); }}>
+                {DVPN_COUNTRIES.map(c => {
+                  const sel = c[0] === country[0];
+                  const pick = () => { setCountry(c); setOpen(false); };
+                  return (
+                  <div key={c[0]} className="sn-con-ddopt" data-on={sel} role="option" aria-selected={sel}
+                       tabIndex={0}
+                       onClick={pick}
+                       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } }}>
                     <span style={{ fontFamily:T2.fontMono, fontSize:11, color:T2.blueLight, width:26, flexShrink:0 }}>{c[0]}</span>
                     {c[1]}
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -581,7 +588,7 @@ function SentinelDVPNSection() {
   const gridApps = visible;
 
   const PlatPill = ({ platform, href }) => (
-    <a href={href} target="_blank" rel="noopener" className="sn-dvpn-link" title={platform}>
+    <a href={href} target="_blank" rel="noopener noreferrer" className="sn-dvpn-link" title={platform}>
       <DvpnPlatIcon kind={DVPN_PLAT_ICON[platform] || 'apple'} size={14} />
       {platform}
     </a>
@@ -620,89 +627,11 @@ function SentinelDVPNSection() {
   );
 }
 
-/* ── Centralized VPN ──────────────────────────────────────── */
-function CentralizedVPNSection() {
-  return null; // comparison moved up — TrustCompareStrip renders above the ecosystem grid
-  const isMobile = useIsMobile();
-  // Paired point ↔ counterpoint, rendered as aligned rows of one panel.
-  const pairs = [
-    ['All user traffic passes through company infrastructure.', 'Traffic routes directly to your chosen node — no relay layer.'],
-    ['"No-log" is a legal promise, not a technical guarantee.', 'No company exists that could log your traffic.'],
-    ['Server software is proprietary and unauditable.', 'All code open source — node, client, protocol, SDK.'],
-    ['Subject to subpoenas, gag orders, FISA, NSLs.', 'No single jurisdiction governs the network.'],
-    ['Can be compelled to install logging silently.', 'On-chain session authorization — cryptographic, not corporate.'],
-    ['Auto-update is a trusted code execution path.', 'Protocol governed by validators, not a board.'],
-    ['Corporate acquisition can change policies overnight.', 'WireGuard / V2Ray end-to-end — keys never leave your device.'],
-  ];
-
-  const ServerMark = () => (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e0413c" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="3.5" width="18" height="7" rx="1.6"/>
-      <rect x="3" y="13.5" width="18" height="7" rx="1.6"/>
-      <circle cx="7" cy="7" r="0.4" fill="#e0413c"/>
-      <circle cx="7" cy="17" r="0.4" fill="#e0413c"/>
-      <line x1="13" y1="7" x2="18" y2="7"/>
-      <line x1="13" y1="17" x2="18" y2="17"/>
-    </svg>
-  );
-
-  const Card = ({ bad }) => {
-    const hair = bad ? T2.strokeOnLight : 'rgba(255,255,255,0.16)';
-    return (
-      <div style={{
-        background: bad ? T2.white : 'linear-gradient(165deg, #0a5cff 0%, #0143cd 100%)',
-        border: `1px solid ${bad ? T2.line200 : 'rgba(255,255,255,0.10)'}`,
-        borderRadius: 26,
-        padding: 'clamp(24px,2.6vw,32px)',
-        boxShadow: bad ? '0 20px 48px -36px rgba(0,0,0,0.20)' : '0 28px 64px -32px rgba(1,86,252,0.50)',
-        display: 'flex', flexDirection: 'column',
-      }}>
-        <div style={{ display:'flex', alignItems:'center', gap:15 }}>
-          <span style={{ width:46, height:46, borderRadius:14, flexShrink:0, display:'inline-flex', alignItems:'center', justifyContent:'center', background: bad ? 'rgba(224,65,60,0.08)' : T2.white, border:`1px solid ${bad ? 'rgba(224,65,60,0.18)' : 'rgba(255,255,255,0.45)'}` }}>
-            {bad ? <ServerMark/> : <window.SentinelMark size={24} color="#0156FC" />}
-          </span>
-          <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
-            <span style={{ fontFamily:T2.fontMono, fontSize:11, letterSpacing:'0.1em', fontWeight:700, color: bad ? '#e0413c' : 'rgba(255,255,255,0.85)' }}>{bad ? 'CENTRALIZED VPN' : 'SENTINEL DVPN'}</span>
-            <h3 style={{ fontFamily:T2.fontHeading, fontWeight:500, fontSize:'clamp(20px,2.2vw,23px)', lineHeight:1.15, margin:0, color: bad ? T2.onLight85 : '#ffffff' }}>{bad ? 'Trust-dependent.' : 'Trustless by construction.'}</h3>
-          </div>
-        </div>
-        <p style={{ fontFamily:T2.fontBody, fontSize:14.5, lineHeight:'22px', margin:'14px 0 0', color: bad ? T2.onLight50 : 'rgba(255,255,255,0.78)' }}>{bad ? 'One entity controls every server, every key, every log.' : 'No single entity exists that could compromise the network.'}</p>
-        <div style={{ height:1, background:hair, margin:'18px 0 5px' }} aria-hidden="true"/>
-        {pairs.map((p, i) => (
-          <div key={i} style={{ display:'flex', gap:13, alignItems:'flex-start', padding:'13px 0', borderTop: i === 0 ? 'none' : `1px solid ${hair}` }}>
-            <span style={{ width:24, height:24, borderRadius:8, flexShrink:0, marginTop:1, display:'inline-flex', alignItems:'center', justifyContent:'center', background: bad ? 'rgba(224,65,60,0.10)' : 'rgba(255,255,255,0.16)' }}>
-              {bad
-                ? <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#e0413c" strokeWidth="3.2" strokeLinecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
-                : <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="4 12 10 18 20 6"/></svg>}
-            </span>
-            <p style={{ fontFamily:T2.fontBody, fontSize:14, lineHeight:'22px', margin:'1px 0 0', color: bad ? T2.onLight80 : 'rgba(255,255,255,0.92)' }}>{p[bad ? 0 : 1]}</p>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  return (
-    <section id="dvpn-vs-vpn" style={{ scrollMarginTop:90, background:'radial-gradient(1100px 320px at 50% -6%, rgba(0,204,82,0.045), transparent 60%), radial-gradient(900px 480px at 88% 22%, rgba(1,86,252,0.05), transparent 60%), linear-gradient(180deg, #f3f6f5 0%, #fbfbfb 22%, #fbfbfb 100%)', ...A.section }}>
-      <div style={{ ...A.container, display:'flex', flexDirection:'column', gap:'clamp(32px,4vw,48px)' }}>
-        <div style={{ ...A.sectionHead, maxWidth:960, gap:16 }}>
-          <h2 style={{ ...A.h1Light, maxWidth:826 }}>{tr('centralized.heading', "You can't trust centralized VPNs.")}</h2>
-          <p style={{ ...A.leadLight, maxWidth:880, fontSize:'clamp(15px,1.5vw,17px)', color:T2.onLight60 }}>A centralized VPN only moves your trust from your ISP to a VPN company — a single point of control that now sees all of your traffic, not just some of it.</p>
-        </div>
-
-        <div style={{ display:'grid', gridTemplateColumns:isMobile?'1fr':'1fr 1fr', gap:isMobile?18:'clamp(18px,2.4vw,28px)', alignItems:'stretch' }}>
-          <Card bad />
-          <Card />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── Blockchain DHT ───────────────────────────────────────── */
-function BlockchainDHTSection() {
-  return null; // pipeline merged into BuilderStackSection (builder-stack)
-}
+// CentralizedVPNSection + BlockchainDHTSection were removed: the centralized-VPN
+// comparison now lives in TrustCompareStrip (id="dvpn-vs-vpn", above the ecosystem
+// grid) and the DHT pipeline content merged into BuilderStackSection
+// (id="builder-stack"). Both formerly returned null but were still mounted; they
+// are no longer rendered or exported.
 
 /* ── Compare section — Sentinel + 5 networks ─────────────── */
 const CmpLogos = {
@@ -994,10 +923,12 @@ function TrustCompareStrip() {
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', border:'1px solid rgba(255,255,255,0.08)', borderRadius:20, overflow:'hidden' }}>
             <div style={{ background:'rgba(255,255,255,0.02)' }}><Head bad /></div>
             <div style={{ background:'linear-gradient(135deg, rgba(1,86,252,0.22) 0%, rgba(1,86,252,0.08) 100%)', borderLeft:'1px solid rgba(255,255,255,0.07)' }}><Head /></div>
-            {pairs.map((p, i) => [
-              <div key={'l' + i} style={rowL}><Cross/><p style={txtL}>{p[0]}</p></div>,
-              <div key={'r' + i} style={rowR}><Check/><p style={txtR}>{p[1]}</p></div>,
-            ])}
+            {pairs.map((p, i) => (
+              <React.Fragment key={i}>
+                <div style={rowL}><Cross/><p style={txtL}>{p[0]}</p></div>
+                <div style={rowR}><Check/><p style={txtR}>{p[1]}</p></div>
+              </React.Fragment>
+            ))}
           </div>
         )}
       </div>
@@ -1040,8 +971,8 @@ function EcosystemGrid() {
         <div style={{ display:'grid', gridTemplateColumns:isMobile?'1fr':'repeat(4,1fr)', gap:14 }}>
           {apps.map(a => (
             <div key={a.name} className="sn-card-dark"
-                 style={{ background:T2.graphite750, borderRadius:24, padding:22, border:'1px solid rgba(255,255,255,0.06)', display:'flex', flexDirection:'column', gap:14 }}>
-              <div data-mark="sn-eco-v2" style={{ display:'flex', alignItems:'center', gap:13 }}>
+                 style={{ background:T2.graphite750, borderRadius:24, padding:22, border:'1px solid rgba(255,255,255,0.06)', display:'flex', flexDirection:'column', gap:14, alignItems:isMobile?'center':'stretch', textAlign:isMobile?'center':'left' }}>
+              <div data-mark="sn-eco-v2" style={{ display:'flex', alignItems:'center', gap:13, justifyContent:isMobile?'center':'flex-start' }}>
                 <div style={{ width:56, height:56, borderRadius:15, background:'#0f0f10', border:'1px solid rgba(255,255,255,0.10)', display:'grid', placeItems:'center', overflow:'hidden', flexShrink:0 }}>
                   <img src={a.logo} alt={a.name} style={{ width:40, height:40, objectFit:'contain' }} />
                 </div>
@@ -1049,11 +980,11 @@ function EcosystemGrid() {
               </div>
               <p style={{ fontFamily:T2.fontBody, fontSize:13, lineHeight:'20px', color:T2.onDark, margin:0, flex:1 }}>{a.body}</p>
               {/* sn-eco-downloads — per-platform store links (user 2026-06-11) */}
-              <div style={{ display:'flex', flexDirection:'column', gap:9, marginTop:2 }}>
+              <div style={{ display:'flex', flexDirection:'column', gap:9, marginTop:2, alignItems:isMobile?'center':'stretch', width:isMobile?'100%':'auto' }}>
                 <span style={{ fontFamily:T2.fontMono, fontSize:10, fontWeight:600, letterSpacing:'0.14em', textTransform:'uppercase', color:T2.onDark60 }}>{tr('ecosystem.downloadLabel','Download App:')}</span>
-                <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+                <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:isMobile?'center':'flex-start' }}>
                   {(a.builds || []).map(b => (
-                    <a key={b.label} href={b.href} target="_blank" rel="noopener" className="sn-eco-dl" title={a.name + ' — ' + b.label} aria-label={a.name + ' for ' + b.label}
+                    <a key={b.label} href={b.href} target="_blank" rel="noopener noreferrer" className="sn-eco-dl" title={a.name + ' — ' + b.label} aria-label={a.name + ' for ' + b.label}
                        style={{ width:32, height:32, borderRadius:10, display:'inline-flex', alignItems:'center', justifyContent:'center', color:'rgba(230,236,248,0.78)', background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.10)', textDecoration:'none' }}>
                       <EcoOSIcon k={b.k} />
                     </a>
@@ -1064,8 +995,8 @@ function EcosystemGrid() {
           ))}
           {/* CTA tile — recruit builders */}
           <a href={L2.sdkDocs || '#'} className="sn-card-dark sn-eco-cta"
-             style={{ background:T2.graphite750, borderRadius:24, padding:22, border:'1.5px solid #0156fc', display:'flex', flexDirection:'column', gap:14, textDecoration:'none' }}>
-            <div data-mark="sn-eco-v2" style={{ display:'flex', alignItems:'center', gap:13 }}>
+             style={{ background:T2.graphite750, borderRadius:24, padding:22, border:'1.5px solid #0156fc', display:'flex', flexDirection:'column', gap:14, textDecoration:'none', alignItems:isMobile?'center':'stretch', textAlign:isMobile?'center':'left' }}>
+            <div data-mark="sn-eco-v2" style={{ display:'flex', alignItems:'center', gap:13, justifyContent:isMobile?'center':'flex-start' }}>
               <div style={{ width:56, height:56, borderRadius:15, background:'#0f0f10', border:'1px solid rgba(255,255,255,0.10)', display:'grid', placeItems:'center', flexShrink:0 }}>
               <svg width="32" height="32" viewBox="8 14 84 70" fill="#0156fc" aria-hidden="true">
                 <path d="m81 16.082h-62c-5.8906 0-10.668 4.7773-10.668 10.668v46.5c0 2.8281 1.125 5.543 3.125 7.543s4.7148 3.125 7.543 3.125h62c5.8906 0 10.668-4.7773 10.668-10.668v-46.5c0-5.8906-4.7773-10.668-10.668-10.668zm4.832 57.168c0 2.668-2.1641 4.832-4.832 4.832h-62c-2.668 0-4.832-2.1641-4.832-4.832v-46.5c0-2.668 2.1641-4.832 4.832-4.832h62c1.2812 0 2.5117 0.50781 3.418 1.4141s1.4141 2.1367 1.4141 3.418zm-59.289-26.668c-1.8867 1.8867-1.8867 4.9492 0 6.8359l10 10.043v-0.003907c0.57031 0.54297 0.89062 1.2969 0.89062 2.0859 0 0.78516-0.32031 1.5391-0.89062 2.082-0.53906 0.58203-1.293 0.91406-2.0859 0.91406-0.78906 0-1.5469-0.33203-2.082-0.91406l-10.043-10c-4.1641-4.1641-4.1641-10.918 0-15.082l10.043-10c0.53516-0.58203 1.293-0.91406 2.082-0.91406 0.79297 0 1.5469 0.33203 2.0859 0.91406 0.57031 0.54297 0.89062 1.293 0.89062 2.082s-0.32031 1.5391-0.89062 2.082zm51.043-4.168-0.003907 0.003907c4.1641 4.1641 4.1641 10.918 0 15.082l-10.043 10h0.003907c-0.53906 0.58203-1.293 0.91406-2.0859 0.91406-0.78906 0-1.5469-0.33203-2.082-0.91406-0.57031-0.54297-0.89453-1.2969-0.89453-2.082 0-0.78906 0.32422-1.543 0.89453-2.0859l10-10.043v0.003907c1.8867-1.8867 1.8867-4.9492 0-6.8359l-10-10.043v0.003907c-0.57031-0.54297-0.89453-1.2969-0.89453-2.0859 0-0.78516 0.32422-1.5391 0.89453-2.082 0.53516-0.58203 1.293-0.91406 2.082-0.91406 0.79297 0 1.5469 0.33203 2.0859 0.91406z" />
@@ -1092,6 +1023,5 @@ function EcosystemSection() {
 }
 
 Object.assign(window, {
-  NodeHostingSection, AgenticPaymentsSection, SentinelDVPNSection,
-  CentralizedVPNSection, BlockchainDHTSection, CompareSection, EcosystemSection,
+  NodeHostingSection, AgenticPaymentsSection, CompareSection, EcosystemSection,
 });

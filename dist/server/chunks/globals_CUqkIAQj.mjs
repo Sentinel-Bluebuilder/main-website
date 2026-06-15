@@ -102,7 +102,7 @@ const SENTINEL_LINKS = {
   privacy: "https://sentinel.co/legal/privacy",
   // Network / explorer
   stats: "https://stats.sentinel.co/",
-  nodes: "https://nodes.sentinel.co/",
+  nodes: "https://nodes.suchnode.net/",
   nodeMap: "https://map.sentinel.co/",
   explorer: "https://p2pscan.com/",
   // Developer
@@ -130,7 +130,6 @@ const SENTINEL_LINKS = {
   twitter: "https://x.com/sentinelp2p",
   telegram: "https://t.me/sentinelp2p",
   discord: "https://discord.com/invite/mmAA8qF",
-  youtube: "https://www.youtube.com/@SentinelP2P",
   growthDao: "https://t.me/sentinelgrowthdao",
   p2pNews: "https://t.me/p2pnewswire",
   bluefrens: "https://x.com/BluefrensNFT"
@@ -150,8 +149,8 @@ const en = {
   // ─── Nav: Explore dropdown ───
   "nav.explore.statsTitle": "Network Statistics",
   "nav.explore.statsDesc": "Monitor real-time network performance and metrics.",
-  "nav.explore.dashboardTitle": "Node Dashboard",
-  "nav.explore.dashboardDesc": "Manage and monitor your node operations.",
+  "nav.explore.dashboardTitle": "Node Explorer",
+  "nav.explore.dashboardDesc": "Live map of active nodes, sessions, and data usage.",
   "nav.explore.explorerTitle": "Explorer",
   "nav.explore.explorerDesc": "Search and explore network transactions.",
   "nav.explore.ecosystemTitle": "Ecosystem",
@@ -469,7 +468,7 @@ const en = {
   "contact.submit": "Send Message",
   // ─── Footer columns ───
   "footer.exploreStats": "Network Statistics",
-  "footer.exploreDashboard": "Node Dashboard",
+  "footer.exploreDashboard": "Node Explorer",
   "footer.exploreNodeMap": "Node Map",
   "footer.exploreExplorer": "Explorer",
   "footer.dvpnShield": "Sentinel Shield",
@@ -3292,6 +3291,10 @@ function makeT(locale) {
 }
 
 const g = globalThis;
+function currentContext() {
+  const resolve = g.__snCurrentContext;
+  return typeof resolve === "function" ? resolve() : void 0;
+}
 if (typeof g.window === "undefined") {
   g.window = g;
 }
@@ -3299,10 +3302,30 @@ g.React = React;
 g.SENTINEL = SENTINEL;
 g.SENTINEL_LINKS = SENTINEL_LINKS;
 g.__resources = RESOURCES;
+const seededLocale = g.__locale;
+const seededIsMobile = g.__isMobile;
+let defaultLocale = seededLocale ?? DEFAULT_LOCALE;
+let defaultMessages = messagesFor(defaultLocale);
+let defaultT = makeT(defaultLocale);
+let defaultIsMobile = typeof seededIsMobile === "boolean" ? seededIsMobile : false;
+function defineContextGetter(name, read) {
+  Object.defineProperty(g, name, {
+    configurable: true,
+    enumerable: true,
+    get: read
+  });
+}
+defineContextGetter("__locale", () => currentContext()?.locale ?? defaultLocale);
+defineContextGetter("__messages", () => currentContext()?.messages ?? defaultMessages);
+defineContextGetter("T", () => currentContext()?.t ?? defaultT);
 function setActiveLocale(locale) {
-  g.__locale = locale;
-  g.__messages = messagesFor(locale);
-  g.T = makeT(locale);
+  defaultLocale = locale;
+  defaultMessages = messagesFor(locale);
+  defaultT = makeT(locale);
+}
+defineContextGetter("__isMobile", () => currentContext()?.isMobile ?? defaultIsMobile);
+function setServerIsMobile(isMobile) {
+  defaultIsMobile = isMobile;
 }
 g.__i18n = {
   cookie: LOCALE_COOKIE,
@@ -3310,7 +3333,5 @@ g.__i18n = {
   names: LOCALE_NAMES,
   isRtl: (l) => isRtl(l)
 };
-const preset = g.__locale;
-setActiveLocale(preset ?? DEFAULT_LOCALE);
 
-export { localeDir as l, makeT as m, resolveLocale as r, setActiveLocale as s };
+export { messagesFor as a, setServerIsMobile as b, localeDir as l, makeT as m, resolveLocale as r, setActiveLocale as s };

@@ -81,7 +81,7 @@ export const SENTINEL_LINKS = {
 
   // Network / explorer
   stats: 'https://stats.sentinel.co/',
-  nodes: 'https://nodes.sentinel.co/',
+  nodes: 'https://nodes.suchnode.net/',
   nodeMap: 'https://map.sentinel.co/',
   explorer: 'https://p2pscan.com/',
 
@@ -114,7 +114,6 @@ export const SENTINEL_LINKS = {
   twitter: 'https://x.com/sentinelp2p',
   telegram: 'https://t.me/sentinelp2p',
   discord: 'https://discord.com/invite/mmAA8qF',
-  youtube: 'https://www.youtube.com/@SentinelP2P',
   growthDao: 'https://t.me/sentinelgrowthdao',
   p2pNews: 'https://t.me/p2pnewswire',
   bluefrens: 'https://x.com/BluefrensNFT',

@@ -36,8 +36,7 @@ const {
   Header, Hero, StatsStrip,
   ResilienceCards, StepsSection, SDKSection, PaymentRailsSection,
   NodeHostingSection, AgenticPaymentsSection,
-  CentralizedVPNSection,
-  BlockchainDHTSection, CompareSection,
+  CompareSection,
   EcosystemSection,
   ContactSection, Footer,
 } = window as any;
@@ -62,8 +61,6 @@ export default function App() {
         <PaymentRailsSection />
         <NodeHostingSection />
         <AgenticPaymentsSection />
-        <CentralizedVPNSection />
-        <BlockchainDHTSection />
         <CompareSection />
         <ContactSection />
       </main>

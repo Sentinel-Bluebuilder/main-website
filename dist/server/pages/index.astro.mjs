@@ -3,7 +3,7 @@ import 'piccolore';
 import 'clsx';
 /* empty css                                 */
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
-import '../chunks/globals_DHLWSNFs.mjs';
+import '../chunks/globals_CUqkIAQj.mjs';
 import * as React$1 from 'react';
 export { renderers } from '../renderers.mjs';
 
@@ -21,20 +21,45 @@ const $$Layout = createComponent(($$result, $$props, $$slots) => {
     description = i18n.description
   } = Astro2.props;
   const { locale, dir, ogImageAlt } = i18n;
+  const isMobile = Astro2.locals.isMobile ?? false;
   const SITE = "https://sentinel.co/";
   const canonical = new URL(Astro2.url.pathname, Astro2.site ?? SITE).toString();
   const ogImage = new URL("/assets/img/og-cover.png", Astro2.site ?? SITE).toString();
-  return renderTemplate(_a || (_a = __template(["<html", "", '> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>', '</title><meta name="description"', '><link rel="canonical"', '><!-- OpenGraph --><meta property="og:type" content="website"><meta property="og:site_name" content="Sentinel"><meta property="og:title"', '><meta property="og:description"', '><meta property="og:url"', '><meta property="og:image"', '><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt"', '><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@sentinelp2p"><meta name="twitter:title"', '><meta name="twitter:description"', '><meta name="twitter:image"', `><meta name="theme-color" content="#0156FC"><!-- Seed the active locale before the React island hydrates, so the client's
+  const OG_LOCALES = {
+    en: "en_US",
+    es: "es_ES",
+    zh: "zh_CN",
+    ru: "ru_RU",
+    de: "de_DE",
+    fr: "fr_FR",
+    ar: "ar_AR",
+    fa: "fa_IR",
+    pt: "pt_BR"
+  };
+  const ogLocale = OG_LOCALES[locale] ?? locale;
+  return renderTemplate(_a || (_a = __template(["<html", "", '> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>', '</title><meta name="description"', '><meta name="robots" content="index, follow, max-image-preview:large"><link rel="canonical"', '><!-- OpenGraph --><meta property="og:type" content="website"><meta property="og:site_name" content="Sentinel"><meta property="og:locale"', '><meta property="og:title"', '><meta property="og:description"', '><meta property="og:url"', '><meta property="og:image"', '><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt"', '><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@sentinelp2p"><meta name="twitter:title"', '><meta name="twitter:description"', '><meta name="twitter:image"', '><meta name="twitter:image:alt"', `><meta name="theme-color" content="#0156FC"><!-- Critical inline CSS \u2014 applied on first paint, BEFORE the external
+         global.css <link> loads. Without this the un-styled skip link flashes
+         visibly in the top-left and the dark background pops in late (FOUC).
+         These rules duplicate the canonical ones in global.css; keep them in
+         sync if the skip link / base background design changes. --><style>
+      html, body { margin:0; background:#0b0c10; color:#eaeaea; }
+      /* Pre-hide the skip link until it is focused. Its full styling lives only
+         in the external global.css, so without this it paints visibly in the
+         top-left until that stylesheet loads. Mirrors global.css .sn-skip. */
+      .sn-skip { position:absolute; left:8px; top:8px; transform:translateY(-200%); }
+      .sn-skip:focus { transform:translateY(0); }
+    </style><!-- Seed the active locale before the React island hydrates, so the client's
          globals bootstrap (lib/globals.ts) re-applies the same locale the server
-         rendered with \u2014 keeping SSR markup and hydration in sync. --><script>(function(){`, "\n      window.__locale = locale;\n    })();<\/script>", '</head> <body> <a class="sn-skip" href="#main">Skip to content</a> ', ' <!-- Ambient music: OFF by default, pure intent toggle. --> <div id="sn-music"> <span id="sn-music-label" aria-hidden="true">Sound &middot; off</span> <button id="sn-music-btn" type="button" aria-pressed="false" aria-label="Unmute ambient music" title="Unmute ambient music"> <svg class="sn-music-play" width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true"><path d="M8.2 1.1a.7.7 0 0 1 1.1.6v10.6a.7.7 0 0 1-1.1.6L4.6 10H2.4A1.4 1.4 0 0 1 1 8.6V5.4C1 4.6 1.6 4 2.4 4h2.2l3.6-2.9z" fill="currentColor"></path><path d="M11.2 4.8 14.8 9.2M14.8 4.8 11.2 9.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg> <span class="sn-music-bars" aria-hidden="true"><i></i><i></i><i></i></span> </button> <audio id="sn-music-audio" src="/assets/media/ambient-music.mp3" loop preload="auto"></audio> </div> <script src="/scripts/music.js"><\/script> </body> </html>'])), addAttribute(locale, "lang"), addAttribute(dir, "dir"), title, addAttribute(description, "content"), addAttribute(canonical, "href"), addAttribute(title, "content"), addAttribute(description, "content"), addAttribute(canonical, "content"), addAttribute(ogImage, "content"), addAttribute(ogImageAlt, "content"), addAttribute(title, "content"), addAttribute(description, "content"), addAttribute(ogImage, "content"), defineScriptVars({ locale }), renderHead(), renderSlot($$result, $$slots["default"]));
-}, "C:/Users/Connect/AppData/Local/Temp/main-website-pr/src/layouts/Layout.astro", void 0);
+         rendered with \u2014 keeping SSR markup and hydration in sync. --><script>(function(){`, "\n      window.__locale = locale;\n      window.__isMobile = isMobile;\n    })();<\/script>", '</head> <body> <a class="sn-skip" href="#main">Skip to content</a> ', ' <!-- Ambient music: OFF by default, pure intent toggle. --> <div id="sn-music"> <span id="sn-music-label" aria-hidden="true">Sound &middot; off</span> <button id="sn-music-btn" type="button" aria-pressed="false" aria-label="Unmute ambient music" title="Unmute ambient music"> <svg class="sn-music-play" width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true"><path d="M8.2 1.1a.7.7 0 0 1 1.1.6v10.6a.7.7 0 0 1-1.1.6L4.6 10H2.4A1.4 1.4 0 0 1 1 8.6V5.4C1 4.6 1.6 4 2.4 4h2.2l3.6-2.9z" fill="currentColor"></path><path d="M11.2 4.8 14.8 9.2M14.8 4.8 11.2 9.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg> <span class="sn-music-bars" aria-hidden="true"><i></i><i></i><i></i></span> </button> <audio id="sn-music-audio" src="/assets/media/ambient-music.mp3" loop preload="auto"></audio> </div> <script src="/scripts/music.js"><\/script> </body> </html>'])), addAttribute(locale, "lang"), addAttribute(dir, "dir"), title, addAttribute(description, "content"), addAttribute(canonical, "href"), addAttribute(ogLocale, "content"), addAttribute(title, "content"), addAttribute(description, "content"), addAttribute(canonical, "content"), addAttribute(ogImage, "content"), addAttribute(ogImageAlt, "content"), addAttribute(title, "content"), addAttribute(description, "content"), addAttribute(ogImage, "content"), addAttribute(ogImageAlt, "content"), defineScriptVars({ locale, isMobile }), renderHead(), renderSlot($$result, $$slots["default"]));
+}, "C:/Users/Connect/AppData/Local/Temp/mw-deploy/src/layouts/Layout.astro", void 0);
 
 const T = window.SENTINEL;
 const L = window.SENTINEL_LINKS;
 const { useState, useEffect, useRef } = React;
 const tr$2 = (k, f) => typeof window !== "undefined" && window.T ? window.T(k, f) : f != null ? f : k;
 function useIsMobile$1(bp = 768) {
-  const [m, setM] = useState(typeof window !== "undefined" ? window.innerWidth <= bp : false);
+  const seed = typeof window !== "undefined" && typeof window.__isMobile === "boolean" ? window.__isMobile : false;
+  const [m, setM] = useState(seed);
   useEffect(() => {
     const fn = () => setM(window.innerWidth <= bp);
     fn();
@@ -124,19 +149,19 @@ const NAV_MENUS = {
     width: 660,
     items: [
       { tk: "nav.explore.statsTitle", dk: "nav.explore.statsDesc", title: "Network Statistics", desc: "Monitor real-time network performance and metrics.", href: L.stats },
-      { tk: "nav.explore.dashboardTitle", dk: "nav.explore.dashboardDesc", title: "Node Dashboard", desc: "Manage and monitor your node operations.", href: L.nodes },
+      { tk: "nav.explore.dashboardTitle", dk: "nav.explore.dashboardDesc", title: "Node Explorer", desc: "Live map of active nodes, sessions, and data usage.", href: L.nodes },
       { tk: "nav.explore.explorerTitle", dk: "nav.explore.explorerDesc", title: "Explorer", desc: "Search and explore network transactions.", href: L.explorer },
-      { tk: "nav.explore.ecosystemTitle", dk: "nav.explore.ecosystemDesc", title: "Ecosystem", desc: "Discover apps and services in our ecosystem.", href: L.dapps }
+      { tk: "nav.explore.ecosystemTitle", dk: "nav.explore.ecosystemDesc", title: "Ecosystem", desc: "Discover apps and services in our ecosystem.", href: "#use-dvpn" }
     ]
   },
   dVPN: {
     cols: 2,
     width: 660,
     items: [
-      { tk: "nav.dvpn.downloadTitle", dk: "nav.dvpn.downloadDesc", title: "Download Apps", desc: "Sentinel Shield, Norse, Valt, Meile and more.", href: L.dapps },
+      { tk: "nav.dvpn.downloadTitle", dk: "nav.dvpn.downloadDesc", title: "Download Apps", desc: "Sentinel Shield, Norse, Valt, Meile and more.", href: "#use-dvpn" },
       { tk: "nav.dvpn.coverageTitle", dk: "nav.dvpn.coverageDesc", title: "Coverage", desc: "110+ Countries, 430+ Cities.", href: L.nodeMap },
       { tk: "nav.dvpn.learnTitle", dk: "nav.dvpn.learnDesc", title: "Learn", desc: "Explore guides, documentation, and more.", href: L.docs },
-      { tk: "nav.dvpn.runNodeTitle", dk: "nav.dvpn.runNodeDesc", title: "Run a Node", desc: "Support the network and earn rewards.", href: L.hostNode },
+      { tk: "nav.dvpn.runNodeTitle", dk: "nav.dvpn.runNodeDesc", title: "Run a Node", desc: "Support the network and earn rewards.", href: "#host-dvpn" },
       { tk: "nav.dvpn.buildTitle", dk: "nav.dvpn.buildDesc", title: "Build", desc: "Create your own applications on the network.", href: L.sdkDocs },
       { tk: "nav.dvpn.earnTitle", dk: "nav.dvpn.earnDesc", title: "Earn", desc: "Monetize your bandwidth and more.", href: L.nodeEarnings }
     ]
@@ -176,10 +201,23 @@ function DropdownPanel({ menu }) {
     display: "grid",
     gridTemplateColumns: `repeat(${menu.cols}, 1fr)`,
     gap: "8px 16px"
-  }, children: menu.items.map((it) => /* @__PURE__ */ jsxs("a", { href: it.href || "#", target: "_blank", rel: "noopener", className: "sn-dd-item", children: [
-    /* @__PURE__ */ jsx("div", { className: "sn-dd-title", children: it.tk ? tr$2(it.tk, it.title) : it.title }),
-    /* @__PURE__ */ jsx("div", { className: "sn-dd-desc", children: it.dk ? tr$2(it.dk, it.desc) : it.desc })
-  ] }, it.title)) }) });
+  }, children: menu.items.map((it) => {
+    const anchor = (it.href || "").charAt(0) === "#";
+    return /* @__PURE__ */ jsxs(
+      "a",
+      {
+        href: it.href || "#",
+        target: anchor ? void 0 : "_blank",
+        rel: anchor ? void 0 : "noopener noreferrer",
+        className: "sn-dd-item",
+        children: [
+          /* @__PURE__ */ jsx("div", { className: "sn-dd-title", children: it.tk ? tr$2(it.tk, it.title) : it.title }),
+          /* @__PURE__ */ jsx("div", { className: "sn-dd-desc", children: it.dk ? tr$2(it.dk, it.desc) : it.desc })
+        ]
+      },
+      it.title
+    );
+  }) }) });
 }
 const BUY_LOGOS = {
   mexc: "data:image/jpeg;base64,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",
@@ -221,7 +259,8 @@ function LangSwitcher() {
       setOpen(false);
       return;
     }
-    document.cookie = `${meta.cookie}=${encodeURIComponent(loc)}; path=/; max-age=31536000; samesite=lax`;
+    const secure = location.protocol === "https:" ? "; secure" : "";
+    document.cookie = `${meta.cookie}=${encodeURIComponent(loc)}; path=/; max-age=31536000; samesite=lax${secure}`;
     window.location.reload();
   };
   return /* @__PURE__ */ jsxs("div", { style: { position: "relative" }, onMouseEnter: enter, onMouseLeave: leave, children: [
@@ -229,7 +268,7 @@ function LangSwitcher() {
       "button",
       {
         type: "button",
-        "aria-haspopup": "true",
+        "aria-haspopup": "menu",
         "aria-expanded": open,
         "aria-label": tr$2("lang.label", "Language"),
         onClick: () => setOpen((o) => !o),
@@ -306,7 +345,7 @@ function BuyP2P() {
       {
         href: v.href,
         target: "_blank",
-        rel: "noopener",
+        rel: "noopener noreferrer",
         className: "sn-buy-row",
         style: { display: "flex", alignItems: "center", gap: 11, padding: "9px 10px", borderRadius: 12, textDecoration: "none" },
         children: [
@@ -351,25 +390,29 @@ function Header$1() {
           /* @__PURE__ */ jsx(SentinelMark$1, { size: 28, color: "#0156FC" }),
           /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontHeading, fontWeight: 400, fontSize: 17, color: "white" }, children: "Sentinel" })
         ] }),
-        /* @__PURE__ */ jsx(
-          "button",
-          {
-            onClick: () => setMobileOpen((o) => !o),
-            "aria-label": "Menu",
-            "aria-expanded": mobileOpen,
-            style: { width: 42, height: 42, display: "grid", placeItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 12, cursor: "pointer" },
-            children: /* @__PURE__ */ jsx("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "#fff", strokeWidth: "2", strokeLinecap: "round", children: mobileOpen ? /* @__PURE__ */ jsxs("g", { children: [
-              /* @__PURE__ */ jsx("line", { x1: "6", y1: "6", x2: "18", y2: "18" }),
-              /* @__PURE__ */ jsx("line", { x1: "18", y1: "6", x2: "6", y2: "18" })
-            ] }) : /* @__PURE__ */ jsxs("g", { children: [
-              /* @__PURE__ */ jsx("line", { x1: "3", y1: "7", x2: "21", y2: "7" }),
-              /* @__PURE__ */ jsx("line", { x1: "3", y1: "12", x2: "21", y2: "12" }),
-              /* @__PURE__ */ jsx("line", { x1: "3", y1: "17", x2: "21", y2: "17" })
-            ] }) })
-          }
-        )
+        /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 10 }, children: [
+          /* @__PURE__ */ jsx(LangSwitcher, {}),
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              onClick: () => setMobileOpen((o) => !o),
+              "aria-label": tr$2("nav.menu", "Menu"),
+              "aria-expanded": mobileOpen,
+              "aria-controls": "sn-mobile-nav",
+              style: { width: 42, height: 42, display: "grid", placeItems: "center", background: "transparent", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 12, cursor: "pointer" },
+              children: /* @__PURE__ */ jsx("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "#fff", strokeWidth: "2", strokeLinecap: "round", children: mobileOpen ? /* @__PURE__ */ jsxs("g", { children: [
+                /* @__PURE__ */ jsx("line", { x1: "6", y1: "6", x2: "18", y2: "18" }),
+                /* @__PURE__ */ jsx("line", { x1: "18", y1: "6", x2: "6", y2: "18" })
+              ] }) : /* @__PURE__ */ jsxs("g", { children: [
+                /* @__PURE__ */ jsx("line", { x1: "3", y1: "7", x2: "21", y2: "7" }),
+                /* @__PURE__ */ jsx("line", { x1: "3", y1: "12", x2: "21", y2: "12" }),
+                /* @__PURE__ */ jsx("line", { x1: "3", y1: "17", x2: "21", y2: "17" })
+              ] }) })
+            }
+          )
+        ] })
       ] }),
-      mobileOpen && /* @__PURE__ */ jsxs("div", { style: { height: "calc(100vh - 62px)", overflowY: "auto", WebkitOverflowScrolling: "touch", padding: "12px clamp(16px,4vw,24px) 40px", display: "flex", flexDirection: "column", gap: 6 }, children: [
+      mobileOpen && /* @__PURE__ */ jsxs("nav", { id: "sn-mobile-nav", "aria-label": tr$2("nav.primary", "Primary"), style: { height: "calc(100vh - 62px)", overflowY: "auto", WebkitOverflowScrolling: "touch", padding: "12px clamp(16px,4vw,24px) 40px", display: "flex", flexDirection: "column", gap: 6 }, children: [
         navItems.map((l) => {
           const menu = NAV_MENUS[l];
           const isOpen = acc === l;
@@ -387,34 +430,34 @@ function Header$1() {
                 ]
               }
             ),
-            isOpen && /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", gap: 2, padding: "0 4px 14px" }, children: menu.items.map((it) => /* @__PURE__ */ jsxs(
-              "a",
-              {
-                href: it.href || "#",
-                target: "_blank",
-                rel: "noopener",
-                onClick: () => setMobileOpen(false),
-                style: { display: "flex", flexDirection: "column", gap: 3, padding: "11px 12px", borderRadius: 12, textDecoration: "none", background: "rgba(255,255,255,0.03)" },
-                children: [
-                  /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontHeading, fontWeight: 500, fontSize: 15.5, color: "rgba(255,255,255,0.95)" }, children: it.title }),
-                  /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontBody, fontSize: 13, lineHeight: 1.35, color: "rgba(255,255,255,0.45)" }, children: it.desc })
-                ]
-              },
-              it.title
-            )) })
+            isOpen && /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", gap: 2, padding: "0 4px 14px" }, children: menu.items.map((it) => {
+              const anchor = (it.href || "").charAt(0) === "#";
+              return /* @__PURE__ */ jsxs(
+                "a",
+                {
+                  href: it.href || "#",
+                  target: anchor ? void 0 : "_blank",
+                  rel: anchor ? void 0 : "noopener noreferrer",
+                  onClick: () => setMobileOpen(false),
+                  style: { display: "flex", flexDirection: "column", gap: 3, padding: "11px 12px", borderRadius: 12, textDecoration: "none", background: "rgba(255,255,255,0.03)" },
+                  children: [
+                    /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontHeading, fontWeight: 500, fontSize: 15.5, color: "rgba(255,255,255,0.95)" }, children: it.title }),
+                    /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontBody, fontSize: 13, lineHeight: 1.35, color: "rgba(255,255,255,0.45)" }, children: it.desc })
+                  ]
+                },
+                it.title
+              );
+            }) })
           ] }, l);
         }),
-        /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 20, marginTop: 18, padding: "0 4px" }, children: [
-          /* @__PURE__ */ jsx("a", { className: "sn-header-icon", "aria-label": "GitHub", href: "https://github.com/sentinel-official", target: "_blank", rel: "noopener", onClick: () => setMobileOpen(false), style: { textDecoration: "none" }, children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" }) }) }),
-          /* @__PURE__ */ jsx(LangSwitcher, {})
-        ] }),
+        /* @__PURE__ */ jsx("div", { style: { display: "flex", alignItems: "center", gap: 20, marginTop: 18, padding: "0 4px" }, children: /* @__PURE__ */ jsx("a", { className: "sn-header-icon", "aria-label": "GitHub", href: "https://github.com/sentinel-official", target: "_blank", rel: "noopener noreferrer", onClick: () => setMobileOpen(false), style: { textDecoration: "none" }, children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" }) }) }) }),
         /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontMono, fontSize: 11, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", marginTop: 18, padding: "0 4px" }, children: tr$2("nav.buyP2P", "Buy P2P") }),
         /* @__PURE__ */ jsx("div", { style: { display: "flex", alignItems: "center", gap: 8, marginTop: 8, padding: "0 4px", flexWrap: "wrap" }, children: BUY_VENUES.map((v) => /* @__PURE__ */ jsxs(
           "a",
           {
             href: v.href,
             target: "_blank",
-            rel: "noopener",
+            rel: "noopener noreferrer",
             onClick: () => setMobileOpen(false),
             style: { display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 13px 8px 9px", borderRadius: 999, textDecoration: "none", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.10)" },
             children: [
@@ -435,32 +478,62 @@ function Header$1() {
     /* @__PURE__ */ jsxs(
       "nav",
       {
+        "aria-label": tr$2("nav.primary", "Primary"),
         style: { display: "flex", alignItems: "center", gap: 0, height: 68, position: "relative", margin: "0 auto" },
         onMouseLeave: () => setOpen(null),
+        onKeyDown: (e) => {
+          if (e.key === "Escape") setOpen(null);
+        },
         children: [
           navItems.map((l) => {
             const hasMenu = !!NAV_MENUS[l];
+            const isOpen = open === l;
+            const label = tr$2(NAV_LABEL_KEYS[l] || "", l);
+            if (!hasMenu) {
+              return /* @__PURE__ */ jsx(
+                "a",
+                {
+                  href: "#",
+                  className: "sn-nav-link",
+                  onMouseEnter: () => setOpen(null),
+                  onFocus: () => setOpen(null),
+                  children: label
+                },
+                l
+              );
+            }
             return /* @__PURE__ */ jsxs(
-              "a",
+              "button",
               {
-                href: "#",
+                type: "button",
                 className: "sn-nav-link",
-                "data-open": open === l ? "true" : "false",
-                onMouseEnter: () => setOpen(hasMenu ? l : null),
+                "data-open": isOpen ? "true" : "false",
+                "aria-haspopup": "true",
+                "aria-expanded": isOpen,
+                "aria-controls": `sn-nav-menu-${l}`,
+                onMouseEnter: () => setOpen(l),
+                onFocus: () => setOpen(l),
+                onClick: () => setOpen((o) => o === l ? null : l),
+                onKeyDown: (e) => {
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setOpen(l);
+                  }
+                },
                 children: [
-                  tr$2(NAV_LABEL_KEYS[l] || "", l),
-                  hasMenu && /* @__PURE__ */ jsx("svg", { className: "sn-caret", width: "9", height: "6", viewBox: "0 0 9 6", fill: "none", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M0.5 1L4.5 5L8.5 1", stroke: "currentColor", strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round" }) })
+                  label,
+                  /* @__PURE__ */ jsx("svg", { className: "sn-caret", width: "9", height: "6", viewBox: "0 0 9 6", fill: "none", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M0.5 1L4.5 5L8.5 1", stroke: "currentColor", strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round" }) })
                 ]
               },
               l
             );
           }),
-          open && NAV_MENUS[open] && /* @__PURE__ */ jsx("div", { style: { position: "absolute", top: "100%", left: "50%", paddingTop: 12, zIndex: 60, animation: "sn-dd-in 220ms cubic-bezier(.22,.61,.36,1) both" }, children: /* @__PURE__ */ jsx(DropdownPanel, { menu: NAV_MENUS[open] }) }, open)
+          open && NAV_MENUS[open] && /* @__PURE__ */ jsx("div", { id: `sn-nav-menu-${open}`, style: { position: "absolute", top: "100%", left: "50%", paddingTop: 12, zIndex: 60, animation: "sn-dd-in 220ms cubic-bezier(.22,.61,.36,1) both" }, children: /* @__PURE__ */ jsx(DropdownPanel, { menu: NAV_MENUS[open] }) }, open)
         ]
       }
     ),
     /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 18, position: "absolute", right: "clamp(16px, 2.5vw, 24px)" }, children: [
-      /* @__PURE__ */ jsx("a", { className: "sn-header-icon", "aria-label": "GitHub", href: "https://github.com/sentinel-official", target: "_blank", rel: "noopener", style: { textDecoration: "none" }, children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" }) }) }),
+      /* @__PURE__ */ jsx("a", { className: "sn-header-icon", "aria-label": "GitHub", href: "https://github.com/sentinel-official", target: "_blank", rel: "noopener noreferrer", style: { textDecoration: "none" }, children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" }) }) }),
       /* @__PURE__ */ jsx(LangSwitcher, {}),
       /* @__PURE__ */ jsx(BuyP2P, {})
     ] })
@@ -575,24 +648,6 @@ function Hero$1() {
     isMobile && /* @__PURE__ */ jsx("div", { style: { ...atomStyles.container, background: "#0b0c10", paddingTop: 8, paddingBottom: 56 }, children: /* @__PURE__ */ jsx("div", { style: { maxWidth: 560 }, children: /* @__PURE__ */ jsx(HeroBulletList, { compact: true }) }) })
   ] });
 }
-function SupportersStrip() {
-  const logos = [
-    { src: window.__resources.logoGalaxy, alt: "Galaxy" },
-    { src: window.__resources.logoTrgc, alt: "TRGC" },
-    { src: window.__resources.logoCosmos, alt: "Cosmos" },
-    { src: window.__resources.logoFetch, alt: "Fetch" }
-  ];
-  const repeated = [...logos, ...logos, ...logos, ...logos];
-  return /* @__PURE__ */ jsx("section", { style: { background: "radial-gradient(900px 360px at 50% -30%, rgba(1,86,252,0.10), transparent 62%), #0b0c10", padding: "64px 0 0" }, children: /* @__PURE__ */ jsx("div", { style: { position: "relative", overflow: "hidden", maskImage: "linear-gradient(to right,transparent 0,black 100px,black calc(100% - 100px),transparent 100%)", WebkitMaskImage: "linear-gradient(to right,transparent 0,black 100px,black calc(100% - 100px),transparent 100%)" }, children: /* @__PURE__ */ jsx("div", { style: { display: "flex", gap: 100, alignItems: "center", width: "max-content", animation: "sn-marquee 28s linear infinite" }, children: repeated.map((l, i) => /* @__PURE__ */ jsx(
-    "img",
-    {
-      src: l.src,
-      alt: l.alt,
-      style: { height: 28, objectFit: "contain", opacity: 0.55, filter: "grayscale(1) brightness(2)", flexShrink: 0 }
-    },
-    i
-  )) }) }) });
-}
 const SN_NETWORK_CSS = `
   .sn-stats-frame { position:relative; }
   .sn-stats-frame::before { content:''; position:absolute; inset:0; border-radius:inherit; box-shadow:inset 0 1px 0 rgba(255,255,255,0.07); pointer-events:none; }
@@ -670,7 +725,7 @@ function StatsStrip$1() {
         {
           href: L.stats,
           target: "_blank",
-          rel: "noopener",
+          rel: "noopener noreferrer",
           className: "sn-stats-cta",
           style: { display: "inline-flex", alignItems: "center", gap: 12, padding: "12px 18px", textDecoration: "none", background: "linear-gradient(180deg, rgba(255,255,255,0.040), rgba(255,255,255,0.012))", border: `1px solid ${hairline}`, borderRadius: 14 },
           children: [
@@ -821,7 +876,7 @@ function BuilderStackSection() {
   const chipName = { fontFamily: T.fontHeading, fontWeight: 600, fontSize: 14, lineHeight: 1.25, color: T.fog };
   const chipSub = { fontFamily: T.fontBody, fontSize: 12, lineHeight: 1.35, color: "rgba(214,222,240,0.62)" };
   const actionStyle = { display: "flex", alignItems: "center", justifyContent: "center", gap: 9, alignSelf: "stretch", width: "100%", height: 46, padding: "0 21px", borderRadius: 999, border: "1px solid rgba(125,160,255,0.35)", background: "linear-gradient(180deg, rgba(56,124,255,0.18), rgba(38,112,255,0.07))", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.10)", fontFamily: T.fontHeading, fontWeight: 600, fontSize: 14, letterSpacing: "0.01em", color: "#b9ceff", textDecoration: "none", whiteSpace: "nowrap", boxSizing: "border-box" };
-  const actionRow = (label, href) => /* @__PURE__ */ jsxs("a", { href, target: "_blank", rel: "noopener", className: "sn-layer-act", style: actionStyle, children: [
+  const actionRow = (label, href) => /* @__PURE__ */ jsxs("a", { href, target: "_blank", rel: "noopener noreferrer", className: "sn-layer-act", style: actionStyle, children: [
     label,
     /* @__PURE__ */ jsx("span", { className: "sn-layer-act-arrow", "aria-hidden": "true", children: /* @__PURE__ */ jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx("path", { d: "M5 12h14M13 6l6 6-6 6" }) }) })
   ] });
@@ -913,7 +968,7 @@ function BuilderStackSection() {
           tr$2("nav.buyP2P", "Buy P2P"),
           /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { display: "inline-flex" }, children: /* @__PURE__ */ jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx("path", { d: "M12 5v14M6 13l6 6 6-6" }) }) })
         ] }),
-        /* @__PURE__ */ jsx("div", { className: "sn-tile-grid", children: BUY_VENUES.map((v) => /* @__PURE__ */ jsxs("a", { href: v.href, target: "_blank", rel: "noopener", className: "sn-buy-row", style: { ...rowChip, textDecoration: "none" }, children: [
+        /* @__PURE__ */ jsx("div", { className: "sn-tile-grid", children: BUY_VENUES.map((v) => /* @__PURE__ */ jsxs("a", { href: v.href, target: "_blank", rel: "noopener noreferrer", className: "sn-buy-row", style: { ...rowChip, textDecoration: "none" }, children: [
           /* @__PURE__ */ jsx("span", { style: logoTile, children: v.logo }),
           /* @__PURE__ */ jsxs("span", { style: { display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }, children: [
             /* @__PURE__ */ jsx("span", { style: chipName, children: v.name }),
@@ -991,12 +1046,12 @@ function BuilderStackSection() {
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, minmax(0,1fr))", gridTemplateRows: isMobile ? void 0 : "repeat(6, auto)", gap: 23 }, children: layers.map((c) => /* @__PURE__ */ jsxs("div", { className: "sn-rcard", style: { position: "relative", display: isMobile ? "flex" : "grid", flexDirection: "column", gridTemplateRows: isMobile ? void 0 : "subgrid", gridRow: isMobile ? void 0 : "span 3", gap: isMobile ? 21 : void 0, background: "linear-gradient(180deg, #17181c 0%, #121317 100%)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: isMobile ? "25px 21px" : 0, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)" }, children: [
-      /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 12, margin: isMobile ? 0 : "clamp(36px,2.9vw,45px) clamp(32px,2.5vw,41px) 0" }, children: [
+      /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 12, margin: isMobile ? 0 : "clamp(36px,2.9vw,45px) clamp(32px,2.5vw,41px) 0", justifyContent: isMobile ? "center" : "flex-start", textAlign: isMobile ? "center" : "left" }, children: [
         iconBadge(c.icon),
-        /* @__PURE__ */ jsx("h3", { style: { flex: 1, minWidth: 0, fontFamily: T.fontHeading, fontWeight: 600, fontSize: isMobile ? 17 : 20, lineHeight: 1.25, color: T.fog, margin: 0, letterSpacing: "-0.005em" }, children: c.title })
+        /* @__PURE__ */ jsx("h3", { style: { flex: isMobile ? "0 1 auto" : 1, minWidth: 0, fontFamily: T.fontHeading, fontWeight: 600, fontSize: isMobile ? 17 : 20, lineHeight: 1.25, color: T.fog, margin: 0, letterSpacing: "-0.005em" }, children: c.title })
       ] }),
-      /* @__PURE__ */ jsx("ul", { style: { listStyle: "none", display: "flex", flexDirection: "column", gap: 12, margin: isMobile ? 0 : "0 clamp(32px,2.5vw,41px)", padding: 0 }, children: c.points.map((pt) => /* @__PURE__ */ jsxs("li", { style: { display: "flex", alignItems: "flex-start", gap: 11 }, children: [
-        /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { width: 6, height: 6, borderRadius: "50%", background: "#5e94ff", flexShrink: 0, marginTop: 8 } }),
+      /* @__PURE__ */ jsx("ul", { style: { listStyle: "none", display: "flex", flexDirection: "column", gap: 12, margin: isMobile ? 0 : "0 clamp(32px,2.5vw,41px)", padding: 0 }, children: c.points.map((pt) => /* @__PURE__ */ jsxs("li", { style: { display: "flex", alignItems: isMobile ? "center" : "flex-start", justifyContent: isMobile ? "center" : "flex-start", gap: 11, textAlign: isMobile ? "center" : "left" }, children: [
+        /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { width: 6, height: 6, borderRadius: "50%", background: "#5e94ff", flexShrink: 0, marginTop: isMobile ? 0 : 8 } }),
         /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontBody, fontSize: 14.5, lineHeight: "22px", color: T.onDark80 }, children: pt })
       ] }, pt)) }),
       c.extra && /* @__PURE__ */ jsx("div", { style: { margin: isMobile ? "auto 0 0" : "0 clamp(32px,2.5vw,41px) clamp(36px,2.9vw,45px)", borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 21 }, children: c.extra })
@@ -1057,8 +1112,8 @@ function OpenSourceSection() {
         ` }),
     /* @__PURE__ */ jsxs("div", { "data-mark": "sn-oss-v8", style: { position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", gap: "clamp(20px,2.4vw,26px)", borderRadius: 24, border: "1px solid rgba(255,255,255,0.10)", background: "radial-gradient(560px 240px at 92% -10%, rgba(1,86,252,0.14), transparent 65%), linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 55%, rgba(1,86,252,0.06) 100%)", padding: isMobile ? "24px 20px" : "clamp(26px,2.8vw,36px) clamp(26px,3vw,40px)" }, children: [
       /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", width: "190", height: "190", viewBox: "0 0 24 24", fill: "rgba(157,188,255,0.05)", style: { position: "absolute", right: -30, bottom: -56, transform: "rotate(-8deg)", pointerEvents: "none" }, children: /* @__PURE__ */ jsx("path", { d: SN_GH_PATH }) }),
-      /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "flex-start" : "center", gap: isMobile ? 16 : "clamp(24px,3vw,44px)" }, children: [
-        /* @__PURE__ */ jsxs("h2", { style: { flex: 1, minWidth: 0, fontFamily: T.fontHeading, fontWeight: 600, fontSize: "clamp(18px,1.9vw,23px)", lineHeight: 1.45, letterSpacing: "-0.01em", color: T.fog, margin: 0, maxWidth: 760 }, children: [
+      /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "center" : "center", gap: isMobile ? 16 : "clamp(24px,3vw,44px)" }, children: [
+        /* @__PURE__ */ jsxs("h2", { style: { flex: 1, minWidth: 0, fontFamily: T.fontHeading, fontWeight: 600, fontSize: "clamp(18px,1.9vw,23px)", lineHeight: 1.45, letterSpacing: "-0.01em", color: T.fog, margin: 0, maxWidth: 760, textAlign: isMobile ? "center" : "left" }, children: [
           /* @__PURE__ */ jsx("span", { style: { color: T.onDark60 }, children: tr$2("oss.closedSource", "Closed-source VPNs ask for your trust.") }),
           " ",
           tr$2("oss.openStatement", "Sentinel is the only open-source, decentralized framework to build a VPN application on — full transparency into the application-side code and the server-side code alike.")
@@ -1069,28 +1124,28 @@ function OpenSourceSection() {
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.15fr 1fr", gap: isMobile ? "22px" : "clamp(28px,3.4vw,52px)", borderTop: ossDivider, paddingTop: "clamp(18px,2.2vw,26px)" }, children: [
-        /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-          /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 5 }, children: [
+        /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14, alignItems: isMobile ? "center" : "stretch" }, children: [
+          /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 5, textAlign: isMobile ? "center" : "left" }, children: [
             /* @__PURE__ */ jsx("h3", { style: ossColHead, children: tr$2("oss.everyLayerHeading", "Every layer of Sentinel is open source") }),
             /* @__PURE__ */ jsx("p", { style: ossColSub, children: tr$2("oss.everyLayerSubhead", "Nothing in the stack is closed — read, audit, and fork all of it.") })
           ] }),
-          /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 13, flex: 1 }, children: [
-            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { position: "absolute", left: 5, top: 12, bottom: 12, width: 2, borderRadius: 2, background: "linear-gradient(180deg, rgba(38,112,255,0.85) 0%, rgba(38,112,255,0.2) 100%)" } }),
-            stack.map((s) => /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "flex-start", gap: 13 }, children: [
-              /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { position: "relative", width: 12, height: 12, flexShrink: 0, marginTop: 5, borderRadius: "50%", background: "#2670FF", boxShadow: "0 0 0 3px rgba(38,112,255,0.22), 0 0 14px rgba(38,112,255,0.7)" } }),
-              /* @__PURE__ */ jsxs("span", { style: { display: "flex", flexDirection: "column", gap: 3, minWidth: 0, flex: 1 }, children: [
+          /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 13, flex: 1, alignItems: isMobile ? "center" : "stretch", width: isMobile ? "100%" : "auto" }, children: [
+            !isMobile && /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { position: "absolute", left: 5, top: 12, bottom: 12, width: 2, borderRadius: 2, background: "linear-gradient(180deg, rgba(38,112,255,0.85) 0%, rgba(38,112,255,0.2) 100%)" } }),
+            stack.map((s) => /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: isMobile ? "center" : "flex-start", justifyContent: isMobile ? "center" : "flex-start", gap: 13 }, children: [
+              /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { position: "relative", width: 12, height: 12, flexShrink: 0, marginTop: isMobile ? 0 : 5, borderRadius: "50%", background: "#2670FF", boxShadow: "0 0 0 3px rgba(38,112,255,0.22), 0 0 14px rgba(38,112,255,0.7)" } }),
+              /* @__PURE__ */ jsxs("span", { style: { display: "flex", flexDirection: "column", gap: 3, minWidth: 0, flex: isMobile ? "0 1 auto" : 1, textAlign: isMobile ? "center" : "left" }, children: [
                 /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontHeading, fontWeight: 600, fontSize: 15.5, color: T.fog, lineHeight: 1.2 }, children: s.k }),
                 /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontBody, fontSize: 13.5, lineHeight: "19px", color: T.onDark60 }, children: s.d })
               ] })
             ] }, s.k))
           ] })
         ] }),
-        /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
-          /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 5 }, children: [
+        /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14, alignItems: isMobile ? "center" : "stretch" }, children: [
+          /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 5, textAlign: isMobile ? "center" : "left" }, children: [
             /* @__PURE__ */ jsx("h3", { style: ossColHead, children: tr$2("oss.buildLanguageHeading", "Build in the language you already use") }),
             /* @__PURE__ */ jsx("p", { style: ossColSub, children: tr$2("oss.buildLanguageSubhead", "Four official SDKs — every one of them open source.") })
           ] }),
-          /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 10, flex: 1 }, children: langs.map((l) => /* @__PURE__ */ jsx(LangBadge, { mark: l.mark, name: l.name }, l.name)) })
+          /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 10, flex: 1, width: isMobile ? "100%" : "auto" }, children: langs.map((l) => /* @__PURE__ */ jsx(LangBadge, { mark: l.mark, name: l.name }, l.name)) })
         ] })
       ] }),
       /* @__PURE__ */ jsx("div", { style: { position: "relative", display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "center", gap: "14px clamp(40px,6vw,84px)", borderTop: ossDivider, paddingTop: "clamp(18px,2.2vw,26px)" }, children: stats.map((s) => /* @__PURE__ */ jsxs("span", { style: { display: "flex", alignItems: "baseline", gap: 12 }, children: [
@@ -1189,6 +1244,7 @@ const BUILD_PLATFORMS = [
   { key: "Server", name: "Server", descKey: "sdk.serverDesc", stack: ["Node", "Go"], desc: "Route traffic from code. Bots, backends and AI agents." }
 ];
 function SDKSection$1() {
+  const isMobile = useIsMobile$1();
   return /* @__PURE__ */ jsxs("section", { id: "build-dvpn", style: { background: "radial-gradient(1000px 480px at 12% -8%, rgba(1,86,252,0.06), transparent 60%), radial-gradient(820px 420px at 94% 36%, rgba(1,86,252,0.04), transparent 60%), linear-gradient(180deg, #f4f6fb 0%, #fbfbfb 28%, #fbfbfb 100%)", ...atomStyles.section, scrollMarginTop: 90 }, children: [
     /* @__PURE__ */ jsx("style", { children: `
         .sn-build-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:${T.line200}; border:1px solid ${T.line200}; border-radius:24px; overflow:hidden; }
@@ -1202,7 +1258,7 @@ function SDKSection$1() {
         .sn-build-card:hover .sn-build-arrow { opacity:1; transform:translate(0, 0); }
       ` }),
     /* @__PURE__ */ jsxs("div", { style: { ...atomStyles.container, display: "flex", flexDirection: "column", gap: "clamp(36px,5vw,52px)" }, children: [
-      /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 18, maxWidth: 720 }, children: [
+      /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 18, maxWidth: 720, alignItems: isMobile ? "center" : "flex-start", textAlign: isMobile ? "center" : "left", alignSelf: isMobile ? "center" : "auto" }, children: [
         /* @__PURE__ */ jsx(StepTag, { n: 2, light: true }),
         /* @__PURE__ */ jsx("h2", { style: { ...atomStyles.h1Light, fontSize: "clamp(26px,3.2vw,38px)", margin: 0 }, children: tr$2("sdk.buildPlatformHeading", "Build a dVPN for Any Platform") }),
         /* @__PURE__ */ jsx("p", { style: { ...atomStyles.leadLight, maxWidth: 680 }, children: tr$2("sdk.buildPlatformBody", "The Sentinel SDK runs on phones, desktops, browsers, TVs and servers. You build the app and own the brand. The network handles bandwidth, routing and payments.") })
@@ -1212,7 +1268,7 @@ function SDKSection$1() {
         {
           href: L.sdkDocs,
           target: "_blank",
-          rel: "noopener",
+          rel: "noopener noreferrer",
           className: "sn-build-card",
           style: { background: T.white, padding: "26px 24px 20px", display: "flex", flexDirection: "column", gap: 16, textDecoration: "none", minHeight: 224, boxSizing: "border-box" },
           children: [
@@ -1318,7 +1374,6 @@ Object.assign(window, {
   CodeWindow,
   Header: Header$1,
   Hero: Hero$1,
-  SupportersStrip,
   StatsStrip: StatsStrip$1,
   ResilienceCards: ResilienceCards$1,
   StepsSection: StepsSection$1,
@@ -1343,7 +1398,7 @@ function LiveNodeTestLink({ fullWidth }) {
     {
       href: L2.testNode,
       target: "_blank",
-      rel: "noopener",
+      rel: "noopener noreferrer",
       className: "sn-livetest",
       "data-mark": "sn-live-clean",
       style: { display: "flex", alignItems: "center", gap: 12, height: 60, padding: "0 20px 0 11px", width: fullWidth ? "100%" : "auto", boxSizing: "border-box", textDecoration: "none", background: "linear-gradient(135deg, rgba(1,86,252,0.14) 0%, rgba(1,86,252,0.04) 100%)", border: "1px solid rgba(94,148,255,0.26)", borderRadius: 14 },
@@ -1648,25 +1703,7 @@ function DvpnPlatIcon({ kind, size = 14, brand }) {
     ] });
   return null;
 }
-const DVPN_COUNTRIES = [
-  ["US", "United States"],
-  ["GB", "United Kingdom"],
-  ["DE", "Germany"],
-  ["NL", "Netherlands"],
-  ["FR", "France"],
-  ["CH", "Switzerland"],
-  ["SE", "Sweden"],
-  ["ES", "Spain"],
-  ["CA", "Canada"],
-  ["JP", "Japan"],
-  ["SG", "Singapore"],
-  ["KR", "South Korea"],
-  ["AU", "Australia"],
-  ["IN", "India"],
-  ["BR", "Brazil"],
-  ["AE", "UAE"]
-];
-const DVPN_APPS = [
+[
   {
     name: "DVPN by NORSE",
     logo: window.__resources.ecoNorse,
@@ -1746,150 +1783,6 @@ const DVPN_APPS = [
     }
   }
 ];
-function dvpnLinkFor(a, platform) {
-  if (platform === "iOS") return a.links["iOS"];
-  if (platform === "Android") return a.links["Android"];
-  if (platform === "Desktop") return a.links["macOS"] || a.links["Windows"] || a.links["Linux"];
-  return a.links["Apple TV"] || a.links["TV"];
-}
-const DVPN_CON_PLATFORMS = [
-  { key: "iOS", icon: "apple", label: "iOS" },
-  { key: "Android", icon: "android", label: "Android" },
-  { key: "Desktop", icon: "windows", label: "Desktop" },
-  { key: "TV", icon: "tv", label: "TV" }
-];
-function DvpnConsole() {
-  const isMobile = useIsMobile();
-  const [open, setOpen] = useS2(false);
-  const [country, setCountry] = useS2(DVPN_COUNTRIES[0]);
-  const [platform, setPlatform] = useS2("iOS");
-  const [appName, setAppName] = useS2("DVPN by NORSE");
-  const [connecting, setConnecting] = useS2(false);
-  const available = DVPN_APPS.filter((a) => dvpnLinkFor(a, platform));
-  useE2(() => {
-    if (!available.some((a) => a.name === appName)) setAppName(available[0] ? available[0].name : null);
-  }, [platform]);
-  const selApp = available.find((a) => a.name === appName) || available[0] || null;
-  const url = selApp ? dvpnLinkFor(selApp, platform) : null;
-  const connect = () => {
-    if (!url) return;
-    window.open(url, "_blank", "noopener");
-    setConnecting(true);
-    setTimeout(() => setConnecting(false), 1800);
-  };
-  const fld = { display: "flex", flexDirection: "column", gap: 11, position: "relative" };
-  const lbl = { fontFamily: T2.fontMono, fontSize: 11, letterSpacing: "0.06em", color: T2.blueLight };
-  return /* @__PURE__ */ jsxs("div", { style: { background: T2.bgGraphite, border: "1px solid rgba(255,255,255,0.08)", borderRadius: 28 }, children: [
-    /* @__PURE__ */ jsxs("div", { style: { height: 52, padding: "0 22px", display: "flex", alignItems: "center", gap: 13, borderBottom: "1px solid rgba(255,255,255,0.06)" }, children: [
-      /* @__PURE__ */ jsx("div", { style: { display: "flex", gap: 8 }, children: [0, 1, 2].map((i) => /* @__PURE__ */ jsx("span", { style: { width: 11, height: 11, borderRadius: "50%", background: "#2a2a2c" } }, i)) }),
-      /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 13, color: "rgba(234,234,234,0.62)" }, children: "sentinel://connect" }),
-      !isMobile && /* @__PURE__ */ jsxs("span", { style: { marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 8, fontFamily: T2.fontMono, fontSize: 11, color: "rgba(234,234,234,0.5)" }, children: [
-        /* @__PURE__ */ jsx("span", { className: "sn-con-dot", style: { width: 7, height: 7, borderRadius: "50%", background: "#3DDC84" } }),
-        " ",
-        tr$1("console.wireguardBadge", "WIREGUARD · AES-256")
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { style: { padding: isMobile ? "22px 16px 24px" : "30px 30px 28px", display: "flex", flexDirection: "column", gap: 26 }, children: [
-      /* @__PURE__ */ jsxs("div", { className: "sn-con-steps", children: [
-        /* @__PURE__ */ jsxs("div", { style: fld, children: [
-          /* @__PURE__ */ jsx("span", { style: lbl, children: tr$1("console.step01", "01 — EXIT LOCATION") }),
-          /* @__PURE__ */ jsxs("button", { className: "sn-con-dd", onClick: () => setOpen((o) => !o), "aria-haspopup": "listbox", "aria-expanded": open, children: [
-            /* @__PURE__ */ jsxs("span", { style: { display: "inline-flex", alignItems: "center", gap: 10 }, children: [
-              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 11.5, color: T2.blueLight, background: "rgba(38,112,255,0.14)", padding: "2px 7px", borderRadius: 6 }, children: country[0] }),
-              country[1]
-            ] }),
-            /* @__PURE__ */ jsx("svg", { width: "11", height: "7", viewBox: "0 0 11 7", fill: "none", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform 200ms", flexShrink: 0 }, children: /* @__PURE__ */ jsx("path", { d: "M1 1l4.5 4.5L10 1", stroke: "rgba(255,255,255,0.6)", strokeWidth: "1.4", strokeLinecap: "round", strokeLinejoin: "round" }) })
-          ] }),
-          open && /* @__PURE__ */ jsx("div", { onClick: () => setOpen(false), style: { position: "fixed", inset: 0, zIndex: 29 } }),
-          open && /* @__PURE__ */ jsx("div", { className: "sn-con-ddmenu sn-con-scroll", role: "listbox", children: DVPN_COUNTRIES.map((c) => /* @__PURE__ */ jsxs(
-            "div",
-            {
-              className: "sn-con-ddopt",
-              "data-on": c[0] === country[0],
-              role: "option",
-              "aria-selected": c[0] === country[0],
-              onClick: () => {
-                setCountry(c);
-                setOpen(false);
-              },
-              children: [
-                /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 11, color: T2.blueLight, width: 26, flexShrink: 0 }, children: c[0] }),
-                c[1]
-              ]
-            },
-            c[0]
-          )) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { style: fld, children: [
-          /* @__PURE__ */ jsx("span", { style: lbl, children: tr$1("console.step02", "02 — PLATFORM") }),
-          /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: 8 }, children: DVPN_CON_PLATFORMS.map((p) => /* @__PURE__ */ jsxs("button", { className: "sn-con-seg", "data-on": platform === p.key, onClick: () => setPlatform(p.key), children: [
-            /* @__PURE__ */ jsx(DvpnPlatIcon, { kind: p.icon, size: 15 }),
-            " ",
-            p.label
-          ] }, p.key)) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { style: fld, children: [
-          /* @__PURE__ */ jsx("span", { style: lbl, children: tr$1("console.step03", "03 — SELECT APP") }),
-          /* @__PURE__ */ jsx("div", { className: "sn-con-scroll", style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 8, maxHeight: 188, overflowY: "auto" }, children: available.map((a) => /* @__PURE__ */ jsxs("button", { className: "sn-con-app", "data-on": selApp && a.name === selApp.name, onClick: () => setAppName(a.name), children: [
-            /* @__PURE__ */ jsx("span", { style: { width: 30, height: 30, borderRadius: 8, background: "#0f0f10", border: "1px solid rgba(255,255,255,0.08)", display: "grid", placeItems: "center", flexShrink: 0, overflow: "hidden" }, children: /* @__PURE__ */ jsx("img", { src: a.logo, alt: "", style: { width: 20, height: 20, objectFit: "contain", filter: a.imgFilter ? "brightness(0) invert(1)" : void 0 } }) }),
-            /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontBody, fontSize: 14, color: "rgba(234,234,234,0.9)" }, children: a.name }),
-            selApp && a.name === selApp.name && /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "#2670ff", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", style: { marginLeft: "auto", flexShrink: 0 }, children: /* @__PURE__ */ jsx("polyline", { points: "4 12 10 18 20 6" }) })
-          ] }, a.name)) })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 22, flexWrap: "wrap", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 24 }, children: [
-        /* @__PURE__ */ jsxs("div", { style: { fontFamily: T2.fontMono, fontSize: 12.5, lineHeight: "21px", color: "rgba(234,234,234,0.55)", minWidth: 0, overflowWrap: "anywhere" }, children: [
-          /* @__PURE__ */ jsx("span", { style: { color: connecting ? "#3DDC84" : T2.blueLight }, children: connecting ? tr$1("console.statusConnecting", "> establishing encrypted tunnel…") : tr$1("console.statusReady", "> ready to connect") }),
-          /* @__PURE__ */ jsx("br", {}),
-          "exit=",
-          country[0],
-          " · platform=",
-          platform,
-          ' · app="',
-          selApp ? selApp.name : "—",
-          '"'
-        ] }),
-        /* @__PURE__ */ jsx("button", { className: "sn-con-connect", onClick: connect, disabled: !url || connecting, children: connecting ? /* @__PURE__ */ jsxs(React.Fragment, { children: [
-          /* @__PURE__ */ jsx("span", { className: "sn-con-spinner" }),
-          " ",
-          tr$1("console.connectingBtn", "Connecting…")
-        ] }) : /* @__PURE__ */ jsxs(React.Fragment, { children: [
-          tr$1("console.connectBtn", "Connect to dVPN"),
-          /* @__PURE__ */ jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-            /* @__PURE__ */ jsx("line", { x1: "5", y1: "12", x2: "19", y2: "12" }),
-            /* @__PURE__ */ jsx("polyline", { points: "12 5 19 12 12 19" })
-          ] })
-        ] }) })
-      ] })
-    ] })
-  ] });
-}
-function SentinelDVPNSection() {
-  const apps = DVPN_APPS;
-  const [filter, setFilter] = useS2("all");
-  const matchFilter = (a) => {
-    if (filter === "all") return true;
-    if (filter === "iOS") return !!a.links["iOS"];
-    if (filter === "Android") return !!a.links["Android"];
-    if (filter === "Desktop") return !!(a.links["macOS"] || a.links["Linux"] || a.links["Windows"]);
-    if (filter === "TV") return !!(a.links["Apple TV"] || a.links["TV"]);
-    return false;
-  };
-  apps.filter(matchFilter);
-  return /* @__PURE__ */ jsx("section", { style: { background: T2.paper, ...A.section }, children: /* @__PURE__ */ jsxs("div", { style: { ...A.container, display: "flex", flexDirection: "column", gap: 40 }, children: [
-    /* @__PURE__ */ jsxs("div", { style: { ...A.sectionHead }, children: [
-      /* @__PURE__ */ jsx("h2", { style: { ...A.h1Light, maxWidth: 764 }, children: tr$1("sentinelDvpn.heading", "Use open-source decentralized VPN apps you can trust.") }),
-      /* @__PURE__ */ jsx("p", { style: { ...A.leadLight, maxWidth: 864 }, children: tr$1("sentinelDvpn.lead", "Pick a location, your platform and an app — then connect. Every app here ships on the Sentinel network, so no single provider owns the bandwidth you route through.") })
-    ] }),
-    /* @__PURE__ */ jsx(DvpnConsole, {})
-  ] }) });
-}
-function CentralizedVPNSection$1() {
-  return null;
-}
-function BlockchainDHTSection$1() {
-  return null;
-}
 const CmpLogos = {
   tor: /* @__PURE__ */ jsx("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "#7D4698", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M11.9124 17.1581zM17.9817 1.14a8.419 8.419 0 00-4.4695 3.1196A21.4277 21.4277 0 0116.512 0a12.4187 12.4187 0 00-3.9996 4.3595l.64-2.5497a14.6284 14.6284 0 00-1.8998 5.3494l1.1198.48a33.1264 33.1264 0 015.6094-6.4993zm.82 13.0686c-.82-1.5199-2.9197-3.0097-5.1295-4.3896-.51-.3-.61-1.4098-.53-1.8898l-.5099-.24a6.3693 6.3693 0 00.16 2.3898c.24.75.9999 1.5998 1.5198 2.7997a18.158 18.158 0 01.72 2.9197 13.1686 13.1686 0 01-.54 6.1193 4.2595 4.2595 0 01-1.4298 1.9198l-.24.16c4.1595.13 8.829-4.6295 5.9793-9.789zm-5.3995 4.7894a6.6193 6.6193 0 00-.42-1.9997 12.4087 12.4087 0 00-.7498-1.4399 6.2293 6.2293 0 01-.16-2.0698 6.9992 6.9992 0 00.32 1.9398 11.0788 11.0788 0 01.6899 1.2999 8.999 8.999 0 01.5899 2.2697 10.4289 10.4289 0 01-.35 2.9997 5.1094 5.1094 0 01-.4 1 4.8495 4.8495 0 00.7-1.52 12.4187 12.4187 0 00.36-4.4794 11.6087 11.6087 0 00-.46-1.8898c-.44-1.2-1.0699-2.2298-1.1499-2.4698a16.2082 16.2082 0 01-.39-3.3596 14.3084 14.3084 0 00.44 3.1197c.08.24.8 1.3798 1.2999 2.5797a7.4692 7.4692 0 01.48 1.7298 10.7188 10.7188 0 01-.53 5.1594 3.9996 3.9996 0 01-.35.82 3.7196 3.7196 0 00.8-1.41 16.1382 16.1382 0 000-8.109c-.42-1.2799-1.4099-2.3998-1.6499-3.1697a7.6792 7.6792 0 01-.08-2.3897l-2.1497-1c.56 1.44.6599 2.5598.08 2.9998-2.2598 1.8698-5.9994 3.9995-5.9994 7.1092 0 3.3196 1.9998 6.9092 7.0492 7.1792a12.9986 12.9986 0 01-1.6998-.56 3.4496 3.4496 0 01-1.3098-.8998l-.13-.14A9.339 9.339 0 016.233 18.658a2.7097 2.7097 0 01-.08-1.5199 6.6793 6.6793 0 013.2797-3.9995 10.099 10.099 0 00.9999-.61c.4699-.29.7699-1.5298 1.0798-2.5297-.16.77-.34 2.2598-1.0599 2.8197-.29.22-.6099.43-.9299.64-1.2798.8798-2.5397 1.6998-3.1696 3.8095a2.8197 2.8197 0 00.08 1.3799 9.319 9.319 0 001.9498 3.5096s.13.13.13.16a2.9997 2.9997 0 001.9397 1.1499c-.29-.16-.5299-.35-.7399-.48a4.3595 4.3595 0 01-1.9998-3.5996 3.6996 3.6996 0 012.1798-3.3896 3.5796 3.5796 0 001.6798-2.3798 3.1197 3.1197 0 01-1.5898 2.4998 3.9996 3.9996 0 00-2.0998 3.1696 5.6594 5.6594 0 001.8898 3.3996 4.0796 4.0796 0 001.5898.72 2.8897 2.8897 0 01-.4799-.5 4.9995 4.9995 0 01-.45-.9999 2.9997 2.9997 0 01-.27-.9999 3.5996 3.5996 0 01.64-2.3697 2.8397 2.8397 0 00.9-1.3499 2.8697 2.8697 0 01-.72 1.5099 2.9997 2.9997 0 00-.56 2.2397 4.0596 4.0596 0 00.29.93 3.9996 3.9996 0 00.51.9998c.18.21.26.37.5499.48a6.4793 6.4793 0 00.49-2.3498 9.519 9.519 0 000-1.7598c-.13-.7999-.4-1.5998-.4-2.2397.12.5899.43 1.3798.61 2.2097a5.6294 5.6294 0 01.11 1.7298c0 .56-.08 1-.16 1.4899a1.9998 1.9998 0 01-.45.9299 3.2097 3.2097 0 001.1099-1.9998 7.8991 7.8991 0 00.32-2.3598z" }) }),
   ipfs: /* @__PURE__ */ jsx("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "#65C2CB", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M12 0L1.608 6v12L12 24l10.392-6V6zm-1.073 1.445h.001a1.8 1.8 0 002.138 0l7.534 4.35a1.794 1.794 0 000 .403l-7.535 4.35a1.8 1.8 0 00-2.137 0l-7.536-4.35a1.795 1.795 0 000-.402zM21.324 7.4c.109.08.226.147.349.201v8.7a1.8 1.8 0 00-1.069 1.852l-7.535 4.35a1.8 1.8 0 00-.349-.2l-.009-8.653a1.8 1.8 0 001.07-1.851zm-18.648.048l7.535 4.35a1.8 1.8 0 001.069 1.852v8.7c-.124.054-.24.122-.349.202l-7.535-4.35a1.8 1.8 0 00-1.069-1.852v-8.7c.124-.054.24-.122.35-.202z" }) }),
@@ -2110,16 +2003,16 @@ function TrustCompareStrip() {
     ] }) : /* @__PURE__ */ jsxs("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, overflow: "hidden" }, children: [
       /* @__PURE__ */ jsx("div", { style: { background: "rgba(255,255,255,0.02)" }, children: /* @__PURE__ */ jsx(Head, { bad: true }) }),
       /* @__PURE__ */ jsx("div", { style: { background: "linear-gradient(135deg, rgba(1,86,252,0.22) 0%, rgba(1,86,252,0.08) 100%)", borderLeft: "1px solid rgba(255,255,255,0.07)" }, children: /* @__PURE__ */ jsx(Head, {}) }),
-      pairs.map((p, i) => [
+      pairs.map((p, i) => /* @__PURE__ */ jsxs(React.Fragment, { children: [
         /* @__PURE__ */ jsxs("div", { style: rowL, children: [
           /* @__PURE__ */ jsx(Cross, {}),
           /* @__PURE__ */ jsx("p", { style: txtL, children: p[0] })
-        ] }, "l" + i),
+        ] }),
         /* @__PURE__ */ jsxs("div", { style: rowR, children: [
           /* @__PURE__ */ jsx(Check, {}),
           /* @__PURE__ */ jsx("p", { style: txtR, children: p[1] })
-        ] }, "r" + i)
-      ])
+        ] })
+      ] }, i))
     ] })
   ] }) });
 }
@@ -2153,9 +2046,9 @@ function EcosystemGrid() {
           "div",
           {
             className: "sn-card-dark",
-            style: { background: T2.graphite750, borderRadius: 24, padding: 22, border: "1px solid rgba(255,255,255,0.06)", display: "flex", flexDirection: "column", gap: 14 },
+            style: { background: T2.graphite750, borderRadius: 24, padding: 22, border: "1px solid rgba(255,255,255,0.06)", display: "flex", flexDirection: "column", gap: 14, alignItems: isMobile ? "center" : "stretch", textAlign: isMobile ? "center" : "left" },
             children: [
-              /* @__PURE__ */ jsxs("div", { "data-mark": "sn-eco-v2", style: { display: "flex", alignItems: "center", gap: 13 }, children: [
+              /* @__PURE__ */ jsxs("div", { "data-mark": "sn-eco-v2", style: { display: "flex", alignItems: "center", gap: 13, justifyContent: isMobile ? "center" : "flex-start" }, children: [
                 /* @__PURE__ */ jsx("div", { style: { width: 56, height: 56, borderRadius: 15, background: "#0f0f10", border: "1px solid rgba(255,255,255,0.10)", display: "grid", placeItems: "center", overflow: "hidden", flexShrink: 0 }, children: /* @__PURE__ */ jsx("img", { src: a.logo, alt: a.name, style: { width: 40, height: 40, objectFit: "contain" } }) }),
                 /* @__PURE__ */ jsxs("h3", { style: { fontFamily: T2.fontHeading, fontWeight: 600, fontSize: 17.5, lineHeight: 1.2, color: "#ffffff", letterSpacing: "-0.01em", margin: 0, display: "flex", alignItems: "center", gap: 9, flexWrap: "wrap" }, children: [
                   a.name,
@@ -2163,14 +2056,14 @@ function EcosystemGrid() {
                 ] })
               ] }),
               /* @__PURE__ */ jsx("p", { style: { fontFamily: T2.fontBody, fontSize: 13, lineHeight: "20px", color: T2.onDark, margin: 0, flex: 1 }, children: a.body }),
-              /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 9, marginTop: 2 }, children: [
+              /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 9, marginTop: 2, alignItems: isMobile ? "center" : "stretch", width: isMobile ? "100%" : "auto" }, children: [
                 /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: T2.onDark60 }, children: tr$1("ecosystem.downloadLabel", "Download App:") }),
-                /* @__PURE__ */ jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: 8 }, children: (a.builds || []).map((b) => /* @__PURE__ */ jsx(
+                /* @__PURE__ */ jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, justifyContent: isMobile ? "center" : "flex-start" }, children: (a.builds || []).map((b) => /* @__PURE__ */ jsx(
                   "a",
                   {
                     href: b.href,
                     target: "_blank",
-                    rel: "noopener",
+                    rel: "noopener noreferrer",
                     className: "sn-eco-dl",
                     title: a.name + " — " + b.label,
                     "aria-label": a.name + " for " + b.label,
@@ -2189,9 +2082,9 @@ function EcosystemGrid() {
           {
             href: L2.sdkDocs || "#",
             className: "sn-card-dark sn-eco-cta",
-            style: { background: T2.graphite750, borderRadius: 24, padding: 22, border: "1.5px solid #0156fc", display: "flex", flexDirection: "column", gap: 14, textDecoration: "none" },
+            style: { background: T2.graphite750, borderRadius: 24, padding: 22, border: "1.5px solid #0156fc", display: "flex", flexDirection: "column", gap: 14, textDecoration: "none", alignItems: isMobile ? "center" : "stretch", textAlign: isMobile ? "center" : "left" },
             children: [
-              /* @__PURE__ */ jsxs("div", { "data-mark": "sn-eco-v2", style: { display: "flex", alignItems: "center", gap: 13 }, children: [
+              /* @__PURE__ */ jsxs("div", { "data-mark": "sn-eco-v2", style: { display: "flex", alignItems: "center", gap: 13, justifyContent: isMobile ? "center" : "flex-start" }, children: [
                 /* @__PURE__ */ jsx("div", { style: { width: 56, height: 56, borderRadius: 15, background: "#0f0f10", border: "1px solid rgba(255,255,255,0.10)", display: "grid", placeItems: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsx("svg", { width: "32", height: "32", viewBox: "8 14 84 70", fill: "#0156fc", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "m81 16.082h-62c-5.8906 0-10.668 4.7773-10.668 10.668v46.5c0 2.8281 1.125 5.543 3.125 7.543s4.7148 3.125 7.543 3.125h62c5.8906 0 10.668-4.7773 10.668-10.668v-46.5c0-5.8906-4.7773-10.668-10.668-10.668zm4.832 57.168c0 2.668-2.1641 4.832-4.832 4.832h-62c-2.668 0-4.832-2.1641-4.832-4.832v-46.5c0-2.668 2.1641-4.832 4.832-4.832h62c1.2812 0 2.5117 0.50781 3.418 1.4141s1.4141 2.1367 1.4141 3.418zm-59.289-26.668c-1.8867 1.8867-1.8867 4.9492 0 6.8359l10 10.043v-0.003907c0.57031 0.54297 0.89062 1.2969 0.89062 2.0859 0 0.78516-0.32031 1.5391-0.89062 2.082-0.53906 0.58203-1.293 0.91406-2.0859 0.91406-0.78906 0-1.5469-0.33203-2.082-0.91406l-10.043-10c-4.1641-4.1641-4.1641-10.918 0-15.082l10.043-10c0.53516-0.58203 1.293-0.91406 2.082-0.91406 0.79297 0 1.5469 0.33203 2.0859 0.91406 0.57031 0.54297 0.89062 1.293 0.89062 2.082s-0.32031 1.5391-0.89062 2.082zm51.043-4.168-0.003907 0.003907c4.1641 4.1641 4.1641 10.918 0 15.082l-10.043 10h0.003907c-0.53906 0.58203-1.293 0.91406-2.0859 0.91406-0.78906 0-1.5469-0.33203-2.082-0.91406-0.57031-0.54297-0.89453-1.2969-0.89453-2.082 0-0.78906 0.32422-1.543 0.89453-2.0859l10-10.043v0.003907c1.8867-1.8867 1.8867-4.9492 0-6.8359l-10-10.043v0.003907c-0.57031-0.54297-0.89453-1.2969-0.89453-2.0859 0-0.78516 0.32422-1.5391 0.89453-2.082 0.53516-0.58203 1.293-0.91406 2.082-0.91406 0.79297 0 1.5469 0.33203 2.0859 0.91406z" }) }) }),
                 /* @__PURE__ */ jsx("h3", { style: { fontFamily: T2.fontHeading, fontWeight: 600, fontSize: 17.5, lineHeight: 1.2, color: "#ffffff", letterSpacing: "-0.01em", margin: 0 }, children: tr$1("ecosystem.ctaTitle", "Make your own dVPN") })
               ] }),
@@ -2213,9 +2106,6 @@ function EcosystemSection$1() {
 Object.assign(window, {
   NodeHostingSection: NodeHostingSection$1,
   AgenticPaymentsSection: AgenticPaymentsSection$1,
-  SentinelDVPNSection,
-  CentralizedVPNSection: CentralizedVPNSection$1,
-  BlockchainDHTSection: BlockchainDHTSection$1,
   CompareSection: CompareSection$1,
   EcosystemSection: EcosystemSection$1
 });
@@ -2233,7 +2123,7 @@ function CommunityCard({ icon, name, handle, color, href }) {
     {
       href,
       target: "_blank",
-      rel: "noopener",
+      rel: "noopener noreferrer",
       onMouseEnter: () => setHovered(true),
       onMouseLeave: () => setHovered(false),
       style: {
@@ -2285,7 +2175,7 @@ function CommunityPill({ icon, label, color, href }) {
     {
       href,
       target: "_blank",
-      rel: "noopener",
+      rel: "noopener noreferrer",
       onMouseEnter: () => setHovered(true),
       onMouseLeave: () => setHovered(false),
       style: {
@@ -2311,7 +2201,6 @@ const IconX = () => /* @__PURE__ */ jsx("svg", { width: "21", height: "20", view
 const IconTelegram = () => /* @__PURE__ */ jsx("svg", { width: "22", height: "19", viewBox: "0 0 24 21", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M23.9 1.8L20.2 20c-.3 1.3-1.1 1.6-2.2 1L12 16.6l-2.9 2.8c-.3.3-.6.6-1.2.6l.4-5.8L19.8 3.3c.5-.4-.1-.6-.7-.2L4.6 13.5 0 12.1C-1 11.8-1 11.1.4 10.5l22.1-8.5c.9-.4 1.8.3 1.4 1.8Z" }) });
 const IconGitHub = () => /* @__PURE__ */ jsx("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" }) });
 const IconDiscord = () => /* @__PURE__ */ jsx("svg", { width: "24", height: "18", viewBox: "0 0 24 18", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M20.317 1.492a19.84 19.84 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 1.49a.07.07 0 0 0-.032.027C.533 6.093-.32 10.555.099 14.961a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 12.278c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" }) });
-const IconYouTube = () => /* @__PURE__ */ jsx("svg", { width: "26", height: "19", viewBox: "0 0 24 17", fill: "currentColor", children: /* @__PURE__ */ jsx("path", { d: "M23.495 2.659a3.011 3.011 0 0 0-2.12-2.132C19.505 0 12 0 12 0S4.495 0 2.625.527a3.011 3.011 0 0 0-2.12 2.132C0 4.545 0 8.5 0 8.5s0 3.955.505 5.841a3.011 3.011 0 0 0 2.12 2.132C4.495 17 12 17 12 17s7.505 0 9.375-.527a3.011 3.011 0 0 0 2.12-2.132C24 12.455 24 8.5 24 8.5s0-3.955-.505-5.841zM9.545 12.068V4.932L15.818 8.5l-6.273 3.568z" }) });
 function ContactSection$1() {
   const isMobile = useIsMobileO();
   const [agree, setAgree] = useS(false);
@@ -2323,7 +2212,6 @@ function ContactSection$1() {
     { icon: /* @__PURE__ */ jsx(IconGitHub, {}), name: "GitHub", handle: "sentinel-official", color: "#24292F", href: L3.github }
   ];
   const secondary = [
-    { icon: /* @__PURE__ */ jsx(IconYouTube, {}), label: "YouTube", color: "#FF0000", href: L3.youtube },
     { icon: /* @__PURE__ */ jsx(IconTelegram, {}), label: "Growth DAO", color: "#229ED9", href: L3.growthDao },
     { icon: /* @__PURE__ */ jsx(IconTelegram, {}), label: "p2p News", color: "#229ED9", href: L3.p2pNews },
     { icon: /* @__PURE__ */ jsx(IconX, {}), label: "Bluefrens", color: "#0F1419", href: L3.bluefrens }
@@ -2352,7 +2240,7 @@ function Footer$1() {
   const cols = [
     { head: "Explore", headKey: "nav.explore", links: [
       ["Network Statistics", L3.stats, "footer.exploreStats"],
-      ["Node Dashboard", L3.nodes, "footer.exploreDashboard"],
+      ["Node Explorer", L3.nodes, "footer.exploreDashboard"],
       ["Node Map", L3.nodeMap, "footer.exploreNodeMap"],
       ["Explorer", L3.explorer, "footer.exploreExplorer"]
     ] },
@@ -2389,7 +2277,7 @@ function Footer$1() {
           {
             href: url,
             target: "_blank",
-            rel: "noopener",
+            rel: "noopener noreferrer",
             style: { display: "block", fontFamily: T3.fontBody, fontSize: 14, lineHeight: "26px", color: "rgba(234,234,234,0.55)", textDecoration: "none", padding: "3px 0", transition: "color 200ms" },
             onMouseEnter: (e) => e.target.style.color = "rgba(234,234,234,0.9)",
             onMouseLeave: (e) => e.target.style.color = "rgba(234,234,234,0.55)",
@@ -2404,14 +2292,16 @@ function Footer$1() {
       /* @__PURE__ */ jsx("div", { style: { display: "flex", gap: 22, alignItems: "center" }, children: [
         ["Sentinel © 2026", L3.home, "footer.copyright"],
         ["Privacy Policy", L3.privacy, "footer.privacyPolicy"]
-      ].map(([label, url, labelKey]) => /* @__PURE__ */ jsx("a", { href: url, target: "_blank", rel: "noopener", style: { fontFamily: T3.fontBody, fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none" }, children: tr(labelKey, label) }, label)) }),
+      ].map(([label, url, labelKey]) => /* @__PURE__ */ jsx("a", { href: url, target: "_blank", rel: "noopener noreferrer", style: { fontFamily: T3.fontBody, fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none" }, children: tr(labelKey, label) }, label)) }),
       /* @__PURE__ */ jsx("div", { style: { display: "flex", gap: 16, alignItems: "center" }, children: [
-        { label: "X / Twitter", path: "M16.6 0h3.2l-7 8 8.3 11h-6.5l-5.1-6.7L3.7 19H.4l7.6-8.7L0 0h6.7l4.6 6.1L16.6 0zm-1.1 17.2h1.8L5.7 1.8H3.8l11.7 15.4z" },
-        { label: "Telegram", path: "M21.6 1.3 18.5 18c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.3-4.9 9-8.1c.4-.3-.1-.5-.6-.2L5.9 11.7l-4.7-1.5C.2 9.8.2 9.1 1.4 8.6L20.3.7c.9-.3 1.7.3 1.3 2z" }
+        { label: "X / Twitter", href: L3.twitter, path: "M16.6 0h3.2l-7 8 8.3 11h-6.5l-5.1-6.7L3.7 19H.4l7.6-8.7L0 0h6.7l4.6 6.1L16.6 0zm-1.1 17.2h1.8L5.7 1.8H3.8l11.7 15.4z" },
+        { label: "Telegram", href: L3.telegram, path: "M21.6 1.3 18.5 18c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.3-4.9 9-8.1c.4-.3-.1-.5-.6-.2L5.9 11.7l-4.7-1.5C.2 9.8.2 9.1 1.4 8.6L20.3.7c.9-.3 1.7.3 1.3 2z" }
       ].map((s) => /* @__PURE__ */ jsx(
         "a",
         {
-          href: "#",
+          href: s.href,
+          target: "_blank",
+          rel: "noopener noreferrer",
           "aria-label": s.label,
           style: { color: "rgba(255,255,255,0.45)", display: "grid", placeItems: "center", transition: "color 200ms" },
           onMouseEnter: (e) => e.currentTarget.style.color = "rgba(255,255,255,0.85)",
@@ -11917,8 +11807,6 @@ const {
   PaymentRailsSection,
   NodeHostingSection,
   AgenticPaymentsSection,
-  CentralizedVPNSection,
-  BlockchainDHTSection,
   CompareSection,
   EcosystemSection,
   ContactSection,
@@ -11943,8 +11831,6 @@ function App() {
       /* @__PURE__ */ jsx(PaymentRailsSection, {}),
       /* @__PURE__ */ jsx(NodeHostingSection, {}),
       /* @__PURE__ */ jsx(AgenticPaymentsSection, {}),
-      /* @__PURE__ */ jsx(CentralizedVPNSection, {}),
-      /* @__PURE__ */ jsx(BlockchainDHTSection, {}),
       /* @__PURE__ */ jsx(CompareSection, {}),
       /* @__PURE__ */ jsx(ContactSection, {})
     ] }),
@@ -11956,10 +11842,10 @@ const $$Astro = createAstro();
 const $$Index = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Index;
-  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "App", App, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/Connect/AppData/Local/Temp/main-website-pr/src/components/App.tsx", "client:component-export": "default" })} ` })}`;
-}, "C:/Users/Connect/AppData/Local/Temp/main-website-pr/src/pages/index.astro", void 0);
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "App", App, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/Connect/AppData/Local/Temp/mw-deploy/src/components/App.tsx", "client:component-export": "default" })} ` })}`;
+}, "C:/Users/Connect/AppData/Local/Temp/mw-deploy/src/pages/index.astro", void 0);
 
-const $$file = "C:/Users/Connect/AppData/Local/Temp/main-website-pr/src/pages/index.astro";
+const $$file = "C:/Users/Connect/AppData/Local/Temp/mw-deploy/src/pages/index.astro";
 const $$url = "";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

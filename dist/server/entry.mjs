@@ -1,6 +1,6 @@
 import { renderers } from './renderers.mjs';
 import { c as createExports, s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_DGV0wVBb.mjs';
-import { manifest } from './manifest_DNnImzm1.mjs';
+import { manifest } from './manifest_CWfsT6jF.mjs';
 
 const serverIslandMap = new Map();;
 
@@ -20,8 +20,8 @@ const _manifest = Object.assign(manifest, {
 });
 const _args = {
     "mode": "standalone",
-    "client": "file:///C:/Users/Connect/AppData/Local/Temp/main-website-pr/dist/client/",
-    "server": "file:///C:/Users/Connect/AppData/Local/Temp/main-website-pr/dist/server/",
+    "client": "file:///C:/Users/Connect/AppData/Local/Temp/mw-deploy/dist/client/",
+    "server": "file:///C:/Users/Connect/AppData/Local/Temp/mw-deploy/dist/server/",
     "host": true,
     "port": 4321,
     "assets": "_astro",

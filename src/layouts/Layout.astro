@@ -21,11 +21,23 @@ const {
 } = Astro.props;
 const { locale, dir, ogImageAlt } = i18n;
 
+// Server's coarse UA-based mobile guess (middleware). Seeded onto the page so the
+// island hydrates with the same isMobile the server rendered with — no flash.
+const isMobile = Astro.locals.isMobile ?? false;
+
 // Canonical/social URL. Resolves against Astro.site when set; falls back to the
 // production homepage so OG tags carry an absolute URL even in static preview.
 const SITE = 'https://sentinel.co/';
 const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE).toString();
 const ogImage = new URL('/assets/img/og-cover.png', Astro.site ?? SITE).toString();
+
+// og:locale wants an underscore-joined territory form (en_US). Map each supported
+// UI locale to a representative region; fall back to the bare language code.
+const OG_LOCALES: Record<string, string> = {
+  en: 'en_US', es: 'es_ES', zh: 'zh_CN', ru: 'ru_RU', de: 'de_DE',
+  fr: 'fr_FR', ar: 'ar_AR', fa: 'fa_IR', pt: 'pt_BR',
+};
+const ogLocale = OG_LOCALES[locale] ?? locale;
 ---
 
 <!DOCTYPE html>
@@ -35,11 +47,13 @@ const ogImage = new URL('/assets/img/og-cover.png', Astro.site ?? SITE).toString
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href={canonical} />
 
     <!-- OpenGraph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Sentinel" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -54,14 +68,30 @@ const ogImage = new URL('/assets/img/og-cover.png', Astro.site ?? SITE).toString
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <meta name="theme-color" content="#0156FC" />
+
+    <!-- Critical inline CSS — applied on first paint, BEFORE the external
+         global.css <link> loads. Without this the un-styled skip link flashes
+         visibly in the top-left and the dark background pops in late (FOUC).
+         These rules duplicate the canonical ones in global.css; keep them in
+         sync if the skip link / base background design changes. -->
+    <style is:inline>
+      html, body { margin:0; background:#0b0c10; color:#eaeaea; }
+      /* Pre-hide the skip link until it is focused. Its full styling lives only
+         in the external global.css, so without this it paints visibly in the
+         top-left until that stylesheet loads. Mirrors global.css .sn-skip. */
+      .sn-skip { position:absolute; left:8px; top:8px; transform:translateY(-200%); }
+      .sn-skip:focus { transform:translateY(0); }
+    </style>
 
     <!-- Seed the active locale before the React island hydrates, so the client's
          globals bootstrap (lib/globals.ts) re-applies the same locale the server
          rendered with — keeping SSR markup and hydration in sync. -->
-    <script is:inline define:vars={{ locale }}>
+    <script is:inline define:vars={{ locale, isMobile }}>
       window.__locale = locale;
+      window.__isMobile = isMobile;
     </script>
   </head>
   <body>

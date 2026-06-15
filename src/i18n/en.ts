@@ -27,8 +27,8 @@ export const en = {
   // ─── Nav: Explore dropdown ───
   'nav.explore.statsTitle': 'Network Statistics',
   'nav.explore.statsDesc': 'Monitor real-time network performance and metrics.',
-  'nav.explore.dashboardTitle': 'Node Dashboard',
-  'nav.explore.dashboardDesc': 'Manage and monitor your node operations.',
+  'nav.explore.dashboardTitle': 'Node Explorer',
+  'nav.explore.dashboardDesc': 'Live map of active nodes, sessions, and data usage.',
   'nav.explore.explorerTitle': 'Explorer',
   'nav.explore.explorerDesc': 'Search and explore network transactions.',
   'nav.explore.ecosystemTitle': 'Ecosystem',
@@ -408,7 +408,7 @@ export const en = {
 
   // ─── Footer columns ───
   'footer.exploreStats': 'Network Statistics',
-  'footer.exploreDashboard': 'Node Dashboard',
+  'footer.exploreDashboard': 'Node Explorer',
   'footer.exploreNodeMap': 'Node Map',
   'footer.exploreExplorer': 'Explorer',
   'footer.dvpnShield': 'Sentinel Shield',

@@ -18,8 +18,19 @@ const { useState, useEffect, useRef } = React;
 const tr = (k, f) => (typeof window !== 'undefined' && window.T ? window.T(k, f) : (f != null ? f : k));
 
 /* ── Responsive hook (shared across all section files via window) ── */
+// Initial state is seeded from window.__isMobile (set by the middleware on the
+// server from the User-Agent, and stamped onto the page by Layout.astro before
+// hydration) — NOT from window.innerWidth. That keeps the server render and the
+// client's first render identical, so React hydrates without the desktop->mobile
+// reflow flash. The effect then re-reads the real viewport width and corrects if
+// the coarse UA guess was wrong (e.g. a narrow desktop window, or a phone the UA
+// regex missed). For the default 768px breakpoint the correction is almost always
+// a no-op; non-default breakpoints fall back to the width read on mount.
 function useIsMobile(bp = 768) {
-  const [m, setM] = useState(typeof window !== 'undefined' ? window.innerWidth <= bp : false);
+  const seed = (typeof window !== 'undefined' && typeof window.__isMobile === 'boolean')
+    ? window.__isMobile
+    : false;
+  const [m, setM] = useState(seed);
   useEffect(() => {
     const fn = () => setM(window.innerWidth <= bp);
     fn();
@@ -97,18 +108,18 @@ const NAV_MENUS = {
     cols: 2, width: 660,
     items: [
       { tk:'nav.explore.statsTitle',     dk:'nav.explore.statsDesc',     title:'Network Statistics', desc:'Monitor real-time network performance and metrics.', href:L.stats    },
-      { tk:'nav.explore.dashboardTitle', dk:'nav.explore.dashboardDesc', title:'Node Dashboard',     desc:'Manage and monitor your node operations.',           href:L.nodes    },
+      { tk:'nav.explore.dashboardTitle', dk:'nav.explore.dashboardDesc', title:'Node Explorer',      desc:'Live map of active nodes, sessions, and data usage.', href:L.nodes    },
       { tk:'nav.explore.explorerTitle',  dk:'nav.explore.explorerDesc',  title:'Explorer',           desc:'Search and explore network transactions.',           href:L.explorer },
-      { tk:'nav.explore.ecosystemTitle', dk:'nav.explore.ecosystemDesc', title:'Ecosystem',          desc:'Discover apps and services in our ecosystem.',       href:L.dapps    },
+      { tk:'nav.explore.ecosystemTitle', dk:'nav.explore.ecosystemDesc', title:'Ecosystem',          desc:'Discover apps and services in our ecosystem.',       href:'#use-dvpn' },
     ],
   },
   dVPN: {
     cols: 2, width: 660,
     items: [
-      { tk:'nav.dvpn.downloadTitle', dk:'nav.dvpn.downloadDesc', title:'Download Apps', desc:'Sentinel Shield, Norse, Valt, Meile and more.',    href:L.dapps        },
+      { tk:'nav.dvpn.downloadTitle', dk:'nav.dvpn.downloadDesc', title:'Download Apps', desc:'Sentinel Shield, Norse, Valt, Meile and more.',    href:'#use-dvpn'    },
       { tk:'nav.dvpn.coverageTitle', dk:'nav.dvpn.coverageDesc', title:'Coverage',      desc:'110+ Countries, 430+ Cities.',                     href:L.nodeMap      },
       { tk:'nav.dvpn.learnTitle',    dk:'nav.dvpn.learnDesc',    title:'Learn',         desc:'Explore guides, documentation, and more.',         href:L.docs         },
-      { tk:'nav.dvpn.runNodeTitle',  dk:'nav.dvpn.runNodeDesc',  title:'Run a Node',    desc:'Support the network and earn rewards.',            href:L.hostNode     },
+      { tk:'nav.dvpn.runNodeTitle',  dk:'nav.dvpn.runNodeDesc',  title:'Run a Node',    desc:'Support the network and earn rewards.',            href:'#host-dvpn'   },
       { tk:'nav.dvpn.buildTitle',    dk:'nav.dvpn.buildDesc',    title:'Build',         desc:'Create your own applications on the network.',     href:L.sdkDocs      },
       { tk:'nav.dvpn.earnTitle',     dk:'nav.dvpn.earnDesc',     title:'Earn',          desc:'Monetize your bandwidth and more.',                href:L.nodeEarnings },
     ],
@@ -148,12 +159,19 @@ function DropdownPanel({ menu }) {
         gridTemplateColumns:`repeat(${menu.cols}, 1fr)`,
         gap:'8px 16px',
       }}>
-        {menu.items.map(it => (
-          <a key={it.title} href={it.href || '#'} target="_blank" rel="noopener" className="sn-dd-item">
+        {menu.items.map(it => {
+          // In-page anchors (href="#…") jump to a section on this page — they must
+          // stay in the same tab, not open a new one like the external links do.
+          const anchor = (it.href || '').charAt(0) === '#';
+          return (
+          <a key={it.title} href={it.href || '#'}
+             target={anchor ? undefined : '_blank'} rel={anchor ? undefined : 'noopener noreferrer'}
+             className="sn-dd-item">
             <div className="sn-dd-title">{it.tk ? tr(it.tk, it.title) : it.title}</div>
             <div className="sn-dd-desc">{it.dk ? tr(it.dk, it.desc) : it.desc}</div>
           </a>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -199,13 +217,16 @@ function LangSwitcher() {
   const choose = (loc) => {
     if (loc === current) { setOpen(false); return; }
     // 1 year, site-wide. Reloading lets the server re-render in the new locale.
-    document.cookie = `${meta.cookie}=${encodeURIComponent(loc)}; path=/; max-age=31536000; samesite=lax`;
+    // Secure only over HTTPS so plain-http dev (e.g. http://127.0.0.1) can still
+    // write it — browsers drop Secure cookies on non-secure origins.
+    const secure = location.protocol === 'https:' ? '; secure' : '';
+    document.cookie = `${meta.cookie}=${encodeURIComponent(loc)}; path=/; max-age=31536000; samesite=lax${secure}`;
     window.location.reload();
   };
 
   return (
     <div style={{ position:'relative' }} onMouseEnter={enter} onMouseLeave={leave}>
-      <button type="button" aria-haspopup="true" aria-expanded={open} aria-label={tr('lang.label', 'Language')}
+      <button type="button" aria-haspopup="menu" aria-expanded={open} aria-label={tr('lang.label', 'Language')}
         onClick={() => setOpen(o => !o)}
         style={{ display:'inline-flex', alignItems:'center', gap:7, height:34, padding:'0 12px', borderRadius:999, cursor:'pointer', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.14)', fontFamily:T.fontHeading, fontWeight:500, fontSize:13.5, color:'rgba(234,234,234,0.92)', transition:'background 160ms, border-color 160ms' }}
         onMouseOver={e => { e.currentTarget.style.background='rgba(255,255,255,0.08)'; }}
@@ -257,7 +278,7 @@ function BuyP2P() {
         <div style={{ position:'absolute', top:'100%', right:0, paddingTop:10, zIndex:60, animation:'sn-buy-in 220ms cubic-bezier(.22,.61,.36,1) both' }}>
           <div style={{ width:232, boxSizing:'border-box', background:'#0c0c0c', border:'1px solid rgba(255,255,255,0.08)', borderRadius:18, padding:10, boxShadow:'0 30px 70px -20px rgba(0,0,0,0.75)', display:'flex', flexDirection:'column', gap:2 }}>
             {BUY_VENUES.map(v => (
-              <a key={v.name} href={v.href} target="_blank" rel="noopener" className="sn-buy-row"
+              <a key={v.name} href={v.href} target="_blank" rel="noopener noreferrer" className="sn-buy-row"
                  style={{ display:'flex', alignItems:'center', gap:11, padding:'9px 10px', borderRadius:12, textDecoration:'none' }}>
                 {v.logo}
                 <span style={{ display:'flex', flexDirection:'column', gap:1 }}>
@@ -301,17 +322,22 @@ function Header() {
             <SentinelMark size={28} color="#0156FC" />
             <span style={{ fontFamily:T.fontHeading, fontWeight:400, fontSize:17, color:'white' }}>Sentinel</span>
           </a>
-          <button onClick={() => setMobileOpen(o => !o)} aria-label="Menu" aria-expanded={mobileOpen}
-            style={{ width:42, height:42, display:'grid', placeItems:'center', background:'transparent', border:'1px solid rgba(255,255,255,0.14)', borderRadius:12, cursor:'pointer' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">
-              {mobileOpen
-                ? <g><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></g>
-                : <g><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></g>}
-            </svg>
-          </button>
+          {/* Language switcher sits in the always-visible top bar, left of the
+              hamburger, so the locale is selectable without opening the menu. */}
+          <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+            <LangSwitcher />
+            <button onClick={() => setMobileOpen(o => !o)} aria-label={tr('nav.menu', 'Menu')} aria-expanded={mobileOpen} aria-controls="sn-mobile-nav"
+              style={{ width:42, height:42, display:'grid', placeItems:'center', background:'transparent', border:'1px solid rgba(255,255,255,0.14)', borderRadius:12, cursor:'pointer' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">
+                {mobileOpen
+                  ? <g><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></g>
+                  : <g><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></g>}
+              </svg>
+            </button>
+          </div>
         </div>
         {mobileOpen && (
-          <div style={{ height:'calc(100vh - 62px)', overflowY:'auto', WebkitOverflowScrolling:'touch', padding:'12px clamp(16px,4vw,24px) 40px', display:'flex', flexDirection:'column', gap:6 }}>
+          <nav id="sn-mobile-nav" aria-label={tr('nav.primary', 'Primary')} style={{ height:'calc(100vh - 62px)', overflowY:'auto', WebkitOverflowScrolling:'touch', padding:'12px clamp(16px,4vw,24px) 40px', display:'flex', flexDirection:'column', gap:6 }}>
             {navItems.map(l => {
               const menu = NAV_MENUS[l];
               const isOpen = acc === l;
@@ -327,35 +353,39 @@ function Header() {
                   </button>
                   {isOpen && (
                     <div style={{ display:'flex', flexDirection:'column', gap:2, padding:'0 4px 14px' }}>
-                      {menu.items.map(it => (
-                        <a key={it.title} href={it.href || '#'} target="_blank" rel="noopener" onClick={() => setMobileOpen(false)}
+                      {menu.items.map(it => {
+                        const anchor = (it.href || '').charAt(0) === '#';
+                        return (
+                        <a key={it.title} href={it.href || '#'}
+                          target={anchor ? undefined : '_blank'} rel={anchor ? undefined : 'noopener noreferrer'}
+                          onClick={() => setMobileOpen(false)}
                           style={{ display:'flex', flexDirection:'column', gap:3, padding:'11px 12px', borderRadius:12, textDecoration:'none', background:'rgba(255,255,255,0.03)' }}>
                           <span style={{ fontFamily:T.fontHeading, fontWeight:500, fontSize:15.5, color:'rgba(255,255,255,0.95)' }}>{it.title}</span>
                           <span style={{ fontFamily:T.fontBody, fontSize:13, lineHeight:1.35, color:'rgba(255,255,255,0.45)' }}>{it.desc}</span>
                         </a>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </div>
               );
             })}
             <div style={{ display:'flex', alignItems:'center', gap:20, marginTop:18, padding:'0 4px' }}>
-              <a className="sn-header-icon" aria-label="GitHub" href="https://github.com/sentinel-official" target="_blank" rel="noopener" onClick={() => setMobileOpen(false)} style={{ textDecoration:'none' }}>
+              <a className="sn-header-icon" aria-label="GitHub" href="https://github.com/sentinel-official" target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)} style={{ textDecoration:'none' }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
               </a>
-              <LangSwitcher />
             </div>
             <span style={{ fontFamily:T.fontMono, fontSize:11, fontWeight:600, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(255,255,255,0.45)', marginTop:18, padding:'0 4px' }}>{tr('nav.buyP2P', 'Buy P2P')}</span>
             <div style={{ display:'flex', alignItems:'center', gap:8, marginTop:8, padding:'0 4px', flexWrap:'wrap' }}>
               {BUY_VENUES.map(v => (
-                <a key={v.name} href={v.href} target="_blank" rel="noopener" onClick={() => setMobileOpen(false)}
+                <a key={v.name} href={v.href} target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)}
                    style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'8px 13px 8px 9px', borderRadius:999, textDecoration:'none', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.10)' }}>
                   {v.logo}
                   <span style={{ fontFamily:T.fontHeading, fontWeight:500, fontSize:14, color:'rgba(255,255,255,0.9)' }}>{v.name}</span>
                 </a>
               ))}
             </div>
-          </div>
+          </nav>
         )}
       </header>
     );
@@ -368,30 +398,43 @@ function Header() {
           <SentinelMark size={32} color="#0156FC" />
           <span style={{ fontFamily:T.fontHeading, fontWeight:400, fontSize:18, color:'white' }}>Sentinel</span>
         </a>
-        <nav style={{ display:'flex', alignItems:'center', gap:0, height:68, position:'relative', margin:'0 auto' }}
-             onMouseLeave={() => setOpen(null)}>
+        <nav aria-label={tr('nav.primary', 'Primary')}
+             style={{ display:'flex', alignItems:'center', gap:0, height:68, position:'relative', margin:'0 auto' }}
+             onMouseLeave={() => setOpen(null)}
+             onKeyDown={(e) => { if (e.key === 'Escape') setOpen(null); }}>
           {navItems.map(l => {
             const hasMenu = !!NAV_MENUS[l];
+            const isOpen = open === l;
+            const label = tr(NAV_LABEL_KEYS[l] || '', l);
+            if (!hasMenu) {
+              return (
+                <a key={l} href="#" className="sn-nav-link"
+                   onMouseEnter={() => setOpen(null)} onFocus={() => setOpen(null)}>
+                  {label}
+                </a>
+              );
+            }
             return (
-              <a key={l} href="#" className="sn-nav-link" data-open={open===l ? 'true' : 'false'}
-                 onMouseEnter={() => setOpen(hasMenu ? l : null)}>
-                {tr(NAV_LABEL_KEYS[l] || '', l)}
-                {hasMenu && (
-                  <svg className="sn-caret" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true">
-                    <path d="M0.5 1L4.5 5L8.5 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                )}
-              </a>
+              <button key={l} type="button" className="sn-nav-link" data-open={isOpen ? 'true' : 'false'}
+                 aria-haspopup="true" aria-expanded={isOpen} aria-controls={`sn-nav-menu-${l}`}
+                 onMouseEnter={() => setOpen(l)} onFocus={() => setOpen(l)}
+                 onClick={() => setOpen(o => o === l ? null : l)}
+                 onKeyDown={(e) => { if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(l); } }}>
+                {label}
+                <svg className="sn-caret" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true">
+                  <path d="M0.5 1L4.5 5L8.5 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
             );
           })}
           {open && NAV_MENUS[open] && (
-            <div key={open} style={{ position:'absolute', top:'100%', left:'50%', paddingTop:12, zIndex:60, animation:'sn-dd-in 220ms cubic-bezier(.22,.61,.36,1) both' }}>
+            <div key={open} id={`sn-nav-menu-${open}`} style={{ position:'absolute', top:'100%', left:'50%', paddingTop:12, zIndex:60, animation:'sn-dd-in 220ms cubic-bezier(.22,.61,.36,1) both' }}>
               <DropdownPanel menu={NAV_MENUS[open]} />
             </div>
           )}
         </nav>
         <div style={{ display:'flex', alignItems:'center', gap:18, position:'absolute', right:'clamp(16px, 2.5vw, 24px)' }}>
-          <a className="sn-header-icon" aria-label="GitHub" href="https://github.com/sentinel-official" target="_blank" rel="noopener" style={{ textDecoration:'none' }}>
+          <a className="sn-header-icon" aria-label="GitHub" href="https://github.com/sentinel-official" target="_blank" rel="noopener noreferrer" style={{ textDecoration:'none' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
           </a>
           <LangSwitcher />
@@ -641,7 +684,7 @@ function StatsStrip() {
           ))}
         </div>
         <div data-mark="sn-stats-cta" style={{ display:'flex', justifyContent:'center', marginTop:'clamp(18px,2.4vw,26px)' }}>
-          <a href={L.stats} target="_blank" rel="noopener" className="sn-stats-cta"
+          <a href={L.stats} target="_blank" rel="noopener noreferrer" className="sn-stats-cta"
              style={{ display:'inline-flex', alignItems:'center', gap:12, padding:'12px 18px', textDecoration:'none', background:'linear-gradient(180deg, rgba(255,255,255,0.040), rgba(255,255,255,0.012))', border:`1px solid ${hairline}`, borderRadius:14 }}>
             <span style={{ width:38, height:38, borderRadius:11, flexShrink:0, background:'rgba(1,86,252,0.12)', border:'1px solid rgba(94,148,255,0.30)', display:'inline-flex', alignItems:'center', justifyContent:'center' }}>
               <SentinelMark size={20} color="#2670FF" />
@@ -711,7 +754,7 @@ function BuilderStackSection() {
   const chipSub = { fontFamily:T.fontBody, fontSize:12, lineHeight:1.35, color:'rgba(214,222,240,0.62)' };
   const actionStyle = { display:'flex', alignItems:'center', justifyContent:'center', gap:9, alignSelf:'stretch', width:'100%', height:46, padding:'0 21px', borderRadius:999, border:'1px solid rgba(125,160,255,0.35)', background:'linear-gradient(180deg, rgba(56,124,255,0.18), rgba(38,112,255,0.07))', boxShadow:'inset 0 1px 0 rgba(255,255,255,0.10)', fontFamily:T.fontHeading, fontWeight:600, fontSize:14, letterSpacing:'0.01em', color:'#b9ceff', textDecoration:'none', whiteSpace:'nowrap', boxSizing:'border-box' };
   const actionRow = (label, href) => (
-    <a href={href} target="_blank" rel="noopener" className="sn-layer-act" style={actionStyle}>
+    <a href={href} target="_blank" rel="noopener noreferrer" className="sn-layer-act" style={actionStyle}>
       {label}
       <span className="sn-layer-act-arrow" aria-hidden="true">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -793,7 +836,7 @@ function BuilderStackSection() {
           </span>
           <div className="sn-tile-grid">
             {BUY_VENUES.map(v => (
-              <a key={v.name} href={v.href} target="_blank" rel="noopener" className="sn-buy-row" style={{ ...rowChip, textDecoration:'none' }}>
+              <a key={v.name} href={v.href} target="_blank" rel="noopener noreferrer" className="sn-buy-row" style={{ ...rowChip, textDecoration:'none' }}>
                 <span style={logoTile}>{v.logo}</span>
                 <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0 }}>
                   <span style={chipName}>{v.name}</span>
@@ -877,14 +920,14 @@ function BuilderStackSection() {
         <div style={{ display:'grid', gridTemplateColumns:isMobile?'1fr':'repeat(2, minmax(0,1fr))', gridTemplateRows:isMobile?undefined:'repeat(6, auto)', gap:23 }}>
           {layers.map(c => (
             <div key={c.title} className="sn-rcard" style={{ position:'relative', display:isMobile?'flex':'grid', flexDirection:'column', gridTemplateRows:isMobile?undefined:'subgrid', gridRow:isMobile?undefined:'span 3', gap:isMobile?21:undefined, background:'linear-gradient(180deg, #17181c 0%, #121317 100%)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:20, padding:isMobile?'25px 21px':0, boxShadow:'inset 0 1px 0 rgba(255,255,255,0.05)' }}>
-              <div style={{ display:'flex', alignItems:'center', gap:12, margin:isMobile?0:'clamp(36px,2.9vw,45px) clamp(32px,2.5vw,41px) 0' }}>
+              <div style={{ display:'flex', alignItems:'center', gap:12, margin:isMobile?0:'clamp(36px,2.9vw,45px) clamp(32px,2.5vw,41px) 0', justifyContent:isMobile?'center':'flex-start', textAlign:isMobile?'center':'left' }}>
                 {iconBadge(c.icon)}
-                <h3 style={{ flex:1, minWidth:0, fontFamily:T.fontHeading, fontWeight:600, fontSize:isMobile?17:20, lineHeight:1.25, color:T.fog, margin:0, letterSpacing:'-0.005em' }}>{c.title}</h3>
+                <h3 style={{ flex:isMobile?'0 1 auto':1, minWidth:0, fontFamily:T.fontHeading, fontWeight:600, fontSize:isMobile?17:20, lineHeight:1.25, color:T.fog, margin:0, letterSpacing:'-0.005em' }}>{c.title}</h3>
               </div>
               <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:12, margin:isMobile?0:'0 clamp(32px,2.5vw,41px)', padding:0 }}>
                 {c.points.map(pt => (
-                  <li key={pt} style={{ display:'flex', alignItems:'flex-start', gap:11 }}>
-                    <span aria-hidden="true" style={{ width:6, height:6, borderRadius:'50%', background:'#5e94ff', flexShrink:0, marginTop:8 }} />
+                  <li key={pt} style={{ display:'flex', alignItems:isMobile?'center':'flex-start', justifyContent:isMobile?'center':'flex-start', gap:11, textAlign:isMobile?'center':'left' }}>
+                    <span aria-hidden="true" style={{ width:6, height:6, borderRadius:'50%', background:'#5e94ff', flexShrink:0, marginTop:isMobile?0:8 }} />
                     <span style={{ fontFamily:T.fontBody, fontSize:14.5, lineHeight:'22px', color:T.onDark80 }}>{pt}</span>
                   </li>
                 ))}
@@ -958,8 +1001,8 @@ function OpenSourceSection() {
         <div data-mark="sn-oss-v8" style={{ position:'relative', overflow:'hidden', display:'flex', flexDirection:'column', gap:'clamp(20px,2.4vw,26px)', borderRadius:24, border:'1px solid rgba(255,255,255,0.10)', background:'radial-gradient(560px 240px at 92% -10%, rgba(1,86,252,0.14), transparent 65%), linear-gradient(160deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 55%, rgba(1,86,252,0.06) 100%)', padding: isMobile ? '24px 20px' : 'clamp(26px,2.8vw,36px) clamp(26px,3vw,40px)' }}>
           <svg aria-hidden="true" width="190" height="190" viewBox="0 0 24 24" fill="rgba(157,188,255,0.05)" style={{ position:'absolute', right:-30, bottom:-56, transform:'rotate(-8deg)', pointerEvents:'none' }}><path d={SN_GH_PATH}/></svg>
           {/* header row: statement left, GitHub CTA pinned right */}
-          <div style={{ position:'relative', display:'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', gap: isMobile ? 16 : 'clamp(24px,3vw,44px)' }}>
-            <h2 style={{ flex:1, minWidth:0, fontFamily:T.fontHeading, fontWeight:600, fontSize:'clamp(18px,1.9vw,23px)', lineHeight:1.45, letterSpacing:'-0.01em', color:T.fog, margin:0, maxWidth:760 }}>
+          <div style={{ position:'relative', display:'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'center' : 'center', gap: isMobile ? 16 : 'clamp(24px,3vw,44px)' }}>
+            <h2 style={{ flex:1, minWidth:0, fontFamily:T.fontHeading, fontWeight:600, fontSize:'clamp(18px,1.9vw,23px)', lineHeight:1.45, letterSpacing:'-0.01em', color:T.fog, margin:0, maxWidth:760, textAlign:isMobile?'center':'left' }}>
               <span style={{ color:T.onDark60 }}>{tr('oss.closedSource', 'Closed-source VPNs ask for your trust.')}</span>{' '}
               {tr('oss.openStatement', 'Sentinel is the only open-source, decentralized framework to build a VPN application on — full transparency into the application-side code and the server-side code alike.')}
             </h2>
@@ -972,17 +1015,17 @@ function OpenSourceSection() {
           </div>
           {/* body: pipeline + languages as equal four-row columns */}
           <div style={{ position:'relative', display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1.15fr 1fr', gap: isMobile ? '22px' : 'clamp(28px,3.4vw,52px)', borderTop:ossDivider, paddingTop:'clamp(18px,2.2vw,26px)' }}>
-            <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-              <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:14, alignItems:isMobile?'center':'stretch' }}>
+              <div style={{ display:'flex', flexDirection:'column', gap:5, textAlign:isMobile?'center':'left' }}>
                 <h3 style={ossColHead}>{tr('oss.everyLayerHeading', 'Every layer of Sentinel is open source')}</h3>
                 <p style={ossColSub}>{tr('oss.everyLayerSubhead', 'Nothing in the stack is closed — read, audit, and fork all of it.')}</p>
               </div>
-              <div style={{ position:'relative', display:'flex', flexDirection:'column', justifyContent:'space-between', gap:13, flex:1 }}>
-                <span aria-hidden="true" style={{ position:'absolute', left:5, top:12, bottom:12, width:2, borderRadius:2, background:'linear-gradient(180deg, rgba(38,112,255,0.85) 0%, rgba(38,112,255,0.2) 100%)' }} />
+              <div style={{ position:'relative', display:'flex', flexDirection:'column', justifyContent:'space-between', gap:13, flex:1, alignItems:isMobile?'center':'stretch', width:isMobile?'100%':'auto' }}>
+                {!isMobile && <span aria-hidden="true" style={{ position:'absolute', left:5, top:12, bottom:12, width:2, borderRadius:2, background:'linear-gradient(180deg, rgba(38,112,255,0.85) 0%, rgba(38,112,255,0.2) 100%)' }} />}
                 {stack.map(s => (
-                  <div key={s.k} style={{ display:'flex', alignItems:'flex-start', gap:13 }}>
-                    <span aria-hidden="true" style={{ position:'relative', width:12, height:12, flexShrink:0, marginTop:5, borderRadius:'50%', background:'#2670FF', boxShadow:'0 0 0 3px rgba(38,112,255,0.22), 0 0 14px rgba(38,112,255,0.7)' }} />
-                    <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0, flex:1 }}>
+                  <div key={s.k} style={{ display:'flex', alignItems:isMobile?'center':'flex-start', justifyContent:isMobile?'center':'flex-start', gap:13 }}>
+                    <span aria-hidden="true" style={{ position:'relative', width:12, height:12, flexShrink:0, marginTop:isMobile?0:5, borderRadius:'50%', background:'#2670FF', boxShadow:'0 0 0 3px rgba(38,112,255,0.22), 0 0 14px rgba(38,112,255,0.7)' }} />
+                    <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0, flex:isMobile?'0 1 auto':1, textAlign:isMobile?'center':'left' }}>
                       <span style={{ fontFamily:T.fontHeading, fontWeight:600, fontSize:15.5, color:T.fog, lineHeight:1.2 }}>{s.k}</span>
                       <span style={{ fontFamily:T.fontBody, fontSize:13.5, lineHeight:'19px', color:T.onDark60 }}>{s.d}</span>
                     </span>
@@ -990,12 +1033,12 @@ function OpenSourceSection() {
                 ))}
               </div>
             </div>
-            <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-              <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:14, alignItems:isMobile?'center':'stretch' }}>
+              <div style={{ display:'flex', flexDirection:'column', gap:5, textAlign:isMobile?'center':'left' }}>
                 <h3 style={ossColHead}>{tr('oss.buildLanguageHeading', 'Build in the language you already use')}</h3>
                 <p style={ossColSub}>{tr('oss.buildLanguageSubhead', 'Four official SDKs — every one of them open source.')}</p>
               </div>
-              <div style={{ display:'flex', flexDirection:'column', justifyContent:'space-between', gap:10, flex:1 }}>
+              <div style={{ display:'flex', flexDirection:'column', justifyContent:'space-between', gap:10, flex:1, width:isMobile?'100%':'auto' }}>
                 {langs.map(l => <LangBadge key={l.name} mark={l.mark} name={l.name} />)}
               </div>
             </div>
@@ -1140,6 +1183,7 @@ const BUILD_PLATFORMS = [
 ];
 
 function SDKSection() {
+  const isMobile = useIsMobile();
   return (
     <section id="build-dvpn" style={{ background:'radial-gradient(1000px 480px at 12% -8%, rgba(1,86,252,0.06), transparent 60%), radial-gradient(820px 420px at 94% 36%, rgba(1,86,252,0.04), transparent 60%), linear-gradient(180deg, #f4f6fb 0%, #fbfbfb 28%, #fbfbfb 100%)', ...atomStyles.section, scrollMarginTop:90 }}>
       <style>{`
@@ -1155,7 +1199,7 @@ function SDKSection() {
       `}</style>
       <div style={{ ...atomStyles.container, display:'flex', flexDirection:'column', gap:'clamp(36px,5vw,52px)' }}>
         {/* Text header */}
-        <div style={{ display:'flex', flexDirection:'column', gap:18, maxWidth:720 }}>
+        <div style={{ display:'flex', flexDirection:'column', gap:18, maxWidth:720, alignItems:isMobile?'center':'flex-start', textAlign:isMobile?'center':'left', alignSelf:isMobile?'center':'auto' }}>
           <StepTag n={2} light />
           <h2 style={{ ...atomStyles.h1Light, fontSize:'clamp(26px,3.2vw,38px)', margin:0 }}>{tr('sdk.buildPlatformHeading', 'Build a dVPN for Any Platform')}</h2>
           <p style={{ ...atomStyles.leadLight, maxWidth:680 }}>{tr('sdk.buildPlatformBody', 'The Sentinel SDK runs on phones, desktops, browsers, TVs and servers. You build the app and own the brand. The network handles bandwidth, routing and payments.')}</p>
@@ -1163,7 +1207,7 @@ function SDKSection() {
         {/* Platform grid — seamless hairline cells, aligned rows */}
         <div className="sn-build-grid">
           {BUILD_PLATFORMS.map(p => (
-            <a key={p.key} href={L.sdkDocs} target="_blank" rel="noopener" className="sn-build-card"
+            <a key={p.key} href={L.sdkDocs} target="_blank" rel="noopener noreferrer" className="sn-build-card"
                style={{ background:T.white, padding:'26px 24px 20px', display:'flex', flexDirection:'column', gap:16, textDecoration:'none', minHeight:224, boxSizing:'border-box' }}>
               <div style={{ display:'flex', alignItems:'center', gap:13 }}>
                 <div style={{ width:44, height:44, borderRadius:12, background:T.snow, border:`1px solid ${T.line200}`, display:'grid', placeItems:'center', flexShrink:0 }}>{PlatformIcons[p.key]}</div>
@@ -1261,5 +1305,5 @@ function PaymentRailsSection() {
 
 Object.assign(window, {
   SentinelMark, ChipDark, ChipLight, BtnPrimary, BtnGhost, atomStyles, CodeWindow,
-  Header, Hero, SupportersStrip, StatsStrip, ResilienceCards, StepsSection, SDKSection, PaymentRailsSection,
+  Header, Hero, StatsStrip, ResilienceCards, StepsSection, SDKSection, PaymentRailsSection,
 });

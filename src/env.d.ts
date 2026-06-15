@@ -14,6 +14,9 @@ declare global {
         description: string;
         ogImageAlt: string;
       };
+      // Coarse UA-based mobile guess (src/middleware.ts), seeded into the island
+      // so the server renders the correct responsive layout on first paint.
+      isMobile: boolean;
     }
   }
 }

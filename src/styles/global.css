@@ -665,6 +665,7 @@ html {
   font-family: var(--sn-font-body);
   color: var(--sn-fg-secondary);
   background: var(--sn-bg);
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -672,6 +673,8 @@ html {
 
 body {
   margin: 0;
+  padding: 0;
+  overflow-x: hidden;
   font-size: var(--sn-text-body-size);
   line-height: var(--sn-text-body-lh);
 }
@@ -760,8 +763,6 @@ button { font-family: inherit; font-size: inherit; }
 /* ─────────────────────────────────────── */
 
 
-    html, body { margin:0; padding:0; background:#0c0c0c; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
-
     @keyframes sn-marquee {
       from { transform:translateX(0); }
       to   { transform:translateX(-50%); }
@@ -821,8 +822,13 @@ button { font-family: inherit; font-size: inherit; }
       font-family:"Lato",system-ui,sans-serif; font-weight:500; font-size:16px;
       color:rgba(255,255,255,0.9); text-decoration:none;
       transition:color 200ms;
+      /* triggers render as <button>; strip the native chrome so they match links */
+      background:transparent; border:none; line-height:inherit; appearance:none;
     }
     .sn-nav-link:hover { color:#ffffff; }
+    .sn-nav-link:focus-visible {
+      outline:2px solid rgba(120,170,255,0.9); outline-offset:-4px; border-radius:8px; color:#ffffff;
+    }
     .sn-nav-link .sn-caret { transition:transform 220ms cubic-bezier(.22,.61,.36,1); opacity:0.7; }
     .sn-nav-link[data-open="true"] .sn-caret { transform:rotate(180deg); opacity:1; }
     .sn-dd-item {
