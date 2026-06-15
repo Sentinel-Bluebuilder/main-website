@@ -1,8 +1,9 @@
-import { e as createComponent, r as renderTemplate, k as renderSlot, l as renderHead, g as addAttribute, h as createAstro, n as renderComponent } from '../chunks/astro/server_CZdgb9a8.mjs';
+import { e as createComponent, r as renderTemplate, k as renderSlot, l as renderHead, n as defineScriptVars, g as addAttribute, h as createAstro, o as renderComponent } from '../chunks/astro/server_BvRpWg5T.mjs';
 import 'piccolore';
 import 'clsx';
 /* empty css                                 */
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
+import '../chunks/globals_DHLWSNFs.mjs';
 import * as React$1 from 'react';
 export { renderers } from '../renderers.mjs';
 
@@ -14,164 +15,24 @@ const $$Astro$1 = createAstro();
 const $$Layout = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$1, $$props, $$slots);
   Astro2.self = $$Layout;
+  const i18n = Astro2.locals.i18n;
   const {
-    title = "Sentinel \u2014 Build your own decentralized VPN.",
-    description = "Sentinel is a Layer-1 decentralized bandwidth network. Bring your protocol, your client, your distribution \u2014 we handle the network."
+    title = i18n.title,
+    description = i18n.description
   } = Astro2.props;
+  const { locale, dir, ogImageAlt } = i18n;
   const SITE = "https://sentinel.co/";
   const canonical = new URL(Astro2.url.pathname, Astro2.site ?? SITE).toString();
   const ogImage = new URL("/assets/img/og-cover.png", Astro2.site ?? SITE).toString();
-  return renderTemplate(_a || (_a = __template(['<html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>', '</title><meta name="description"', '><link rel="canonical"', '><!-- OpenGraph --><meta property="og:type" content="website"><meta property="og:site_name" content="Sentinel"><meta property="og:title"', '><meta property="og:description"', '><meta property="og:url"', '><meta property="og:image"', '><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Sentinel \u2014 decentralized Layer-1 bandwidth network"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@sentinelp2p"><meta name="twitter:title"', '><meta name="twitter:description"', '><meta name="twitter:image"', '><meta name="theme-color" content="#0156FC">', '</head> <body> <a class="sn-skip" href="#main">Skip to content</a> ', ' <!-- Ambient music: OFF by default, pure intent toggle. --> <div id="sn-music"> <span id="sn-music-label" aria-hidden="true">Sound &middot; off</span> <button id="sn-music-btn" type="button" aria-pressed="false" aria-label="Unmute ambient music" title="Unmute ambient music"> <svg class="sn-music-play" width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true"><path d="M8.2 1.1a.7.7 0 0 1 1.1.6v10.6a.7.7 0 0 1-1.1.6L4.6 10H2.4A1.4 1.4 0 0 1 1 8.6V5.4C1 4.6 1.6 4 2.4 4h2.2l3.6-2.9z" fill="currentColor"></path><path d="M11.2 4.8 14.8 9.2M14.8 4.8 11.2 9.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg> <span class="sn-music-bars" aria-hidden="true"><i></i><i></i><i></i></span> </button> <audio id="sn-music-audio" src="/assets/media/ambient-music.mp3" loop preload="auto"></audio> </div> <script src="/scripts/music.js"><\/script> </body> </html>'])), title, addAttribute(description, "content"), addAttribute(canonical, "href"), addAttribute(title, "content"), addAttribute(description, "content"), addAttribute(canonical, "content"), addAttribute(ogImage, "content"), addAttribute(title, "content"), addAttribute(description, "content"), addAttribute(ogImage, "content"), renderHead(), renderSlot($$result, $$slots["default"]));
-}, "C:/Users/Connect/Desktop/sentinel-homepage/website/src/layouts/Layout.astro", void 0);
-
-const RESOURCES = {
-  // Hero / textures
-  heroVideo: "/assets/media/heroVideo.mp4",
-  ambientMusic: "/assets/media/ambient-music.mp3",
-  noiseBg: "/assets/img/noiseBg.png",
-  meshBg: "/assets/img/meshBg.png",
-  // Product screenshots
-  screenPlan1: "/assets/img/screenPlan1.png",
-  screenPlan2: "/assets/img/screenPlan2.jpg",
-  screenPlan3: "/assets/img/screenPlan3.png",
-  screenNode1: "/assets/img/screenNode1.jpg",
-  screenNode2: "/assets/img/screenNode2.jpg",
-  screenNode3: "/assets/img/screenNode3.jpg",
-  // Supporter logos
-  logoFetch: "/assets/img/logoFetch.svg",
-  logoGalaxy: "/assets/img/logoGalaxy.svg",
-  logoTrgc: "/assets/img/logoTrgc.svg",
-  logoCosmos: "/assets/img/logoCosmos.svg",
-  // Payment rails
-  payUsdc: "/assets/img/payUsdc.svg",
-  payMoonpay: "/assets/img/payMoonpay.svg",
-  payEthereum: "/assets/img/payEthereum.svg",
-  payCoinbase: "/assets/img/payCoinbase.svg",
-  payX402: "/assets/img/payX402.svg",
-  payGoogle: "/assets/img/payGoogle.svg",
-  payApple: "/assets/img/payApple.svg",
-  payBitcoin: "/assets/img/payBitcoin.svg",
-  payStripe: "/assets/img/payStripe.svg",
-  // Ecosystem apps
-  ecoEncryptsim: "/assets/img/ecoEncryptsim.svg",
-  ecoValt: "/assets/img/ecoValt.svg",
-  ecoNorse: "/assets/img/ecoNorse.svg",
-  ecoSentinelShield: "/assets/img/ecoSentinelShield.svg",
-  ecoIndependent: "/assets/img/ecoIndependent.svg",
-  ecoRyn: "/assets/img/ecoRyn.png",
-  ecoMeile: "/assets/img/ecoMeile.png",
-  // Compare
-  cmpI2p: "/assets/img/cmpI2p.svg"
-};
-
-const noise = RESOURCES.noiseBg;
-const SENTINEL = {
-  // Brand
-  blue: "#0156FC",
-  blueLight: "#2670FF",
-  blueTint: "rgba(1, 86, 252, 0.20)",
-  blueTint08: "rgba(1, 86, 252, 0.08)",
-  // Dark neutrals
-  black: "#000000",
-  graphite900: "#0c0c0c",
-  graphite850: "#121212",
-  graphite750: "#151515",
-  graphite700: "#181818",
-  graphite650: "#1c1c1c",
-  graphite600: "#23262b",
-  graphite500: "#252527",
-  // Light neutrals
-  white: "#ffffff",
-  paper: "#fbfbfb",
-  snow: "#f7f7f7",
-  mist: "#efefef",
-  fog: "#eaeaea",
-  line200: "#ebebeb",
-  line300: "#eeeeee",
-  line500: "#d9d9d9",
-  ink900: "#1d1d1f",
-  ink700: "#262626",
-  // Danger
-  danger700: "rgba(216, 4, 4, 0.84)",
-  // Opacity stacks
-  onDark: "rgba(234, 234, 234, 0.90)",
-  onDark80: "rgba(234, 234, 234, 0.80)",
-  onDark60: "rgba(234, 234, 234, 0.60)",
-  onDark50: "rgba(255, 255, 255, 0.50)",
-  onLight80: "rgba(0, 0, 0, 0.80)",
-  onLight60: "rgba(0, 0, 0, 0.60)",
-  onLight50: "rgba(0, 0, 0, 0.50)",
-  onLight85: "rgba(0, 0, 0, 0.85)",
-  // Strokes
-  strokeOnDark: "rgba(255, 255, 255, 0.06)",
-  strokeOnLight: "rgba(0, 0, 0, 0.06)",
-  // Bg helpers — noise texture as a full-bleed cover layer over the dark fills.
-  bgRadial: `url("${noise}") center/cover no-repeat, radial-gradient(ellipse at center, #1c1c1c 0%, #0c0c0c 100%)`,
-  bgGraphite: `url("${noise}") center/cover no-repeat, #0c0c0c`,
-  bgPaper: "#fbfbfb",
-  // Fonts
-  fontHeading: '"Funnel Display", "Noto Sans", system-ui, sans-serif',
-  fontBody: '"Lato", "Noto Sans", system-ui, sans-serif',
-  fontMono: '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace',
-  // Layout
-  container: 1160,
-  pageWidth: 1440
-};
-const SENTINEL_LINKS = {
-  // Primary
-  docs: "https://docs.sentinel.co/",
-  github: "https://github.com/sentinel-official",
-  dapps: "https://www.sentinel.co/dapps",
-  home: "https://sentinel.co/",
-  privacy: "https://sentinel.co/legal/privacy",
-  // Network / explorer
-  stats: "https://stats.sentinel.co/",
-  nodes: "https://nodes.sentinel.co/",
-  nodeMap: "https://map.sentinel.co/",
-  explorer: "https://p2pscan.com/",
-  // Developer
-  sdkDocs: "https://docs.sentinel.co/sentinel-hub",
-  hubDocs: "https://docs.sentinel.co/sentinel-hub",
-  vpnProtocols: "https://docs.sentinel.co/get-started/dvpn/vpn-protocols",
-  subplanDocs: "https://docs.sentinel.co/sentinel-hub/commands/transactions/subplan",
-  // Node operator
-  hostNode: "https://docs.sentinel.co/dvpn-node-setup",
-  nodeEarnings: "https://docs.sentinel.co/dvpn-nodes/earnings",
-  nodeDeployer: "https://github.com/sentinel-official/node-deployer-experimental/releases/tag/v0.1.2",
-  // New / testing products
-  testNode: "https://test.sentinel.co/",
-  planManager: "https://plan.sentinel.co/",
-  x402: "https://x402.sentinel.co/",
-  // Apps / ecosystem
-  rynVpn: "https://www.rynvpn.com/",
-  sentinelShield: "https://shield.sentinel.co/",
-  independent: "https://independentdvpn.com/",
-  norse: "https://norselabs.io/",
-  meile: "https://mathnodes.com/index.php/meile-dvpn-client-linux-os-x/",
-  valt: "https://valtdata.com/",
-  encryptSim: "https://www.encryptsim.com/",
-  // Community
-  twitter: "https://x.com/sentinelp2p",
-  telegram: "https://t.me/sentinelp2p",
-  discord: "https://discord.com/invite/mmAA8qF",
-  youtube: "https://www.youtube.com/@SentinelP2P",
-  growthDao: "https://t.me/sentinelgrowthdao",
-  p2pNews: "https://t.me/p2pnewswire",
-  bluefrens: "https://x.com/BluefrensNFT"
-};
-
-const g = globalThis;
-if (typeof g.window === "undefined") {
-  g.window = g;
-}
-g.React = React$1;
-g.SENTINEL = SENTINEL;
-g.SENTINEL_LINKS = SENTINEL_LINKS;
-g.__resources = RESOURCES;
+  return renderTemplate(_a || (_a = __template(["<html", "", '> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>', '</title><meta name="description"', '><link rel="canonical"', '><!-- OpenGraph --><meta property="og:type" content="website"><meta property="og:site_name" content="Sentinel"><meta property="og:title"', '><meta property="og:description"', '><meta property="og:url"', '><meta property="og:image"', '><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt"', '><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@sentinelp2p"><meta name="twitter:title"', '><meta name="twitter:description"', '><meta name="twitter:image"', `><meta name="theme-color" content="#0156FC"><!-- Seed the active locale before the React island hydrates, so the client's
+         globals bootstrap (lib/globals.ts) re-applies the same locale the server
+         rendered with \u2014 keeping SSR markup and hydration in sync. --><script>(function(){`, "\n      window.__locale = locale;\n    })();<\/script>", '</head> <body> <a class="sn-skip" href="#main">Skip to content</a> ', ' <!-- Ambient music: OFF by default, pure intent toggle. --> <div id="sn-music"> <span id="sn-music-label" aria-hidden="true">Sound &middot; off</span> <button id="sn-music-btn" type="button" aria-pressed="false" aria-label="Unmute ambient music" title="Unmute ambient music"> <svg class="sn-music-play" width="16" height="14" viewBox="0 0 16 14" fill="none" aria-hidden="true"><path d="M8.2 1.1a.7.7 0 0 1 1.1.6v10.6a.7.7 0 0 1-1.1.6L4.6 10H2.4A1.4 1.4 0 0 1 1 8.6V5.4C1 4.6 1.6 4 2.4 4h2.2l3.6-2.9z" fill="currentColor"></path><path d="M11.2 4.8 14.8 9.2M14.8 4.8 11.2 9.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path></svg> <span class="sn-music-bars" aria-hidden="true"><i></i><i></i><i></i></span> </button> <audio id="sn-music-audio" src="/assets/media/ambient-music.mp3" loop preload="auto"></audio> </div> <script src="/scripts/music.js"><\/script> </body> </html>'])), addAttribute(locale, "lang"), addAttribute(dir, "dir"), title, addAttribute(description, "content"), addAttribute(canonical, "href"), addAttribute(title, "content"), addAttribute(description, "content"), addAttribute(canonical, "content"), addAttribute(ogImage, "content"), addAttribute(ogImageAlt, "content"), addAttribute(title, "content"), addAttribute(description, "content"), addAttribute(ogImage, "content"), defineScriptVars({ locale }), renderHead(), renderSlot($$result, $$slots["default"]));
+}, "C:/Users/Connect/AppData/Local/Temp/main-website-pr/src/layouts/Layout.astro", void 0);
 
 const T = window.SENTINEL;
 const L = window.SENTINEL_LINKS;
 const { useState, useEffect, useRef } = React;
+const tr$2 = (k, f) => typeof window !== "undefined" && window.T ? window.T(k, f) : f != null ? f : k;
 function useIsMobile$1(bp = 768) {
   const [m, setM] = useState(typeof window !== "undefined" ? window.innerWidth <= bp : false);
   useEffect(() => {
@@ -251,47 +112,53 @@ function CodeWindow() {
     ] })
   ] });
 }
+const NAV_LABEL_KEYS = {
+  Explore: "nav.explore",
+  dVPN: "nav.dvpn",
+  Build: "nav.build",
+  More: "nav.more"
+};
 const NAV_MENUS = {
   Explore: {
     cols: 2,
     width: 660,
     items: [
-      { title: "Network Statistics", desc: "Monitor real-time network performance and metrics.", href: L.stats },
-      { title: "Node Dashboard", desc: "Manage and monitor your node operations.", href: L.nodes },
-      { title: "Explorer", desc: "Search and explore network transactions.", href: L.explorer },
-      { title: "Ecosystem", desc: "Discover apps and services in our ecosystem.", href: L.dapps }
+      { tk: "nav.explore.statsTitle", dk: "nav.explore.statsDesc", title: "Network Statistics", desc: "Monitor real-time network performance and metrics.", href: L.stats },
+      { tk: "nav.explore.dashboardTitle", dk: "nav.explore.dashboardDesc", title: "Node Dashboard", desc: "Manage and monitor your node operations.", href: L.nodes },
+      { tk: "nav.explore.explorerTitle", dk: "nav.explore.explorerDesc", title: "Explorer", desc: "Search and explore network transactions.", href: L.explorer },
+      { tk: "nav.explore.ecosystemTitle", dk: "nav.explore.ecosystemDesc", title: "Ecosystem", desc: "Discover apps and services in our ecosystem.", href: L.dapps }
     ]
   },
   dVPN: {
     cols: 2,
     width: 660,
     items: [
-      { title: "Download Apps", desc: "Sentinel Shield, Norse, Valt, Meile and more.", href: L.dapps },
-      { title: "Coverage", desc: "110+ Countries, 430+ Cities.", href: L.nodeMap },
-      { title: "Learn", desc: "Explore guides, documentation, and more.", href: L.docs },
-      { title: "Run a Node", desc: "Support the network and earn rewards.", href: L.hostNode },
-      { title: "Build", desc: "Create your own applications on the network.", href: L.sdkDocs },
-      { title: "Earn", desc: "Monetize your bandwidth and more.", href: L.nodeEarnings }
+      { tk: "nav.dvpn.downloadTitle", dk: "nav.dvpn.downloadDesc", title: "Download Apps", desc: "Sentinel Shield, Norse, Valt, Meile and more.", href: L.dapps },
+      { tk: "nav.dvpn.coverageTitle", dk: "nav.dvpn.coverageDesc", title: "Coverage", desc: "110+ Countries, 430+ Cities.", href: L.nodeMap },
+      { tk: "nav.dvpn.learnTitle", dk: "nav.dvpn.learnDesc", title: "Learn", desc: "Explore guides, documentation, and more.", href: L.docs },
+      { tk: "nav.dvpn.runNodeTitle", dk: "nav.dvpn.runNodeDesc", title: "Run a Node", desc: "Support the network and earn rewards.", href: L.hostNode },
+      { tk: "nav.dvpn.buildTitle", dk: "nav.dvpn.buildDesc", title: "Build", desc: "Create your own applications on the network.", href: L.sdkDocs },
+      { tk: "nav.dvpn.earnTitle", dk: "nav.dvpn.earnDesc", title: "Earn", desc: "Monetize your bandwidth and more.", href: L.nodeEarnings }
     ]
   },
   Build: {
     cols: 2,
     width: 680,
     items: [
-      { title: "Plan Manager", desc: "Turn raw bandwidth into priced subscription plans.", href: L.planManager },
-      { title: "SDK", desc: "Native bindings for iOS, Android, Web & desktop.", href: L.sdkDocs },
-      { title: "Configure Payments", desc: "Stripe, USDC, BTC, on-ramps — wire any gateway per plan.", href: L.planManager },
-      { title: "x402 Payments", desc: "Per-byte agentic payments — no API keys, no accounts.", href: L.x402 },
-      { title: "VPN Protocols", desc: "WireGuard, V2Ray, OpenVPN — pick what your users need.", href: L.vpnProtocols },
-      { title: "Developer Docs", desc: "API reference, quickstarts, and architecture guides.", href: L.docs }
+      { tk: "nav.build.planManagerTitle", dk: "nav.build.planManagerDesc", title: "Plan Manager", desc: "Turn raw bandwidth into priced subscription plans.", href: L.planManager },
+      { tk: "nav.build.sdkTitle", dk: "nav.build.sdkDesc", title: "SDK", desc: "Native bindings for iOS, Android, Web & desktop.", href: L.sdkDocs },
+      { tk: "nav.build.paymentsTitle", dk: "nav.build.paymentsDesc", title: "Configure Payments", desc: "Stripe, USDC, BTC, on-ramps — wire any gateway per plan.", href: L.planManager },
+      { tk: "nav.build.x402Title", dk: "nav.build.x402Desc", title: "x402 Payments", desc: "Per-byte agentic payments — no API keys, no accounts.", href: L.x402 },
+      { tk: "nav.build.protocolsTitle", dk: "nav.build.protocolsDesc", title: "VPN Protocols", desc: "WireGuard, V2Ray, OpenVPN — pick what your users need.", href: L.vpnProtocols },
+      { tk: "nav.build.docsTitle", dk: "nav.build.docsDesc", title: "Developer Docs", desc: "API reference, quickstarts, and architecture guides.", href: L.docs }
     ]
   },
   More: {
     cols: 1,
     width: 380,
     items: [
-      { title: "dVPN Docs", desc: "Clients, nodes, protocols, FAQs.", href: L.docs },
-      { title: "Contacts Us", desc: "Question or support — get in touch.", href: L.telegram }
+      { tk: "nav.more.docsTitle", dk: "nav.more.docsDesc", title: "dVPN Docs", desc: "Clients, nodes, protocols, FAQs.", href: L.docs },
+      { tk: "nav.more.contactTitle", dk: "nav.more.contactDesc", title: "Contacts Us", desc: "Question or support — get in touch.", href: L.telegram }
     ]
   }
 };
@@ -310,8 +177,8 @@ function DropdownPanel({ menu }) {
     gridTemplateColumns: `repeat(${menu.cols}, 1fr)`,
     gap: "8px 16px"
   }, children: menu.items.map((it) => /* @__PURE__ */ jsxs("a", { href: it.href || "#", target: "_blank", rel: "noopener", className: "sn-dd-item", children: [
-    /* @__PURE__ */ jsx("div", { className: "sn-dd-title", children: it.title }),
-    /* @__PURE__ */ jsx("div", { className: "sn-dd-desc", children: it.desc })
+    /* @__PURE__ */ jsx("div", { className: "sn-dd-title", children: it.tk ? tr$2(it.tk, it.title) : it.title }),
+    /* @__PURE__ */ jsx("div", { className: "sn-dd-desc", children: it.dk ? tr$2(it.dk, it.desc) : it.desc })
   ] }, it.title)) }) });
 }
 const BUY_LOGOS = {
@@ -323,11 +190,88 @@ const BUY_LOGOS = {
 const buyLogo = (src, r) => /* @__PURE__ */ jsx("img", { src, alt: "", width: "22", height: "22", style: { display: "block", flexShrink: 0, borderRadius: r } });
 const buyCoin = (src, pad) => /* @__PURE__ */ jsx("span", { style: { width: 22, height: 22, borderRadius: "50%", background: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" }, children: /* @__PURE__ */ jsx("img", { src, alt: "", width: 22 - pad * 2, height: 22 - pad * 2, style: { display: "block" } }) });
 const BUY_VENUES = [
-  { name: "MEXC", tag: "P2P/USDT spot", href: "https://www.mexc.com/exchange/P2P_USDT", logo: buyLogo(BUY_LOGOS.mexc, "50%") },
-  { name: "KuCoin", tag: "P2P/USDT spot", href: "https://www.kucoin.com/trade/P2P-USDT", logo: buyCoin(BUY_LOGOS.kucoin, 4) },
-  { name: "Osmosis", tag: "Swap on-chain", href: "https://app.osmosis.zone/?to=P2P", logo: buyLogo(BUY_LOGOS.osmosis, 0) },
-  { name: "Skip Go", tag: "Cross-chain swap", href: "https://swap.sentinel.co", logo: buyLogo(BUY_LOGOS.skip, 6) }
+  { name: "MEXC", tagKey: "buy.mexcTag", tag: "P2P/USDT spot", href: "https://www.mexc.com/exchange/P2P_USDT", logo: buyLogo(BUY_LOGOS.mexc, "50%") },
+  { name: "KuCoin", tagKey: "buy.mexcTag", tag: "P2P/USDT spot", href: "https://www.kucoin.com/trade/P2P-USDT", logo: buyCoin(BUY_LOGOS.kucoin, 4) },
+  { name: "Osmosis", tagKey: "buy.osmosisTag", tag: "Swap on-chain", href: "https://app.osmosis.zone/?to=P2P", logo: buyLogo(BUY_LOGOS.osmosis, 0) },
+  { name: "Skip Go", tagKey: "buy.skipTag", tag: "Cross-chain swap", href: "https://swap.sentinel.co", logo: buyLogo(BUY_LOGOS.skip, 6) }
 ];
+function LangSwitcher() {
+  const meta = typeof window !== "undefined" && window.__i18n || {
+    cookie: "sn-locale",
+    locales: ["en"],
+    names: { en: "English" },
+    isRtl: () => false
+  };
+  const current = typeof window !== "undefined" && window.__locale || "en";
+  const [open, setOpen] = useState(false);
+  const closeT = useRef(null);
+  const enter = () => {
+    if (closeT.current) clearTimeout(closeT.current);
+    setOpen(true);
+  };
+  const leave = () => {
+    if (closeT.current) clearTimeout(closeT.current);
+    closeT.current = setTimeout(() => setOpen(false), 350);
+  };
+  useEffect(() => () => {
+    if (closeT.current) clearTimeout(closeT.current);
+  }, []);
+  const choose = (loc) => {
+    if (loc === current) {
+      setOpen(false);
+      return;
+    }
+    document.cookie = `${meta.cookie}=${encodeURIComponent(loc)}; path=/; max-age=31536000; samesite=lax`;
+    window.location.reload();
+  };
+  return /* @__PURE__ */ jsxs("div", { style: { position: "relative" }, onMouseEnter: enter, onMouseLeave: leave, children: [
+    /* @__PURE__ */ jsxs(
+      "button",
+      {
+        type: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": open,
+        "aria-label": tr$2("lang.label", "Language"),
+        onClick: () => setOpen((o) => !o),
+        style: { display: "inline-flex", alignItems: "center", gap: 7, height: 34, padding: "0 12px", borderRadius: 999, cursor: "pointer", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.14)", fontFamily: T.fontHeading, fontWeight: 500, fontSize: 13.5, color: "rgba(234,234,234,0.92)", transition: "background 160ms, border-color 160ms" },
+        onMouseOver: (e) => {
+          e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+        },
+        onMouseOut: (e) => {
+          e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+        },
+        children: [
+          /* @__PURE__ */ jsxs("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "1.6", "aria-hidden": "true", children: [
+            /* @__PURE__ */ jsx("circle", { cx: "12", cy: "12", r: "9" }),
+            /* @__PURE__ */ jsx("path", { d: "M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18" })
+          ] }),
+          /* @__PURE__ */ jsx("span", { children: meta.names[current] || current }),
+          /* @__PURE__ */ jsx("svg", { width: "8", height: "5", viewBox: "0 0 9 6", fill: "none", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform 220ms" }, "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M0.5 1L4.5 5L8.5 1", stroke: "currentColor", strokeWidth: "1.2", strokeLinecap: "round" }) })
+        ]
+      }
+    ),
+    open && /* @__PURE__ */ jsx("div", { style: { position: "absolute", top: "100%", right: 0, paddingTop: 8, zIndex: 70, animation: "sn-buy-in 200ms cubic-bezier(.22,.61,.36,1) both" }, children: /* @__PURE__ */ jsx("div", { role: "menu", style: { minWidth: 180, padding: 6, borderRadius: 14, background: "rgba(18,18,20,0.96)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(16px)", boxShadow: "0 18px 50px -16px rgba(0,0,0,0.7)" }, children: meta.locales.map((loc) => {
+      const active = loc === current;
+      return /* @__PURE__ */ jsxs(
+        "button",
+        {
+          type: "button",
+          role: "menuitemradio",
+          "aria-checked": active,
+          dir: meta.isRtl(loc) ? "rtl" : "ltr",
+          onClick: () => choose(loc),
+          className: "sn-buy-row",
+          style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, width: "100%", boxSizing: "border-box", padding: "9px 12px", borderRadius: 9, border: "none", cursor: "pointer", background: active ? "rgba(1,86,252,0.18)" : "transparent", fontFamily: T.fontBody, fontSize: 14, color: active ? "#9cc0ff" : "rgba(234,234,234,0.82)", textAlign: "start" },
+          children: [
+            /* @__PURE__ */ jsx("span", { children: meta.names[loc] || loc }),
+            active && /* @__PURE__ */ jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M20 6 9 17l-5-5" }) })
+          ]
+        },
+        loc
+      );
+    }) }) })
+  ] });
+}
 function BuyP2P() {
   const [open, setOpen] = useState(false);
   const closeT = useRef(null);
@@ -352,7 +296,7 @@ function BuyP2P() {
         onClick: () => setOpen((o) => !o),
         style: { display: "inline-flex", alignItems: "center", gap: 7, height: 34, padding: "0 14px", borderRadius: 999, cursor: "pointer", background: "#0156FC", border: "1px solid rgba(255,255,255,0.14)", fontFamily: T.fontHeading, fontWeight: 500, fontSize: 14, color: "#fff" },
         children: [
-          "Buy P2P",
+          tr$2("nav.buyP2P", "Buy P2P"),
           /* @__PURE__ */ jsx("svg", { width: "8", height: "5", viewBox: "0 0 9 6", fill: "none", style: { transform: open ? "rotate(180deg)" : "none", transition: "transform 220ms" }, children: /* @__PURE__ */ jsx("path", { d: "M0.5 1L4.5 5L8.5 1", stroke: "white", strokeWidth: "1.2", strokeLinecap: "round" }) })
         ]
       }
@@ -429,7 +373,7 @@ function Header$1() {
         navItems.map((l) => {
           const menu = NAV_MENUS[l];
           const isOpen = acc === l;
-          if (!menu) return /* @__PURE__ */ jsx("a", { href: "#", onClick: () => setMobileOpen(false), style: { fontFamily: T.fontHeading, fontWeight: 500, fontSize: 20, color: "#fff", textDecoration: "none", padding: "16px 4px", borderBottom: "1px solid rgba(255,255,255,0.07)" }, children: l }, l);
+          if (!menu) return /* @__PURE__ */ jsx("a", { href: "#", onClick: () => setMobileOpen(false), style: { fontFamily: T.fontHeading, fontWeight: 500, fontSize: 20, color: "#fff", textDecoration: "none", padding: "16px 4px", borderBottom: "1px solid rgba(255,255,255,0.07)" }, children: tr$2(NAV_LABEL_KEYS[l] || "", l) }, l);
           return /* @__PURE__ */ jsxs("div", { style: { borderBottom: "1px solid rgba(255,255,255,0.07)" }, children: [
             /* @__PURE__ */ jsxs(
               "button",
@@ -438,7 +382,7 @@ function Header$1() {
                 "aria-expanded": isOpen,
                 style: { width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", background: "transparent", border: "none", cursor: "pointer", padding: "16px 4px", fontFamily: T.fontHeading, fontWeight: 500, fontSize: 20, color: "#fff" },
                 children: [
-                  l,
+                  tr$2(NAV_LABEL_KEYS[l] || "", l),
                   /* @__PURE__ */ jsx("svg", { width: "14", height: "9", viewBox: "0 0 14 9", fill: "none", style: { transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 220ms" }, children: /* @__PURE__ */ jsx("path", { d: "M1 1l6 6 6-6", stroke: "rgba(255,255,255,0.6)", strokeWidth: "1.6", strokeLinecap: "round", strokeLinejoin: "round" }) })
                 ]
               }
@@ -460,8 +404,11 @@ function Header$1() {
             )) })
           ] }, l);
         }),
-        /* @__PURE__ */ jsx("div", { style: { display: "flex", alignItems: "center", gap: 20, marginTop: 18, padding: "0 4px" }, children: /* @__PURE__ */ jsx("a", { className: "sn-header-icon", "aria-label": "GitHub", href: "https://github.com/sentinel-official", target: "_blank", rel: "noopener", onClick: () => setMobileOpen(false), style: { textDecoration: "none" }, children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" }) }) }) }),
-        /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontMono, fontSize: 11, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", marginTop: 18, padding: "0 4px" }, children: "Buy P2P" }),
+        /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 20, marginTop: 18, padding: "0 4px" }, children: [
+          /* @__PURE__ */ jsx("a", { className: "sn-header-icon", "aria-label": "GitHub", href: "https://github.com/sentinel-official", target: "_blank", rel: "noopener", onClick: () => setMobileOpen(false), style: { textDecoration: "none" }, children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" }) }) }),
+          /* @__PURE__ */ jsx(LangSwitcher, {})
+        ] }),
+        /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontMono, fontSize: 11, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", marginTop: 18, padding: "0 4px" }, children: tr$2("nav.buyP2P", "Buy P2P") }),
         /* @__PURE__ */ jsx("div", { style: { display: "flex", alignItems: "center", gap: 8, marginTop: 8, padding: "0 4px", flexWrap: "wrap" }, children: BUY_VENUES.map((v) => /* @__PURE__ */ jsxs(
           "a",
           {
@@ -501,7 +448,7 @@ function Header$1() {
                 "data-open": open === l ? "true" : "false",
                 onMouseEnter: () => setOpen(hasMenu ? l : null),
                 children: [
-                  l,
+                  tr$2(NAV_LABEL_KEYS[l] || "", l),
                   hasMenu && /* @__PURE__ */ jsx("svg", { className: "sn-caret", width: "9", height: "6", viewBox: "0 0 9 6", fill: "none", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M0.5 1L4.5 5L8.5 1", stroke: "currentColor", strokeWidth: "1.3", strokeLinecap: "round", strokeLinejoin: "round" }) })
                 ]
               },
@@ -514,32 +461,18 @@ function Header$1() {
     ),
     /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 18, position: "absolute", right: "clamp(16px, 2.5vw, 24px)" }, children: [
       /* @__PURE__ */ jsx("a", { className: "sn-header-icon", "aria-label": "GitHub", href: "https://github.com/sentinel-official", target: "_blank", rel: "noopener", style: { textDecoration: "none" }, children: /* @__PURE__ */ jsx("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z" }) }) }),
+      /* @__PURE__ */ jsx(LangSwitcher, {}),
       /* @__PURE__ */ jsx(BuyP2P, {})
     ] })
   ] }) });
 }
 function HeroBulletList({ compact }) {
-  const bold = { color: T.fog, fontWeight: 600 };
+  ({ color: T.fog});
   const POINTS = [
-    /* @__PURE__ */ jsxs("span", { children: [
-      "A ",
-      /* @__PURE__ */ jsx("strong", { style: bold, children: "perpetual, on-chain DHT" }),
-      " — consensus-protected, censorship-resistant."
-    ] }),
-    /* @__PURE__ */ jsxs("span", { children: [
-      /* @__PURE__ */ jsx("strong", { style: bold, children: "Zero bootstrap nodes" }),
-      ", zero central servers to seize."
-    ] }),
-    /* @__PURE__ */ jsxs("span", { children: [
-      "Bandwidth contributed by ",
-      /* @__PURE__ */ jsx("strong", { style: bold, children: "independent operators in 70+ countries" }),
-      "."
-    ] }),
-    /* @__PURE__ */ jsxs("span", { children: [
-      "Any client can join with ",
-      /* @__PURE__ */ jsx("strong", { style: bold, children: "nothing more than an RPC endpoint" }),
-      "."
-    ] })
+    /* @__PURE__ */ jsx("span", { children: tr$2("hero.bullet1", "A perpetual, on-chain DHT — consensus-protected, censorship-resistant.") }),
+    /* @__PURE__ */ jsx("span", { children: tr$2("hero.bullet2", "Zero bootstrap nodes, zero central servers to seize.") }),
+    /* @__PURE__ */ jsx("span", { children: tr$2("hero.bullet3", "Bandwidth contributed by independent operators in 70+ countries.") }),
+    /* @__PURE__ */ jsx("span", { children: tr$2("hero.bullet4", "Any client can join with nothing more than an RPC endpoint.") })
   ];
   return /* @__PURE__ */ jsx("ul", { style: { listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: compact ? 14 : 18 }, children: POINTS.map((p, i) => /* @__PURE__ */ jsxs("li", { style: { display: "flex", alignItems: "flex-start", gap: compact ? 12 : 14, fontFamily: T.fontBody, fontSize: compact ? 15 : 16, lineHeight: compact ? "23px" : "25px", color: "rgba(234,234,234,0.78)" }, children: [
     /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { flexShrink: 0, marginTop: compact ? 3 : 4, display: "inline-flex" }, children: /* @__PURE__ */ jsx(SentinelMark$1, { size: compact ? 14 : 15, color: "#0156FC" }) }),
@@ -559,34 +492,45 @@ function HeroNetworkStats({ hideBullets }) {
     /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }, children: [
       /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { width: 8, height: 8, borderRadius: 9999, background: "#0156FC", boxShadow: "0 0 9px rgba(1,86,252,0.9)", animation: "snHeroPulse 1.6s ease-in-out infinite", flexShrink: 0, display: "inline-block" } }),
       /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontHeading, fontWeight: 400, fontSize: "clamp(30px,4vw,40px)", lineHeight: 1.05, letterSpacing: "-0.01em", color: T.fog, fontVariantNumeric: "tabular-nums" }, children: count.toLocaleString("en-US") }),
-      /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontBody, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.4, color: "rgba(234,234,234,0.82)" }, children: "people use dVPN apps built on Sentinel" })
+      /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontBody, fontSize: "clamp(16px,1.8vw,19px)", lineHeight: 1.4, color: "rgba(234,234,234,0.82)" }, children: tr$2("hero.usersCounter", "people use dVPN apps built on Sentinel") })
     ] })
   ] });
 }
 function Hero$1() {
   const isMobile = useIsMobile$1();
+  const videoRef = useRef(null);
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || v.getAttribute("src")) return;
+    v.src = window.__resources.heroVideo;
+    const p = v.play();
+    if (p && typeof p.catch === "function") p.catch((err) => {
+      console.warn("[hero] autoplay rejected after src attach:", err && err.name);
+    });
+  }, []);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsxs("section", { style: { position: "relative", overflow: "hidden", minHeight: "100vh", display: "flex", alignItems: "center", background: "#0b0c10" }, children: [
       /* @__PURE__ */ jsx(
         "video",
         {
-          style: isMobile ? { position: "absolute", top: 0, left: 0, width: "100%", height: "72svh", objectFit: "cover", objectPosition: "center top", zIndex: 0 } : { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", zIndex: 0 },
+          ref: videoRef,
+          style: isMobile ? { position: "absolute", top: 0, left: 0, width: "100%", height: "72svh", objectFit: "cover", objectPosition: "center top", zIndex: 0, backgroundColor: "#0b0c10" } : { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", zIndex: 0, backgroundColor: "#0b0c10" },
           autoPlay: true,
           muted: true,
           loop: true,
           playsInline: true,
-          preload: "metadata",
-          children: /* @__PURE__ */ jsx("source", { src: window.__resources.heroVideo, type: "video/mp4" })
+          preload: "auto",
+          suppressHydrationWarning: true
         }
       ),
       /* @__PURE__ */ jsx("div", { style: isMobile ? { position: "absolute", top: 0, left: 0, right: 0, height: "72svh", zIndex: 1, background: "linear-gradient(to bottom, rgba(11,12,16,0.38) 0%, rgba(11,12,16,0.08) 30%, rgba(11,12,16,0.55) 78%, rgba(11,12,16,1) 100%)", pointerEvents: "none" } : { position: "absolute", inset: 0, zIndex: 1, background: "linear-gradient(to right, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0) 100%)", pointerEvents: "none" } }),
       /* @__PURE__ */ jsx("div", { style: { ...atomStyles.container, position: "relative", zIndex: 2, paddingTop: isMobile ? 0 : "clamp(104px,18vw,140px)", paddingBottom: isMobile ? 56 : "clamp(56px,10vw,100px)" }, children: /* @__PURE__ */ jsxs("div", { "data-mark": "sn-hero-air", style: isMobile ? { display: "flex", flexDirection: "column", justifyContent: "flex-end", gap: 18, maxWidth: 640, minHeight: "100svh", boxSizing: "border-box", paddingTop: "2svh", paddingBottom: 36 } : { display: "flex", flexDirection: "column", gap: "clamp(28px,4.5vw,42px)", maxWidth: 640 }, children: [
-        /* @__PURE__ */ jsx("h1", { style: { fontFamily: T.fontHeading, fontWeight: 400, fontSize: "clamp(38px,7.5vw,64px)", lineHeight: 1.08, letterSpacing: "-0.01em", color: T.fog, margin: 0 }, children: "Build your own decentralized VPN." }),
+        /* @__PURE__ */ jsx("h1", { style: { fontFamily: T.fontHeading, fontWeight: 400, fontSize: "clamp(38px,7.5vw,64px)", lineHeight: 1.08, letterSpacing: "-0.01em", color: T.fog, margin: 0 }, children: tr$2("hero.title", "Build your own decentralized VPN.") }),
         /* @__PURE__ */ jsxs("p", { style: { fontFamily: T.fontBody, fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.5, color: T.onDark, margin: 0, maxWidth: 560 }, children: [
-          "The most resilient peer-to-peer networking protocol designed to be censorship-resistant for any geography.",
+          tr$2("hero.subtitle", "The most resilient peer-to-peer networking protocol designed to be censorship-resistant for any geography."),
           " ",
           /* @__PURE__ */ jsxs("a", { href: "#network-compare", className: "sn-readmore", style: { position: "relative", display: "inline-flex", alignItems: "center", gap: 7, verticalAlign: "baseline", fontFamily: T.fontHeading, fontWeight: 600, fontSize: "0.78em", letterSpacing: "0.02em", color: "#9cc0ff", textDecoration: "none", whiteSpace: "nowrap", paddingBottom: 3, marginLeft: 12 }, children: [
-            "Read more",
+            tr$2("hero.readMore", "Read more"),
             /* @__PURE__ */ jsx("span", { className: "sn-readmore-arrow", "aria-hidden": "true", style: { display: "inline-block", fontSize: "0.92em", opacity: 0.85, lineHeight: 1 }, children: "↓" })
           ] })
         ] }),
@@ -611,15 +555,18 @@ function Hero$1() {
               @media (max-width: 560px) { .sn-hero-cta { flex:1 1 100%; font-size:13.5px; gap:6px; padding:0 12px; border-radius:12px; } }
             ` }),
           /* @__PURE__ */ jsxs("a", { href: "#use-dvpn", className: "sn-hero-cta sn-cta-blue", children: [
-            "Use a dVPN App ",
+            tr$2("hero.ctaUse", "Use a dVPN App"),
+            " ",
             /* @__PURE__ */ jsx("span", { className: "sn-cta-arrow", "aria-hidden": "true", children: "→" })
           ] }),
           /* @__PURE__ */ jsxs("a", { href: "#build-dvpn", className: "sn-hero-cta sn-cta-glass", children: [
-            "Build a dVPN App ",
+            tr$2("hero.ctaBuild", "Build a dVPN App"),
+            " ",
             /* @__PURE__ */ jsx("span", { className: "sn-cta-arrow", "aria-hidden": "true", children: "→" })
           ] }),
           /* @__PURE__ */ jsxs("a", { href: "#host-dvpn", className: "sn-hero-cta sn-cta-glass", children: [
-            "Host a dVPN Node ",
+            tr$2("hero.ctaHost", "Host a dVPN Node"),
+            " ",
             /* @__PURE__ */ jsx("span", { className: "sn-cta-arrow", "aria-hidden": "true", children: "→" })
           ] })
         ] })
@@ -703,10 +650,10 @@ function StatValue({ value }) {
 function StatsStrip$1() {
   const isMobile = useIsMobile$1();
   const stats = [
-    { v: "8+", l: "dApps built on Sentinel" },
-    { v: "1.4M+", l: "Total Users" },
-    { v: "1500+", l: "P2P Bandwidth Providers" },
-    { v: "6+ PB", l: "Data Consumed" }
+    { v: "8+", l: tr$2("stats.dapps", "dApps built on Sentinel") },
+    { v: "1.4M+", l: tr$2("stats.totalUsers", "Total Users") },
+    { v: "1500+", l: tr$2("stats.providers", "P2P Bandwidth Providers") },
+    { v: "6+ PB", l: tr$2("stats.data", "Data Consumed") }
   ];
   const hairline = "rgba(255,255,255,0.07)";
   const dividers = (i) => isMobile ? [i % 2 === 1 ? `-1px 0 0 ${hairline}` : null, i >= 2 ? `0 -1px 0 ${hairline}` : null].filter(Boolean).join(", ") || "none" : i > 0 ? `-1px 0 0 ${hairline}` : "none";
@@ -728,7 +675,7 @@ function StatsStrip$1() {
           style: { display: "inline-flex", alignItems: "center", gap: 12, padding: "12px 18px", textDecoration: "none", background: "linear-gradient(180deg, rgba(255,255,255,0.040), rgba(255,255,255,0.012))", border: `1px solid ${hairline}`, borderRadius: 14 },
           children: [
             /* @__PURE__ */ jsx("span", { style: { width: 38, height: 38, borderRadius: 11, flexShrink: 0, background: "rgba(1,86,252,0.12)", border: "1px solid rgba(94,148,255,0.30)", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx(SentinelMark$1, { size: 20, color: "#2670FF" }) }),
-            /* @__PURE__ */ jsx("span", { className: "sn-stats-cta-label", style: { fontFamily: T.fontHeading, fontWeight: 600, fontSize: 15, lineHeight: 1, color: T.fog, whiteSpace: "nowrap" }, children: "View Network Stats" }),
+            /* @__PURE__ */ jsx("span", { className: "sn-stats-cta-label", style: { fontFamily: T.fontHeading, fontWeight: 600, fontSize: 15, lineHeight: 1, color: T.fog, whiteSpace: "nowrap" }, children: tr$2("stats.viewNetworkStats", "View Network Stats") }),
             /* @__PURE__ */ jsx("span", { className: "sn-stats-cta-arrow", "aria-hidden": "true", style: { fontSize: 15, fontWeight: 600, lineHeight: 1, color: "#2670FF", flexShrink: 0 }, children: "↗" })
           ]
         }
@@ -885,7 +832,7 @@ function BuilderStackSection() {
   const steps = [
     {
       n: "01",
-      title: "Direct Node Probe",
+      title: tr$2("builderStack.step1Title", "Direct Node Probe"),
       icon: /* @__PURE__ */ jsxs("svg", { width: "18", height: "18", viewBox: "0 0 24 24", ...ic, "aria-hidden": "true", children: [
         /* @__PURE__ */ jsx("circle", { cx: "12", cy: "12", r: "1.6", fill: "#9dbcff", stroke: "none" }),
         /* @__PURE__ */ jsx("path", { d: "M8.5 15.5a5 5 0 0 1 0-7" }),
@@ -893,114 +840,114 @@ function BuilderStackSection() {
         /* @__PURE__ */ jsx("path", { d: "M5.6 18.4a9 9 0 0 1 0-12.8" }),
         /* @__PURE__ */ jsx("path", { d: "M18.4 5.6a9 9 0 0 1 0 12.8" })
       ] }),
-      body: "HTTPS request directly to the node’s remote address. Returns live status: protocol type, peer count, location, bandwidth. Peer-to-peer, no relay."
+      body: tr$2("builderStack.step1Body", "HTTPS request directly to the node’s remote address. Returns live status: protocol type, peer count, location, bandwidth. Peer-to-peer, no relay.")
     },
     {
       n: "02",
-      title: "On-Chain Session",
+      title: tr$2("builderStack.step2Title", "On-Chain Session"),
       icon: /* @__PURE__ */ jsxs("svg", { width: "18", height: "18", viewBox: "0 0 24 24", ...ic, "aria-hidden": "true", children: [
         /* @__PURE__ */ jsx("path", { d: "M12 2.5 21 7.5v9l-9 5-9-5v-9z" }),
         /* @__PURE__ */ jsx("path", { d: "M12 12.2 21 7.5M12 12.2 3 7.5M12 12.2V21.5" })
       ] }),
-      body: "Signed transaction creates an immutable session record on the blockchain. Session ID, node address, account address — all consensus-validated."
+      body: tr$2("builderStack.step2Body", "Signed transaction creates an immutable session record on the blockchain. Session ID, node address, account address — all consensus-validated.")
     },
     {
       n: "03",
-      title: "Verified Handshake",
+      title: tr$2("builderStack.step3Title", "Verified Handshake"),
       icon: /* @__PURE__ */ jsxs("svg", { width: "18", height: "18", viewBox: "0 0 24 24", ...ic, "aria-hidden": "true", children: [
         /* @__PURE__ */ jsx("path", { d: "M12 2.8 20 6v6c0 5-3.4 8.3-8 9.2C7.4 20.3 4 17 4 12V6z" }),
         /* @__PURE__ */ jsx("path", { d: "m8.8 12 2.2 2.2 4.2-4.4" })
       ] }),
-      body: "Node receives request, queries the chain to verify the session matches. Only then generates VPN credentials. Authorization is on-chain."
+      body: tr$2("builderStack.step3Body", "Node receives request, queries the chain to verify the session matches. Only then generates VPN credentials. Authorization is on-chain.")
     },
     {
       n: "04",
-      title: "Encrypted Tunnel",
+      title: tr$2("builderStack.step4Title", "Encrypted Tunnel"),
       icon: /* @__PURE__ */ jsxs("svg", { width: "18", height: "18", viewBox: "0 0 24 24", ...ic, "aria-hidden": "true", children: [
         /* @__PURE__ */ jsx("rect", { x: "4.5", y: "10.5", width: "15", height: "10", rx: "2.5" }),
         /* @__PURE__ */ jsx("path", { d: "M8 10.5V7.8a4 4 0 0 1 8 0v2.7" }),
         /* @__PURE__ */ jsx("circle", { cx: "12", cy: "15.5", r: "1.4", fill: "#9dbcff", stroke: "none" })
       ] }),
-      body: "WireGuard (Curve25519) or V2Ray (VLess/VMess) tunnel established directly between client and node. End-to-end encrypted. Zero intermediaries."
+      body: tr$2("builderStack.step4Body", "WireGuard (Curve25519) or V2Ray (VLess/VMess) tunnel established directly between client and node. End-to-end encrypted. Zero intermediaries.")
     }
   ];
   const layers = [
     // sn-resil-1line — bullets condensed to one-liners
     {
-      title: "The blockchain IS the backend",
+      title: tr$2("resilience.blockchainTitle", "The blockchain IS the backend"),
       icon: /* @__PURE__ */ jsxs("svg", { width: "22", height: "22", viewBox: "0 0 24 24", ...ic, "aria-hidden": "true", children: [
         /* @__PURE__ */ jsx("rect", { x: "6", y: "6", width: "12", height: "12", rx: "2" }),
         /* @__PURE__ */ jsx("rect", { x: "10", y: "10", width: "4", height: "4" }),
         /* @__PURE__ */ jsx("path", { d: "M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" })
       ] }),
       points: [
-        "Every node, session, and account lives on-chain.",
-        "Discovery is a chain query — nothing to take down.",
-        "Finality, Sybil resistance, and governance built in."
+        tr$2("resilience.blockchainPoint1", "Every node, session, and account lives on-chain."),
+        tr$2("resilience.blockchainPoint2", "Discovery is a chain query — nothing to take down."),
+        tr$2("resilience.blockchainPoint3", "Finality, Sybil resistance, and governance built in.")
       ],
-      extra: /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", gap: 18 }, children: actionRow("View Real-Time Transactions", "https://p2pscan.com/transactions") })
+      extra: /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", gap: 18 }, children: actionRow(tr$2("resilience.blockchainAction", "View Real-Time Transactions"), "https://p2pscan.com/transactions") })
     },
     {
-      title: "Validators provide the compute",
+      title: tr$2("resilience.validatorsTitle", "Validators provide the compute"),
       icon: /* @__PURE__ */ jsxs("svg", { width: "22", height: "22", viewBox: "0 0 24 24", ...ic, "aria-hidden": "true", children: [
         /* @__PURE__ */ jsx("path", { d: "M12 2 20.5 7v10L12 22 3.5 17V7Z" }),
         /* @__PURE__ */ jsx("path", { d: "M12 22V12M12 12 3.5 7M12 12l8.5-5" })
       ] }),
       points: [
-        "Sessions, plans, and payouts verified by Sentinel’s validators.",
-        "That consensus compute is your backend: no servers to run.",
-        "Every state change is final and tamper-proof."
+        tr$2("resilience.validatorsPoint1", "Sessions, plans, and payouts verified by Sentinel’s validators."),
+        tr$2("resilience.validatorsPoint2", "That consensus compute is your backend: no servers to run."),
+        tr$2("resilience.validatorsPoint3", "Every state change is final and tamper-proof.")
       ],
-      extra: /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", gap: 18 }, children: actionRow("View Validators", "https://p2pscan.com/validators") })
+      extra: /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", gap: 18 }, children: actionRow(tr$2("resilience.validatorsAction", "View Validators"), "https://p2pscan.com/validators") })
     },
     {
-      title: "Pay for bandwidth directly in P2P",
+      title: tr$2("resilience.bandwidthTitle", "Pay for bandwidth directly in P2P"),
       icon: /* @__PURE__ */ jsx(SentinelMark$1, { size: 24, color: "#9dbcff" }),
       points: [
-        "Wallets pay node operators directly on-chain — no invoices.",
-        "Pick nodes by country, price, or protocol.",
-        "Pay in P2P for bandwidth, Sentinel’s native token."
+        tr$2("resilience.bandwidthPoint1", "Wallets pay node operators directly on-chain — no invoices."),
+        tr$2("resilience.bandwidthPoint2", "Pick nodes by country, price, or protocol."),
+        tr$2("resilience.bandwidthPoint3", "Pay in P2P for bandwidth, Sentinel’s native token.")
       ],
       extra: /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 18 }, children: [
         /* @__PURE__ */ jsxs("span", { style: { ...actionStyle, cursor: "default" }, children: [
-          "Buy P2P",
+          tr$2("nav.buyP2P", "Buy P2P"),
           /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { display: "inline-flex" }, children: /* @__PURE__ */ jsx("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx("path", { d: "M12 5v14M6 13l6 6 6-6" }) }) })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "sn-tile-grid", children: BUY_VENUES.map((v) => /* @__PURE__ */ jsxs("a", { href: v.href, target: "_blank", rel: "noopener", className: "sn-buy-row", style: { ...rowChip, textDecoration: "none" }, children: [
           /* @__PURE__ */ jsx("span", { style: logoTile, children: v.logo }),
           /* @__PURE__ */ jsxs("span", { style: { display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }, children: [
             /* @__PURE__ */ jsx("span", { style: chipName, children: v.name }),
-            /* @__PURE__ */ jsx("span", { style: chipSub, children: v.tag })
+            /* @__PURE__ */ jsx("span", { style: chipSub, children: v.tagKey ? tr$2(v.tagKey, v.tag) : v.tag })
           ] })
         ] }, v.name)) })
       ] })
     },
     {
-      title: "1500+ servers, zero server ops",
+      title: tr$2("resilience.serversTitle", "1500+ servers, zero server ops"),
       icon: /* @__PURE__ */ jsxs("svg", { width: "22", height: "22", viewBox: "0 0 24 24", ...ic, "aria-hidden": "true", children: [
         /* @__PURE__ */ jsx("circle", { cx: "12", cy: "18", r: "1.6" }),
         /* @__PURE__ */ jsx("path", { d: "M8.5 14.5a5 5 0 0 1 7 0M5.6 11.6a9 9 0 0 1 12.8 0M2.8 8.7a13 13 0 0 1 18.4 0" })
       ] }),
       points: [
-        "Bandwidth from 1500+ servers run by independent operators.",
-        "90+ countries across six continents.",
-        "Racking, patching, and scaling — abstracted away entirely."
+        tr$2("resilience.serversPoint1", "Bandwidth from 1500+ servers run by independent operators."),
+        tr$2("resilience.serversPoint2", "90+ countries across six continents."),
+        tr$2("resilience.serversPoint3", "Racking, patching, and scaling — abstracted away entirely.")
       ],
       extra: /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 18 }, children: [
-        actionRow("View Global Node Map", "https://map.suchnode.net/"),
+        actionRow(tr$2("resilience.serversAction", "View Global Node Map"), "https://map.suchnode.net/"),
         /* @__PURE__ */ jsxs("div", { className: "sn-tile-grid", children: [
           /* @__PURE__ */ jsxs("span", { style: { ...rowChip }, children: [
             /* @__PURE__ */ jsx("span", { style: logoTile, children: /* @__PURE__ */ jsx(WireGuardMark, { size: 22 }) }),
             /* @__PURE__ */ jsxs("span", { style: { display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }, children: [
               /* @__PURE__ */ jsx("span", { style: chipName, children: "WireGuard" }),
-              /* @__PURE__ */ jsx("span", { style: { ...chipSub, whiteSpace: "nowrap" }, children: "Kernel-fast encrypted tunnels" })
+              /* @__PURE__ */ jsx("span", { style: { ...chipSub, whiteSpace: "nowrap" }, children: tr$2("resilience.wireguardSub", "Kernel-fast encrypted tunnels") })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("span", { style: { ...rowChip }, children: [
             /* @__PURE__ */ jsx("span", { style: logoTile, children: /* @__PURE__ */ jsx(V2RayMark, { size: 22 }) }),
             /* @__PURE__ */ jsxs("span", { style: { display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }, children: [
               /* @__PURE__ */ jsx("span", { style: chipName, children: "V2Ray" }),
-              /* @__PURE__ */ jsx("span", { style: { ...chipSub, whiteSpace: "nowrap" }, children: "VMess / VLESS · anti-censorship" })
+              /* @__PURE__ */ jsx("span", { style: { ...chipSub, whiteSpace: "nowrap" }, children: tr$2("resilience.v2raySub", "VMess / VLESS · anti-censorship") })
             ] })
           ] })
         ] }),
@@ -1014,15 +961,15 @@ function BuilderStackSection() {
           /* @__PURE__ */ jsx(FlagChip, { code: "NL", name: "Netherlands" }),
           /* @__PURE__ */ jsx(FlagChip, { code: "SG", name: "Singapore" }),
           /* @__PURE__ */ jsx(FlagChip, { code: "CH", name: "Switzerland" }),
-          /* @__PURE__ */ jsx("span", { title: "90+ countries across six continents", style: { display: "inline-flex", alignItems: "center", background: "rgba(94,148,255,0.08)", border: "1px solid rgba(125,160,255,0.32)", borderRadius: 999, padding: "4px 8px", fontFamily: T.fontHeading, fontWeight: 600, fontSize: 12.5, color: "#9dbcff", whiteSpace: "nowrap" }, children: "+ 80 more" })
+          /* @__PURE__ */ jsx("span", { title: tr$2("resilience.moreCountriesTitle", "90+ countries across six continents"), style: { display: "inline-flex", alignItems: "center", background: "rgba(94,148,255,0.08)", border: "1px solid rgba(125,160,255,0.32)", borderRadius: 999, padding: "4px 8px", fontFamily: T.fontHeading, fontWeight: 600, fontSize: 12.5, color: "#9dbcff", whiteSpace: "nowrap" }, children: tr$2("resilience.moreCountries", "+ 80 more") })
         ] })
       ] })
     }
   ];
   return /* @__PURE__ */ jsx("section", { id: "builder-stack", style: { background: "transparent", paddingTop: "clamp(8px,2vw,24px)", paddingBottom: "clamp(40px,5vw,64px)", scrollMarginTop: 90 }, children: /* @__PURE__ */ jsxs("div", { style: { ...atomStyles.container }, children: [
     /* @__PURE__ */ jsxs("div", { style: { ...atomStyles.sectionHead, alignItems: "center", textAlign: "center", gap: 18, margin: "0 auto clamp(34px,4.5vw,54px)" }, children: [
-      /* @__PURE__ */ jsx("h2", { style: { ...atomStyles.h1Dark, maxWidth: 820 }, children: "Everything a dVPN builder needs. Handled." }),
-      /* @__PURE__ */ jsx("p", { style: { ...atomStyles.leadDark, maxWidth: 680, margin: 0 }, children: "Compute, bandwidth, payments, security — the Sentinel protocol runs the entire white-label stack underneath your brand. You build the app. The network does the rest." })
+      /* @__PURE__ */ jsx("h2", { style: { ...atomStyles.h1Dark, maxWidth: 820 }, children: tr$2("sdk.heading", "Everything a dVPN builder needs. Handled.") }),
+      /* @__PURE__ */ jsx("p", { style: { ...atomStyles.leadDark, maxWidth: 680, margin: 0 }, children: tr$2("builderStack.sdkBody", "Compute, bandwidth, payments, security — the Sentinel protocol runs the entire white-label stack underneath your brand. You build the app. The network does the rest.") })
     ] }),
     /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4, minmax(0,1fr))", gap: isMobile ? 12 : 14 }, children: steps.map((p) => /* @__PURE__ */ jsxs("div", { style: { position: "relative", overflow: "hidden", display: "flex", flexDirection: "column", gap: 10, background: "rgba(255,255,255,0.028)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "20px 18px" }, children: [
       /* @__PURE__ */ jsx("div", { "aria-hidden": "true", style: { position: "absolute", top: 0, left: 22, right: 22, height: 1, background: "linear-gradient(90deg, transparent, rgba(94,148,255,0.55), transparent)" } }),
@@ -1039,8 +986,8 @@ function BuilderStackSection() {
     /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: 20, textAlign: "center", margin: "clamp(30px,4vw,46px) 0 clamp(36px,4.5vw,56px)" }, children: [
       /* @__PURE__ */ jsx("div", { "aria-hidden": "true", style: { width: "min(560px,90%)", height: 1, background: "linear-gradient(90deg, transparent, rgba(94,148,255,0.55), transparent)" } }),
       /* @__PURE__ */ jsxs("h3", { style: { margin: 0, fontFamily: T.fontHeading, fontWeight: 500 }, children: [
-        /* @__PURE__ */ jsx("span", { style: { display: "block", fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.4, letterSpacing: "0.01em", color: "rgba(214,222,240,0.82)" }, children: "No centralized server is involved at any step." }),
-        /* @__PURE__ */ jsx("span", { style: { display: "block", marginTop: 8, fontWeight: 600, fontSize: "clamp(25px,3.4vw,36px)", lineHeight: 1.2, letterSpacing: "-0.01em", background: "linear-gradient(90deg, #9dbcff, #5e94ff 55%, #b9ceff)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }, children: "The blockchain is the backend." })
+        /* @__PURE__ */ jsx("span", { style: { display: "block", fontSize: "clamp(16px,2vw,20px)", lineHeight: 1.4, letterSpacing: "0.01em", color: "rgba(214,222,240,0.82)" }, children: tr$2("builderStack.closing1", "No centralized server is involved at any step.") }),
+        /* @__PURE__ */ jsx("span", { style: { display: "block", marginTop: 8, fontWeight: 600, fontSize: "clamp(25px,3.4vw,36px)", lineHeight: 1.2, letterSpacing: "-0.01em", background: "linear-gradient(90deg, #9dbcff, #5e94ff 55%, #b9ceff)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }, children: tr$2("builderStack.closing2", "The blockchain is the backend.") })
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, minmax(0,1fr))", gridTemplateRows: isMobile ? void 0 : "repeat(6, auto)", gap: 23 }, children: layers.map((c) => /* @__PURE__ */ jsxs("div", { className: "sn-rcard", style: { position: "relative", display: isMobile ? "flex" : "grid", flexDirection: "column", gridTemplateRows: isMobile ? void 0 : "subgrid", gridRow: isMobile ? void 0 : "span 3", gap: isMobile ? 21 : void 0, background: "linear-gradient(180deg, #17181c 0%, #121317 100%)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: isMobile ? "25px 21px" : 0, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)" }, children: [
@@ -1066,8 +1013,8 @@ function LangBadge({ mark, name }) {
 function OpenSourceSection() {
   const isMobile = useIsMobile$1();
   const stats = [
-    { v: "4", l: "SDK languages" },
-    { v: "41,000+", l: "lines of open code" }
+    { v: "4", l: tr$2("oss.sdkLanguagesStat", "SDK languages") },
+    { v: "41,000+", l: tr$2("oss.linesOfCodeStat", "lines of open code") }
   ];
   const langs = [
     { name: "JavaScript", mark: /* @__PURE__ */ jsxs("svg", { width: "26", height: "26", viewBox: "0 0 26 26", "aria-hidden": "true", children: [
@@ -1088,10 +1035,10 @@ function OpenSourceSection() {
     ] }) }
   ];
   const stack = [
-    { k: "SDKs", d: "Client libraries in JavaScript, C#, Go & Swift" },
-    { k: "Protocol", d: "WireGuard & V2Ray session layer" },
-    { k: "Chain", d: "Sentinel Hub, built on the Cosmos SDK" },
-    { k: "Node software", d: "The dVPN node anyone can run and inspect" }
+    { k: tr$2("oss.sdksLabel", "SDKs"), d: tr$2("oss.sdksDesc", "Client libraries in JavaScript, C#, Go & Swift") },
+    { k: tr$2("oss.protocolLabel", "Protocol"), d: tr$2("oss.protocolDesc", "WireGuard & V2Ray session layer") },
+    { k: tr$2("oss.chainLabel", "Chain"), d: tr$2("oss.chainDesc", "Sentinel Hub, built on the Cosmos SDK") },
+    { k: tr$2("oss.nodeLabel", "Node software"), d: tr$2("oss.nodeDesc", "The dVPN node anyone can run and inspect") }
   ];
   const ossColHead = { margin: 0, fontFamily: T.fontHeading, fontWeight: 600, fontSize: "clamp(16.5px,1.7vw,19px)", lineHeight: 1.3, letterSpacing: "-0.005em", color: T.fog };
   const ossColSub = { margin: 0, fontFamily: T.fontBody, fontSize: 13.5, lineHeight: "20px", color: T.onDark60 };
@@ -1112,20 +1059,20 @@ function OpenSourceSection() {
       /* @__PURE__ */ jsx("svg", { "aria-hidden": "true", width: "190", height: "190", viewBox: "0 0 24 24", fill: "rgba(157,188,255,0.05)", style: { position: "absolute", right: -30, bottom: -56, transform: "rotate(-8deg)", pointerEvents: "none" }, children: /* @__PURE__ */ jsx("path", { d: SN_GH_PATH }) }),
       /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "flex-start" : "center", gap: isMobile ? 16 : "clamp(24px,3vw,44px)" }, children: [
         /* @__PURE__ */ jsxs("h2", { style: { flex: 1, minWidth: 0, fontFamily: T.fontHeading, fontWeight: 600, fontSize: "clamp(18px,1.9vw,23px)", lineHeight: 1.45, letterSpacing: "-0.01em", color: T.fog, margin: 0, maxWidth: 760 }, children: [
-          /* @__PURE__ */ jsx("span", { style: { color: T.onDark60 }, children: "Closed-source VPNs ask for your trust." }),
+          /* @__PURE__ */ jsx("span", { style: { color: T.onDark60 }, children: tr$2("oss.closedSource", "Closed-source VPNs ask for your trust.") }),
           " ",
-          "Sentinel is the only open-source, decentralized framework to build a VPN application on — full transparency into the application-side code and the server-side code alike."
+          tr$2("oss.openStatement", "Sentinel is the only open-source, decentralized framework to build a VPN application on — full transparency into the application-side code and the server-side code alike.")
         ] }),
         /* @__PURE__ */ jsxs(BtnPrimary$1, { href: L.github, style: isMobile ? { gap: 10, height: "auto", minHeight: 52, padding: "13px 18px", fontSize: 15, lineHeight: 1.3, whiteSpace: "normal", textAlign: "center", alignSelf: "stretch", width: "100%", maxWidth: "100%", boxSizing: "border-box" } : { gap: 12, height: 58, padding: "0 34px", fontSize: 17, flexShrink: 0, whiteSpace: "nowrap" }, children: [
           /* @__PURE__ */ jsx("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: SN_GH_PATH }) }),
-          "View open-source code on GitHub"
+          tr$2("oss.githubCta", "View open-source code on GitHub")
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.15fr 1fr", gap: isMobile ? "22px" : "clamp(28px,3.4vw,52px)", borderTop: ossDivider, paddingTop: "clamp(18px,2.2vw,26px)" }, children: [
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 5 }, children: [
-            /* @__PURE__ */ jsx("h3", { style: ossColHead, children: "Every layer of Sentinel is open source" }),
-            /* @__PURE__ */ jsx("p", { style: ossColSub, children: "Nothing in the stack is closed — read, audit, and fork all of it." })
+            /* @__PURE__ */ jsx("h3", { style: ossColHead, children: tr$2("oss.everyLayerHeading", "Every layer of Sentinel is open source") }),
+            /* @__PURE__ */ jsx("p", { style: ossColSub, children: tr$2("oss.everyLayerSubhead", "Nothing in the stack is closed — read, audit, and fork all of it.") })
           ] }),
           /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 13, flex: 1 }, children: [
             /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { position: "absolute", left: 5, top: 12, bottom: 12, width: 2, borderRadius: 2, background: "linear-gradient(180deg, rgba(38,112,255,0.85) 0%, rgba(38,112,255,0.2) 100%)" } }),
@@ -1140,8 +1087,8 @@ function OpenSourceSection() {
         ] }),
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 14 }, children: [
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 5 }, children: [
-            /* @__PURE__ */ jsx("h3", { style: ossColHead, children: "Build in the language you already use" }),
-            /* @__PURE__ */ jsx("p", { style: ossColSub, children: "Four official SDKs — every one of them open source." })
+            /* @__PURE__ */ jsx("h3", { style: ossColHead, children: tr$2("oss.buildLanguageHeading", "Build in the language you already use") }),
+            /* @__PURE__ */ jsx("p", { style: ossColSub, children: tr$2("oss.buildLanguageSubhead", "Four official SDKs — every one of them open source.") })
           ] }),
           /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 10, flex: 1 }, children: langs.map((l) => /* @__PURE__ */ jsx(LangBadge, { mark: l.mark, name: l.name }, l.name)) })
         ] })
@@ -1183,14 +1130,14 @@ function StepTag({ n, light }) {
 function StepsSection$1() {
   const isMobile = useIsMobile$1();
   return /* @__PURE__ */ jsx("section", { style: { background: "transparent" }, children: /* @__PURE__ */ jsxs("div", { style: { ...atomStyles.container, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "clamp(26px,3.6vh,40px)", paddingTop: isMobile ? "clamp(44px,10vw,64px)" : "clamp(64px,7.5vw,110px)", paddingBottom: isMobile ? "clamp(44px,10vw,64px)" : "clamp(64px,7.5vw,110px)" }, children: [
-    /* @__PURE__ */ jsx("h2", { style: { fontFamily: T.fontHeading, fontWeight: 600, fontSize: "clamp(31px,5.2vw,66px)", lineHeight: 1.04, letterSpacing: "-0.02em", color: T.fog, margin: 0, maxWidth: 1e3 }, children: "Three steps from zero to a production dVPN." }),
+    /* @__PURE__ */ jsx("h2", { style: { fontFamily: T.fontHeading, fontWeight: 600, fontSize: "clamp(31px,5.2vw,66px)", lineHeight: 1.04, letterSpacing: "-0.02em", color: T.fog, margin: 0, maxWidth: 1e3 }, children: tr$2("steps.heading", "Three steps from zero to a production dVPN.") }),
     /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 18, maxWidth: 780 }, children: [
       /* @__PURE__ */ jsx(StepTag, { n: 1 }),
-      /* @__PURE__ */ jsx("h3", { style: { fontFamily: T.fontHeading, fontWeight: 600, fontSize: "clamp(22px,2.9vw,36px)", lineHeight: 1.18, letterSpacing: "-0.005em", color: T.fog, margin: 0 }, children: "Add nodes to your subscription plan." }),
-      /* @__PURE__ */ jsx("p", { style: { fontFamily: T.fontBody, fontSize: 16.5, lineHeight: "27px", color: "rgba(234,234,234,0.76)", margin: 0, maxWidth: 680 }, children: "Pay dVPN nodes and add them to your subscription plan. Filter by country, encryption protocol and more to find nodes that meet your application’s capacity needs." })
+      /* @__PURE__ */ jsx("h3", { style: { fontFamily: T.fontHeading, fontWeight: 600, fontSize: "clamp(22px,2.9vw,36px)", lineHeight: 1.18, letterSpacing: "-0.005em", color: T.fog, margin: 0 }, children: tr$2("steps.step1Heading", "Add nodes to your subscription plan.") }),
+      /* @__PURE__ */ jsx("p", { style: { fontFamily: T.fontBody, fontSize: 16.5, lineHeight: "27px", color: "rgba(234,234,234,0.76)", margin: 0, maxWidth: 680 }, children: tr$2("steps.step1Body", "Pay dVPN nodes and add them to your subscription plan. Filter by country, encryption protocol and more to find nodes that meet your application’s capacity needs.") })
     ] }),
-    /* @__PURE__ */ jsx("div", { style: { width: "100%", maxWidth: 960, borderRadius: 18, overflow: "hidden", border: "1px solid rgba(255,255,255,0.10)", background: "#0c0c0c", boxShadow: "0 30px 80px rgba(0,0,0,0.45)" }, children: /* @__PURE__ */ jsx("img", { src: window.__resources.screenPlan2, alt: "Adding nodes to a subscription plan in the Plan Manager", style: { display: "block", width: "100%", height: "auto", maxHeight: "56vh", objectFit: "cover", objectPosition: "top center" } }) }),
-    /* @__PURE__ */ jsx(BtnPrimary$1, { light: true, href: L.planManager, children: "Open Plan Manager" })
+    /* @__PURE__ */ jsx("div", { style: { width: "100%", maxWidth: 960, borderRadius: 18, overflow: "hidden", border: "1px solid rgba(255,255,255,0.10)", background: "#0c0c0c", boxShadow: "0 30px 80px rgba(0,0,0,0.45)" }, children: /* @__PURE__ */ jsx("img", { src: window.__resources.screenPlan2, alt: tr$2("steps.planManagerAlt", "Adding nodes to a subscription plan in the Plan Manager"), style: { display: "block", width: "100%", height: "auto", maxHeight: "56vh", objectFit: "cover", objectPosition: "top center" } }) }),
+    /* @__PURE__ */ jsx(BtnPrimary$1, { light: true, href: L.planManager, children: tr$2("steps.openPlanManager", "Open Plan Manager") })
   ] }) });
 }
 const PlatformIcons = {
@@ -1232,14 +1179,14 @@ const PlatformIcons = {
   ] })
 };
 const BUILD_PLATFORMS = [
-  { key: "iOS", name: "iOS", stack: ["Swift", "React Native"], desc: "Ship an App Store client. The Network Extension tunnel is already built." },
-  { key: "Android", name: "Android", stack: ["Kotlin", "React Native"], desc: "Ship a Play Store app on VpnService. WireGuard and V2Ray included." },
-  { key: "macOS", name: "macOS", stack: ["Swift", "Electron"], desc: "Build a menu-bar app that tunnels all system traffic." },
-  { key: "Windows", name: "Windows", stack: ["Electron", ".NET"], desc: "Build a desktop client for the OS most people use." },
-  { key: "Linux", name: "Linux", stack: ["CLI", "daemon"], desc: "Run headless daemons on servers, routers and homelabs." },
-  { key: "Web", name: "Web", stack: ["TypeScript", "WASM"], desc: "Build browser extensions and dashboards. Users install nothing." },
-  { key: "TV", name: "TV", stack: ["Android TV", "tvOS"], desc: "Build TV apps designed for the remote control." },
-  { key: "Server", name: "Server", stack: ["Node", "Go"], desc: "Route traffic from code. Bots, backends and AI agents." }
+  { key: "iOS", name: "iOS", descKey: "sdk.iosDesc", stack: ["Swift", "React Native"], desc: "Ship an App Store client. The Network Extension tunnel is already built." },
+  { key: "Android", name: "Android", descKey: "sdk.androidDesc", stack: ["Kotlin", "React Native"], desc: "Ship a Play Store app on VpnService. WireGuard and V2Ray included." },
+  { key: "macOS", name: "macOS", descKey: "sdk.macosDesc", stack: ["Swift", "Electron"], desc: "Build a menu-bar app that tunnels all system traffic." },
+  { key: "Windows", name: "Windows", descKey: "sdk.windowsDesc", stack: ["Electron", ".NET"], desc: "Build a desktop client for the OS most people use." },
+  { key: "Linux", name: "Linux", descKey: "sdk.linuxDesc", stack: ["CLI", "daemon"], desc: "Run headless daemons on servers, routers and homelabs." },
+  { key: "Web", name: "Web", descKey: "sdk.webDesc", stack: ["TypeScript", "WASM"], desc: "Build browser extensions and dashboards. Users install nothing." },
+  { key: "TV", name: "TV", descKey: "sdk.tvDesc", stack: ["Android TV", "tvOS"], desc: "Build TV apps designed for the remote control." },
+  { key: "Server", name: "Server", descKey: "sdk.serverDesc", stack: ["Node", "Go"], desc: "Route traffic from code. Bots, backends and AI agents." }
 ];
 function SDKSection$1() {
   return /* @__PURE__ */ jsxs("section", { id: "build-dvpn", style: { background: "radial-gradient(1000px 480px at 12% -8%, rgba(1,86,252,0.06), transparent 60%), radial-gradient(820px 420px at 94% 36%, rgba(1,86,252,0.04), transparent 60%), linear-gradient(180deg, #f4f6fb 0%, #fbfbfb 28%, #fbfbfb 100%)", ...atomStyles.section, scrollMarginTop: 90 }, children: [
@@ -1257,8 +1204,8 @@ function SDKSection$1() {
     /* @__PURE__ */ jsxs("div", { style: { ...atomStyles.container, display: "flex", flexDirection: "column", gap: "clamp(36px,5vw,52px)" }, children: [
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 18, maxWidth: 720 }, children: [
         /* @__PURE__ */ jsx(StepTag, { n: 2, light: true }),
-        /* @__PURE__ */ jsx("h2", { style: { ...atomStyles.h1Light, fontSize: "clamp(26px,3.2vw,38px)", margin: 0 }, children: "Build a dVPN for Any Platform" }),
-        /* @__PURE__ */ jsx("p", { style: { ...atomStyles.leadLight, maxWidth: 680 }, children: "The Sentinel SDK runs on phones, desktops, browsers, TVs and servers. You build the app and own the brand. The network handles bandwidth, routing and payments." })
+        /* @__PURE__ */ jsx("h2", { style: { ...atomStyles.h1Light, fontSize: "clamp(26px,3.2vw,38px)", margin: 0 }, children: tr$2("sdk.buildPlatformHeading", "Build a dVPN for Any Platform") }),
+        /* @__PURE__ */ jsx("p", { style: { ...atomStyles.leadLight, maxWidth: 680 }, children: tr$2("sdk.buildPlatformBody", "The Sentinel SDK runs on phones, desktops, browsers, TVs and servers. You build the app and own the brand. The network handles bandwidth, routing and payments.") })
       ] }),
       /* @__PURE__ */ jsx("div", { className: "sn-build-grid", children: BUILD_PLATFORMS.map((p) => /* @__PURE__ */ jsxs(
         "a",
@@ -1274,15 +1221,15 @@ function SDKSection$1() {
               /* @__PURE__ */ jsx("span", { className: "sn-build-name", style: { fontFamily: T.fontHeading, fontWeight: 600, fontSize: 20, lineHeight: 1.2, color: T.onLight85 }, children: p.name }),
               /* @__PURE__ */ jsx("span", { className: "sn-build-arrow", "aria-hidden": "true", style: { marginLeft: "auto", color: T.blue, fontSize: 17, lineHeight: 1 }, children: "↗" })
             ] }),
-            /* @__PURE__ */ jsx("p", { style: { margin: 0, fontFamily: T.fontBody, fontSize: 14, lineHeight: 1.55, color: T.onLight60, flex: 1 }, children: p.desc }),
+            /* @__PURE__ */ jsx("p", { style: { margin: 0, fontFamily: T.fontBody, fontSize: 14, lineHeight: 1.55, color: T.onLight60, flex: 1 }, children: p.descKey ? tr$2(p.descKey, p.desc) : p.desc }),
             /* @__PURE__ */ jsx("div", { style: { borderTop: `1px solid ${T.line200}`, paddingTop: 14, display: "flex", flexWrap: "wrap", gap: 6 }, children: p.stack.map((s) => /* @__PURE__ */ jsx("span", { style: { fontFamily: T.fontMono, fontSize: 11, letterSpacing: "0.02em", padding: "4px 10px", borderRadius: 7, background: T.snow, color: T.onLight60, whiteSpace: "nowrap" }, children: s }, s)) })
           ]
         },
         p.key
       )) }),
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "stretch", flexWrap: "wrap", gap: "clamp(12px,2vw,28px)", justifyContent: "center" }, children: [
-        /* @__PURE__ */ jsx(BtnPrimary$1, { light: true, href: L.sdkDocs, style: { borderColor: "#d9d9d9" }, children: "SDK Docs" }),
-        /* @__PURE__ */ jsx(BtnGhost, { dark: false, href: L.github, children: "View on GitHub" })
+        /* @__PURE__ */ jsx(BtnPrimary$1, { light: true, href: L.sdkDocs, style: { borderColor: "#d9d9d9" }, children: tr$2("sdk.docsButton", "SDK Docs") }),
+        /* @__PURE__ */ jsx(BtnGhost, { dark: false, href: L.github, children: tr$2("sdk.githubButton", "View on GitHub") })
       ] })
     ] })
   ] });
@@ -1307,29 +1254,29 @@ function PaymentRailsSection$1() {
   const Mark = ({ id, big }) => /* @__PURE__ */ jsx("span", { style: { height: big ? 58 : 30, minWidth: big ? 66 : 38, padding: big ? "0 13px" : "0 7px", borderRadius: big ? 13 : 8, background: T.snow, border: `1px solid ${T.line200}`, display: "inline-flex", alignItems: "center", justifyContent: "center", overflow: "hidden", flex: "none" }, children: /* @__PURE__ */ jsx("span", { style: { display: "inline-flex", alignItems: "center", transform: big ? "scale(1.45)" : "scale(0.75)" }, dangerouslySetInnerHTML: { __html: LOGOS[id] } }) });
   const fiatTiles = [
     {
-      name: "Credit / Debit Card",
+      name: tr$2("payments.creditName", "Credit / Debit Card"),
       marks: ["visa", "mc"],
-      desc: "Sell dVPN access with Visa, Mastercard, Amex and more — through any payment processor you choose."
+      desc: tr$2("payments.creditDesc", "Sell dVPN access with Visa, Mastercard, Amex and more — through any payment processor you choose.")
     },
     {
-      name: "Apple Pay / Google Pay",
+      name: tr$2("payments.walletName", "Apple Pay / Google Pay"),
       marks: ["applepay", "googlepay"],
-      desc: "Charge for your dVPN with one-tap Apple Pay or Google Pay checkout, on the web or in your app."
+      desc: tr$2("payments.walletDesc", "Charge for your dVPN with one-tap Apple Pay or Google Pay checkout, on the web or in your app.")
     },
     {
-      name: "Stripe",
+      name: tr$2("payments.stripeName", "Stripe"),
       marks: ["stripe"],
-      desc: "Bill your dVPN through Stripe Checkout or Billing — payment confirmed by webhook, access granted in the same flow."
+      desc: tr$2("payments.stripeDesc", "Bill your dVPN through Stripe Checkout or Billing — payment confirmed by webhook, access granted in the same flow.")
     },
     {
-      name: "Digital Currencies",
+      name: tr$2("payments.cryptoName", "Digital Currencies"),
       marks: ["btc", "sol", "zec"],
-      desc: "Accept BTC, SOL, ZEC or any other chain for dVPN access, via the processor of your choice."
+      desc: tr$2("payments.cryptoDesc", "Accept BTC, SOL, ZEC or any other chain for dVPN access, via the processor of your choice.")
     },
     {
-      name: "Free VPN",
+      name: tr$2("payments.freeName", "Free VPN"),
       marks: ["free"],
-      desc: "Grant free dVPN access on any condition you set — ads watched, offers completed, referrals made."
+      desc: tr$2("payments.freeDesc", "Grant free dVPN access on any condition you set — ads watched, offers completed, referrals made.")
     }
   ];
   return /* @__PURE__ */ jsx("section", { style: { background: "linear-gradient(180deg, #fbfbfb 0%, #f6f8fc 78%, #edf1f9 100%)", ...atomStyles.section, paddingTop: 0 }, children: /* @__PURE__ */ jsxs("div", { style: { ...atomStyles.container, display: "flex", flexDirection: "column", gap: "clamp(28px,4vw,44px)" }, children: [
@@ -1342,8 +1289,8 @@ function PaymentRailsSection$1() {
           /* @__PURE__ */ jsx(Mark, { big: true, id: "stripe" }),
           /* @__PURE__ */ jsx(Mark, { big: true, id: "btc" })
         ] }),
-        /* @__PURE__ */ jsx("h2", { style: { ...atomStyles.h1Light, fontSize: "clamp(26px,3.2vw,38px)", margin: 0, maxWidth: 780 }, children: "Integrate Any Payment Rails" }),
-        /* @__PURE__ */ jsx("p", { style: { fontFamily: T.fontBody, fontSize: 15, lineHeight: 1.65, color: T.onLight50, maxWidth: 760, margin: 0 }, children: "Accept fiat payments, crypto payments, or set any conditional trigger to authorize a user for free VPN services." })
+        /* @__PURE__ */ jsx("h2", { style: { ...atomStyles.h1Light, fontSize: "clamp(26px,3.2vw,38px)", margin: 0, maxWidth: 780 }, children: tr$2("payments.heading", "Integrate Any Payment Rails") }),
+        /* @__PURE__ */ jsx("p", { style: { fontFamily: T.fontBody, fontSize: 15, lineHeight: 1.65, color: T.onLight50, maxWidth: 760, margin: 0 }, children: tr$2("payments.subhead", "Accept fiat payments, crypto payments, or set any conditional trigger to authorize a user for free VPN services.") })
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(5,1fr)", gap: 14 }, children: fiatTiles.map((t) => /* @__PURE__ */ jsxs(
@@ -1358,7 +1305,7 @@ function PaymentRailsSection$1() {
       },
       t.name
     )) }),
-    /* @__PURE__ */ jsx("div", { style: { display: "flex", alignItems: "stretch", flexWrap: "wrap", gap: "clamp(12px,2vw,28px)", justifyContent: "center" }, children: /* @__PURE__ */ jsx(BtnPrimary$1, { light: true, href: "https://plan.sentinel.co/pricing", children: "Integrate Any Payment Rail into your dVPN" }) })
+    /* @__PURE__ */ jsx("div", { style: { display: "flex", alignItems: "stretch", flexWrap: "wrap", gap: "clamp(12px,2vw,28px)", justifyContent: "center" }, children: /* @__PURE__ */ jsx(BtnPrimary$1, { light: true, href: "https://plan.sentinel.co/pricing", children: tr$2("payments.cta", "Integrate Any Payment Rail into your dVPN") }) })
   ] }) });
 }
 Object.assign(window, {
@@ -1384,6 +1331,7 @@ const L2 = window.SENTINEL_LINKS;
 const { atomStyles: A, BtnPrimary} = window;
 const { useState: useS2, useEffect: useE2, useRef: useR2 } = React;
 const useIsMobile = window.useIsMobile;
+const tr$1 = (k, f) => typeof window !== "undefined" && window.T ? window.T(k, f) : f != null ? f : k;
 const NH_OS = [
   { label: "Windows", icon: "windows", href: L2.nodeDeployer },
   { label: "macOS", icon: "apple", href: L2.nodeDeployer },
@@ -1409,7 +1357,7 @@ function LiveNodeTestLink({ fullWidth }) {
         .sn-livetest:hover .sn-livetest-arrow { transform:translateX(3px); }
       ` }),
         /* @__PURE__ */ jsx("span", { style: { width: 40, height: 40, borderRadius: 12, flexShrink: 0, background: T2.white, border: "1px solid rgba(255,255,255,0.45)", display: "inline-flex", alignItems: "center", justifyContent: "center" }, children: /* @__PURE__ */ jsx(window.SentinelMark, { size: 22, color: "#0156FC" }) }),
-        /* @__PURE__ */ jsx("span", { className: "sn-livetest-label", style: { flex: 1, fontFamily: T2.fontHeading, fontWeight: 600, fontSize: 15, lineHeight: 1, color: T2.fog, whiteSpace: "nowrap", minWidth: 0 }, children: "View Live Node Test" }),
+        /* @__PURE__ */ jsx("span", { className: "sn-livetest-label", style: { flex: 1, fontFamily: T2.fontHeading, fontWeight: 600, fontSize: 15, lineHeight: 1, color: T2.fog, whiteSpace: "nowrap", minWidth: 0 }, children: tr$1("nodeHosting.liveTest", "View Live Node Test") }),
         /* @__PURE__ */ jsx("span", { className: "sn-livetest-arrow", "aria-hidden": "true", style: { fontSize: 15, fontWeight: 600, color: "#2670FF", flexShrink: 0 }, children: "↗" })
       ]
     }
@@ -1418,15 +1366,15 @@ function LiveNodeTestLink({ fullWidth }) {
 function NodeHostingSection$1() {
   const cards = [
     {
-      tab: "Install",
-      title: "Host a dVPN Node on Your Device",
-      body: "Run a Wireguard or V2Ray dVPN Node on your Windows, Mac, or Linux machine and start earning today!",
+      tab: tr$1("nodeHosting.installTab", "Install"),
+      title: tr$1("nodeHosting.card1Title", "Host a dVPN Node on Your Device"),
+      body: tr$1("nodeHosting.card1Body", "Run a Wireguard or V2Ray dVPN Node on your Windows, Mac, or Linux machine and start earning today!"),
       img: window.__resources.screenNode1
     },
     {
-      tab: "Cloud",
-      title: "Host dVPN Nodes on the Cloud",
-      body: "SSH into any cloud server and deploy dVPN nodes in batches — spin up, monitor, and manage your entire fleet from one place.",
+      tab: tr$1("nodeHosting.cloudTab", "Cloud"),
+      title: tr$1("nodeHosting.card2Title", "Host dVPN Nodes on the Cloud"),
+      body: tr$1("nodeHosting.card2Body", "SSH into any cloud server and deploy dVPN nodes in batches — spin up, monitor, and manage your entire fleet from one place."),
       img: window.__resources.screenNode2
     }
   ];
@@ -1482,8 +1430,8 @@ function NodeHostingSection$1() {
   }, [isMobile]);
   return /* @__PURE__ */ jsx("section", { ref: rootRef, id: "host-dvpn", style: { background: "radial-gradient(1100px 540px at 12% -2%, rgba(1,86,252,0.14), transparent 62%), radial-gradient(900px 600px at 92% 34%, rgba(38,112,255,0.08), transparent 60%), radial-gradient(1300px 520px at 50% 104%, rgba(38,112,255,0.09), transparent 65%), #0b0c10", scrollMarginTop: 90 }, children: /* @__PURE__ */ jsx("div", { className: "sn-nh-pin", children: /* @__PURE__ */ jsxs("div", { style: { ...A.container, display: "flex", flexDirection: "column", gap: isMobile ? 28 : "clamp(12px,1.8vh,20px)", paddingTop: isMobile ? 0 : "clamp(10px,1.4vh,16px)", paddingBottom: isMobile ? 0 : "clamp(10px,1.4vh,16px)", height: "100%", boxSizing: "border-box", justifyContent: "center" }, children: [
     /* @__PURE__ */ jsxs("div", { style: { ...A.sectionHead, gap: 10 }, children: [
-      /* @__PURE__ */ jsx("h2", { style: { ...A.h1Dark }, children: "Host a dVPN Node. Earn Bandwidth Rewards." }),
-      /* @__PURE__ */ jsx("p", { style: { ...A.leadDark, maxWidth: 772 }, children: "Run a Sentinel Node in minutes and join 1500+ operators across the world and provide your bandwidth to the future of decentralized privacy." })
+      /* @__PURE__ */ jsx("h2", { style: { ...A.h1Dark }, children: tr$1("nodeHosting.heading", "Host a dVPN Node. Earn Bandwidth Rewards.") }),
+      /* @__PURE__ */ jsx("p", { style: { ...A.leadDark, maxWidth: 772 }, children: tr$1("nodeHosting.lead", "Run a Sentinel Node in minutes and join 1500+ operators across the world and provide your bandwidth to the future of decentralized privacy.") })
     ] }),
     /* @__PURE__ */ jsxs("div", { style: { width: "100%", display: "flex", flexDirection: "column", gap: 14 }, children: [
       /* @__PURE__ */ jsx("div", { className: "sn-nh-stage", children: cards.map((c) => /* @__PURE__ */ jsxs("div", { className: "sn-nh-card", children: [
@@ -1503,7 +1451,7 @@ function NodeHostingSection$1() {
       )) })
     ] }),
     /* @__PURE__ */ jsxs("div", { style: { position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: isMobile ? 24 : "clamp(18px,2.8vh,28px)", marginTop: isMobile ? 44 : "clamp(10px,2.2vh,26px)", paddingBottom: isMobile ? 0 : "clamp(4px,1vh,12px)" }, children: [
-      /* @__PURE__ */ jsx("h3", { style: { fontFamily: T2.fontHeading, fontWeight: 500, fontSize: "clamp(23px,3vw,30px)", color: "rgb(234,234,234)", margin: 0, lineHeight: 1.2, letterSpacing: "-0.005em" }, children: "Host a dVPN Node Today!" }),
+      /* @__PURE__ */ jsx("h3", { style: { fontFamily: T2.fontHeading, fontWeight: 500, fontSize: "clamp(23px,3vw,30px)", color: "rgb(234,234,234)", margin: 0, lineHeight: 1.2, letterSpacing: "-0.005em" }, children: tr$1("nodeHosting.ctaHeading", "Host a dVPN Node Today!") }),
       /* @__PURE__ */ jsxs("div", { style: { position: "relative", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap", gap: "clamp(14px,2vw,20px)" }, children: [
         /* @__PURE__ */ jsx("style", { children: ".sn-btn-primary:hover .sn-plat-flip * { fill:#fff; }" }),
         NH_OS.map((o) => /* @__PURE__ */ jsxs(BtnPrimary, { href: o.href, style: { gap: 12, height: isMobile ? 52 : 60, padding: isMobile ? "0 22px" : "0 38px", fontSize: isMobile ? 15.5 : 18 }, children: [
@@ -1603,27 +1551,27 @@ function AgenticPaymentsSection$1() {
   };
   const glow = "radial-gradient(ellipse at 50% -10%, rgba(38,112,255,0.10), transparent 60%), radial-gradient(ellipse at 50% 110%, rgba(1,86,252,0.07), transparent 60%)";
   const steps = [
-    ["Request access", "Your agent calls the connect endpoint — 1, 7 or 30 days."],
-    ["Get the price", "Sentinel replies with the cost: $0.033 for a full day."],
-    ["Pay automatically", "The agent signs the USDC payment itself. Settles in ~2 seconds."],
-    ["Tunnel up", "Encrypted WireGuard connection. No API keys, no accounts, no human."]
+    [tr$1("agentic.step1Title", "Request access"), tr$1("agentic.step1Body", "Your agent calls the connect endpoint — 1, 7 or 30 days.")],
+    [tr$1("agentic.step2Title", "Get the price"), tr$1("agentic.step2Body", "Sentinel replies with the cost: $0.033 for a full day.")],
+    [tr$1("agentic.step3Title", "Pay automatically"), tr$1("agentic.step3Body", "The agent signs the USDC payment itself. Settles in ~2 seconds.")],
+    [tr$1("agentic.step4Title", "Tunnel up"), tr$1("agentic.step4Body", "Encrypted WireGuard connection. No API keys, no accounts, no human.")]
   ];
   const agents = [
-    { key: "claude", label: "Claude Agent" },
-    { key: "chatgpt", label: "ChatGPT Agent" },
-    { key: "gemini", label: "Gemini Agent" }
+    { key: "claude", label: tr$1("agentic.claudeAgent", "Claude Agent") },
+    { key: "chatgpt", label: tr$1("agentic.chatgptAgent", "ChatGPT Agent") },
+    { key: "gemini", label: tr$1("agentic.geminiAgent", "Gemini Agent") }
   ];
   return /* @__PURE__ */ jsxs("section", { style: { ...A.section, position: "relative", overflow: "hidden", background: `${glow}, linear-gradient(180deg, #0b0c10 0%, #020814 16%, #020814 84%, #040a18 100%)` }, children: [
     /* @__PURE__ */ jsx(MatrixRain, {}),
     /* @__PURE__ */ jsxs("div", { style: { ...A.container, position: "relative", zIndex: 1, display: "flex", flexDirection: "column", gap: isMobile ? 44 : "clamp(32px,4vw,44px)" }, children: [
       /* @__PURE__ */ jsxs("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? 36 : 56, alignItems: "center" }, children: [
         /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 20 }, children: [
-          /* @__PURE__ */ jsx("h2", { style: { ...A.h1Dark, maxWidth: 540, color: X.bright }, children: "The first decentralized VPN network for AI agents." }),
-          /* @__PURE__ */ jsx("p", { style: { ...A.leadDark, maxWidth: 540, color: X.muted }, children: "Agents get privacy and bypass geo-restrictions on their own — no API keys, no accounts, no human. A full day of VPN costs $0.033, paid autonomously in USDC." }),
+          /* @__PURE__ */ jsx("h2", { style: { ...A.h1Dark, maxWidth: 540, color: X.bright }, children: tr$1("agentic.heading", "The first decentralized VPN network for AI agents.") }),
+          /* @__PURE__ */ jsx("p", { style: { ...A.leadDark, maxWidth: 540, color: X.muted }, children: tr$1("agentic.lead", "Agents get privacy and bypass geo-restrictions on their own — no API keys, no accounts, no human. A full day of VPN costs $0.033, paid autonomously in USDC.") }),
           /* @__PURE__ */ jsxs("div", { style: isMobile ? { display: "grid", gridTemplateColumns: "repeat(2, minmax(0,1fr))", gap: 10 } : { display: "flex", gap: 12, flexWrap: "wrap" }, children: [
             /* @__PURE__ */ jsxs("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: isMobile ? "center" : "flex-start", gap: 10, padding: isMobile ? "11px 12px" : "10px 18px", borderRadius: 12, background: "rgba(8,16,30,0.72)", border: `1px solid ${X.borderBright}`, boxShadow: "0 0 18px -6px rgba(38,112,255,0.45)", backdropFilter: "blur(6px)" }, children: [
               /* @__PURE__ */ jsx("svg", { width: "18", height: "18", viewBox: "0 0 24 24", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { fill: "#0052FF", d: "M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.66565 0 0.475508 4.91843 0.0244141 11.1582H15.8643V12.8418H0.0244141C0.475508 19.0816 5.66565 24 12 24Z" }) }),
-              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 12.5, fontWeight: 700, color: X.bright }, children: "Pay on Base" })
+              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 12.5, fontWeight: 700, color: X.bright }, children: tr$1("agentic.payOnBase", "Pay on Base") })
             ] }),
             /* @__PURE__ */ jsxs("span", { style: { display: "inline-flex", alignItems: "center", justifyContent: isMobile ? "center" : "flex-start", gap: 10, padding: isMobile ? "11px 12px" : "10px 18px", borderRadius: 12, background: "rgba(8,16,30,0.5)", border: `1px solid ${X.border}`, backdropFilter: "blur(6px)" }, children: [
               /* @__PURE__ */ jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", "aria-hidden": "true", style: { opacity: 0.9 }, children: [
@@ -1634,10 +1582,10 @@ function AgenticPaymentsSection$1() {
                 /* @__PURE__ */ jsx("path", { fill: "url(#agSolGrad)", d: "M4.6 16.82c.14-.14.34-.23.54-.23h15.4c.34 0 .51.41.27.65l-3.21 3.22c-.14.14-.34.23-.54.23H1.66c-.34 0-.51-.41-.27-.65l3.21-3.22zM4.6 3.54c.14-.14.34-.23.54-.23h15.4c.34 0 .51.41.27.65L17.6 7.18c-.14.14-.34.23-.54.23H1.66c-.34 0-.51-.41-.27-.65L4.6 3.54zM17.6 10.13c-.14-.14-.34-.23-.54-.23H1.66c-.34 0-.51.41-.27.65l3.21 3.22c.14.14.34.23.54.23h15.4c.34 0 .51-.41.27-.65l-3.21-3.22z" })
               ] }),
               /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 12.5, color: X.muted }, children: "Solana" }),
-              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 9.5, fontWeight: 700, letterSpacing: "0.08em", color: "#ffb547", border: "1px solid rgba(255,181,71,0.35)", borderRadius: 6, padding: "2px 7px" }, children: "SOON" })
+              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 9.5, fontWeight: 700, letterSpacing: "0.08em", color: "#ffb547", border: "1px solid rgba(255,181,71,0.35)", borderRadius: 6, padding: "2px 7px" }, children: tr$1("agentic.soon", "SOON") })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: 14, marginTop: 6 }, children: /* @__PURE__ */ jsx(BtnPrimary, { href: L2.x402, style: isMobile ? { width: "100%", boxSizing: "border-box" } : void 0, children: "Launch x402.sentinel.co" }) })
+          /* @__PURE__ */ jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: 14, marginTop: 6 }, children: /* @__PURE__ */ jsx(BtnPrimary, { href: L2.x402, style: isMobile ? { width: "100%", boxSizing: "border-box" } : void 0, children: tr$1("agentic.launchBtn", "Launch x402.sentinel.co") }) })
         ] }),
         /* @__PURE__ */ jsx("div", { style: { background: X.card, border: `1px solid ${X.border}`, borderRadius: 16, padding: isMobile ? "6px 20px" : "8px 24px", backdropFilter: "blur(6px)", boxShadow: "0 0 0 1px rgba(38,112,255,0.08), 0 24px 60px -30px rgba(0,0,0,0.9)" }, children: steps.map(([title, body], i) => /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: isMobile ? 14 : 16, alignItems: "flex-start", padding: isMobile ? "17px 0" : "15px 0", borderTop: i === 0 ? "none" : `1px solid ${X.border}` }, children: [
           /* @__PURE__ */ jsx("span", { style: { flexShrink: 0, width: 28, height: 28, borderRadius: 9, border: `1px solid ${X.borderBright}`, background: "rgba(38,112,255,0.10)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: T2.fontMono, fontSize: 12, fontWeight: 700, color: X.accent }, children: i + 1 }),
@@ -1648,7 +1596,7 @@ function AgenticPaymentsSection$1() {
         ] }, title)) })
       ] }),
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }, children: [
-        /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 11, letterSpacing: "0.1em", fontWeight: 700, color: X.dim }, children: "CONNECT YOUR AGENT" }),
+        /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 11, letterSpacing: "0.1em", fontWeight: 700, color: X.dim }, children: tr$1("agentic.connectAgent", "CONNECT YOUR AGENT") }),
         /* @__PURE__ */ jsx("div", { style: isMobile ? { display: "grid", gridTemplateColumns: "1fr", gap: 10, width: "100%", maxWidth: 300 } : { display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 14 }, children: agents.map((a) => /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: isMobile ? "center" : "flex-start", gap: 12, padding: isMobile ? "13px 22px" : "12px 22px", borderRadius: 14, background: X.card, border: `1px solid ${X.border}`, backdropFilter: "blur(6px)" }, children: [
           AGENT_MARKS[a.key],
           /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 13.5, color: X.text }, children: a.label })
@@ -1723,6 +1671,7 @@ const DVPN_APPS = [
     name: "DVPN by NORSE",
     logo: window.__resources.ecoNorse,
     featured: true,
+    descKey: "apps.norseDesc",
     desc: "A full decentralized-VPN experience wrapped into user-friendly apps for every platform.",
     links: {
       "iOS": "https://apps.apple.com/us/app/dvpn-decentralized-vpn/id6553963594",
@@ -1733,6 +1682,7 @@ const DVPN_APPS = [
   {
     name: "Sentinel Shield",
     logo: window.__resources.ecoSentinelShield,
+    descKey: "apps.shieldDesc",
     desc: "Flagship open-source dVPN by Sentinel P2P — WireGuard & V2Ray.",
     links: {
       "iOS": "https://apps.apple.com/us/app/sentinel-shield-dvpn/id6657986086",
@@ -1742,6 +1692,7 @@ const DVPN_APPS = [
   {
     name: "Ryn VPN",
     logo: window.__resources.ecoRyn,
+    descKey: "apps.rynDesc",
     desc: "A clean, minimalist privacy VPN trusted by 10M+ people.",
     links: {
       "iOS": "https://apps.apple.com/ae/app/ryn-vpn-secure-vpn-master/id1493328027",
@@ -1752,6 +1703,7 @@ const DVPN_APPS = [
   {
     name: "Independent dVPN",
     logo: window.__resources.ecoIndependent,
+    descKey: "apps.independentDesc",
     desc: "Free decentralized VPN on Sentinel — WireGuard & V2Ray.",
     links: {
       "iOS": "https://apps.apple.com/us/app/independent-dvpn/id6468454526",
@@ -1761,6 +1713,7 @@ const DVPN_APPS = [
   {
     name: "Encrypt SIM",
     logo: window.__resources.ecoEncryptsim,
+    descKey: "apps.encryptsimDesc",
     desc: "Privacy-first global eSIM — no KYC, no logs, SOC2-grade encryption.",
     links: {
       "iOS": "https://www.encryptsim.com/",
@@ -1770,6 +1723,7 @@ const DVPN_APPS = [
   {
     name: "Meile dVPN",
     logo: window.__resources.ecoMeile,
+    descKey: "apps.meileDesc",
     desc: "Sentinel-powered desktop dVPN for macOS, Linux & Windows.",
     links: {
       "macOS": "https://mathnodes.com/index.php/meile-dvpn-client-linux-os-x/",
@@ -1781,6 +1735,7 @@ const DVPN_APPS = [
     name: "VALT",
     logo: window.__resources.ecoValt,
     imgFilter: "brightness(0)",
+    descKey: "apps.valtDesc",
     desc: "Capture and protect the data you create every day.",
     links: {
       "iOS": "https://apps.apple.com/us/app/valt-dvpn/id1630660373",
@@ -1830,13 +1785,14 @@ function DvpnConsole() {
       /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 13, color: "rgba(234,234,234,0.62)" }, children: "sentinel://connect" }),
       !isMobile && /* @__PURE__ */ jsxs("span", { style: { marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 8, fontFamily: T2.fontMono, fontSize: 11, color: "rgba(234,234,234,0.5)" }, children: [
         /* @__PURE__ */ jsx("span", { className: "sn-con-dot", style: { width: 7, height: 7, borderRadius: "50%", background: "#3DDC84" } }),
-        " WIREGUARD · AES-256"
+        " ",
+        tr$1("console.wireguardBadge", "WIREGUARD · AES-256")
       ] })
     ] }),
     /* @__PURE__ */ jsxs("div", { style: { padding: isMobile ? "22px 16px 24px" : "30px 30px 28px", display: "flex", flexDirection: "column", gap: 26 }, children: [
       /* @__PURE__ */ jsxs("div", { className: "sn-con-steps", children: [
         /* @__PURE__ */ jsxs("div", { style: fld, children: [
-          /* @__PURE__ */ jsx("span", { style: lbl, children: "01 — EXIT LOCATION" }),
+          /* @__PURE__ */ jsx("span", { style: lbl, children: tr$1("console.step01", "01 — EXIT LOCATION") }),
           /* @__PURE__ */ jsxs("button", { className: "sn-con-dd", onClick: () => setOpen((o) => !o), "aria-haspopup": "listbox", "aria-expanded": open, children: [
             /* @__PURE__ */ jsxs("span", { style: { display: "inline-flex", alignItems: "center", gap: 10 }, children: [
               /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 11.5, color: T2.blueLight, background: "rgba(38,112,255,0.14)", padding: "2px 7px", borderRadius: 6 }, children: country[0] }),
@@ -1865,7 +1821,7 @@ function DvpnConsole() {
           )) })
         ] }),
         /* @__PURE__ */ jsxs("div", { style: fld, children: [
-          /* @__PURE__ */ jsx("span", { style: lbl, children: "02 — PLATFORM" }),
+          /* @__PURE__ */ jsx("span", { style: lbl, children: tr$1("console.step02", "02 — PLATFORM") }),
           /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)", gap: 8 }, children: DVPN_CON_PLATFORMS.map((p) => /* @__PURE__ */ jsxs("button", { className: "sn-con-seg", "data-on": platform === p.key, onClick: () => setPlatform(p.key), children: [
             /* @__PURE__ */ jsx(DvpnPlatIcon, { kind: p.icon, size: 15 }),
             " ",
@@ -1873,7 +1829,7 @@ function DvpnConsole() {
           ] }, p.key)) })
         ] }),
         /* @__PURE__ */ jsxs("div", { style: fld, children: [
-          /* @__PURE__ */ jsx("span", { style: lbl, children: "03 — SELECT APP" }),
+          /* @__PURE__ */ jsx("span", { style: lbl, children: tr$1("console.step03", "03 — SELECT APP") }),
           /* @__PURE__ */ jsx("div", { className: "sn-con-scroll", style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: 8, maxHeight: 188, overflowY: "auto" }, children: available.map((a) => /* @__PURE__ */ jsxs("button", { className: "sn-con-app", "data-on": selApp && a.name === selApp.name, onClick: () => setAppName(a.name), children: [
             /* @__PURE__ */ jsx("span", { style: { width: 30, height: 30, borderRadius: 8, background: "#0f0f10", border: "1px solid rgba(255,255,255,0.08)", display: "grid", placeItems: "center", flexShrink: 0, overflow: "hidden" }, children: /* @__PURE__ */ jsx("img", { src: a.logo, alt: "", style: { width: 20, height: 20, objectFit: "contain", filter: a.imgFilter ? "brightness(0) invert(1)" : void 0 } }) }),
             /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontBody, fontSize: 14, color: "rgba(234,234,234,0.9)" }, children: a.name }),
@@ -1883,7 +1839,7 @@ function DvpnConsole() {
       ] }),
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: 22, flexWrap: "wrap", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 24 }, children: [
         /* @__PURE__ */ jsxs("div", { style: { fontFamily: T2.fontMono, fontSize: 12.5, lineHeight: "21px", color: "rgba(234,234,234,0.55)", minWidth: 0, overflowWrap: "anywhere" }, children: [
-          /* @__PURE__ */ jsx("span", { style: { color: connecting ? "#3DDC84" : T2.blueLight }, children: connecting ? "> establishing encrypted tunnel…" : "> ready to connect" }),
+          /* @__PURE__ */ jsx("span", { style: { color: connecting ? "#3DDC84" : T2.blueLight }, children: connecting ? tr$1("console.statusConnecting", "> establishing encrypted tunnel…") : tr$1("console.statusReady", "> ready to connect") }),
           /* @__PURE__ */ jsx("br", {}),
           "exit=",
           country[0],
@@ -1895,9 +1851,10 @@ function DvpnConsole() {
         ] }),
         /* @__PURE__ */ jsx("button", { className: "sn-con-connect", onClick: connect, disabled: !url || connecting, children: connecting ? /* @__PURE__ */ jsxs(React.Fragment, { children: [
           /* @__PURE__ */ jsx("span", { className: "sn-con-spinner" }),
-          " Connecting…"
+          " ",
+          tr$1("console.connectingBtn", "Connecting…")
         ] }) : /* @__PURE__ */ jsxs(React.Fragment, { children: [
-          "Connect to dVPN",
+          tr$1("console.connectBtn", "Connect to dVPN"),
           /* @__PURE__ */ jsxs("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2.2", strokeLinecap: "round", strokeLinejoin: "round", children: [
             /* @__PURE__ */ jsx("line", { x1: "5", y1: "12", x2: "19", y2: "12" }),
             /* @__PURE__ */ jsx("polyline", { points: "12 5 19 12 12 19" })
@@ -1921,8 +1878,8 @@ function SentinelDVPNSection() {
   apps.filter(matchFilter);
   return /* @__PURE__ */ jsx("section", { style: { background: T2.paper, ...A.section }, children: /* @__PURE__ */ jsxs("div", { style: { ...A.container, display: "flex", flexDirection: "column", gap: 40 }, children: [
     /* @__PURE__ */ jsxs("div", { style: { ...A.sectionHead }, children: [
-      /* @__PURE__ */ jsx("h2", { style: { ...A.h1Light, maxWidth: 764 }, children: "Use open-source decentralized VPN apps you can trust." }),
-      /* @__PURE__ */ jsx("p", { style: { ...A.leadLight, maxWidth: 864 }, children: "Pick a location, your platform and an app — then connect. Every app here ships on the Sentinel network, so no single provider owns the bandwidth you route through." })
+      /* @__PURE__ */ jsx("h2", { style: { ...A.h1Light, maxWidth: 764 }, children: tr$1("sentinelDvpn.heading", "Use open-source decentralized VPN apps you can trust.") }),
+      /* @__PURE__ */ jsx("p", { style: { ...A.leadLight, maxWidth: 864 }, children: tr$1("sentinelDvpn.lead", "Pick a location, your platform and an app — then connect. Every app here ships on the Sentinel network, so no single provider owns the bandwidth you route through.") })
     ] }),
     /* @__PURE__ */ jsx(DvpnConsole, {})
   ] }) });
@@ -1964,58 +1921,58 @@ function CompareSection$1() {
   const sentinel = {
     title: "Sentinel",
     rows: [
-      ["Discovery", "Cosmos-SDK blockchain"],
-      ["Bootstrap", "None — any RPC endpoint"],
-      ["Entry points", "∞ permissionless"],
-      ["Sybil resistance", "On-chain registration TX"],
-      ["State consistency", "Finality · ~6s blocks"],
-      ["Governance", "On-chain validator votes"],
-      ["If org disappears", "Validators continue"],
-      ["Verdict", "Nothing to block"]
+      [tr$1("compare.rowDiscovery", "Discovery"), tr$1("compare.snDiscoveryVal", "Cosmos-SDK blockchain")],
+      [tr$1("compare.rowBootstrap", "Bootstrap"), tr$1("compare.snBootstrapVal", "None — any RPC endpoint")],
+      [tr$1("compare.rowEntry", "Entry points"), tr$1("compare.snEntryVal", "∞ permissionless")],
+      [tr$1("compare.rowSybil", "Sybil resistance"), tr$1("compare.snSybilVal", "On-chain registration TX")],
+      [tr$1("compare.rowState", "State consistency"), tr$1("compare.snStateVal", "Finality · ~6s blocks")],
+      [tr$1("compare.rowGovernance", "Governance"), tr$1("compare.snGovVal", "On-chain validator votes")],
+      [tr$1("compare.rowIfOrg", "If org disappears"), tr$1("compare.snOrgVal", "Validators continue")],
+      [tr$1("compare.rowVerdict", "Verdict"), tr$1("compare.snVerdictVal", "Nothing to block")]
     ],
-    callout: "Discovery is on-chain, entry points are permissionless, and the registry lives as long as anyone runs a validator. Block the team and the network is unaffected."
+    callout: tr$1("compare.sentinelCallout", "Discovery is on-chain, entry points are permissionless, and the registry lives as long as anyone runs a validator. Block the team and the network is unaffected.")
   };
   const items = [
     {
       logo: CmpLogos.tor,
       title: "Tor",
-      sub: "The Onion Router",
-      fail: "Central directory",
-      rows: [["Discovery", "9 Directory Authorities"], ["Routing", "3-hop circuit (slow)"], ["Central failure", "Directory Authorities"], ["If org disappears", "Network degrades"]],
-      callout: "9 organizations control the network's directory. Compromise or block them and Tor falls."
+      sub: tr$1("compare.torSub", "The Onion Router"),
+      fail: tr$1("compare.torFail", "Central directory"),
+      rows: [[tr$1("compare.rowDiscovery", "Discovery"), tr$1("compare.torDiscoveryVal", "9 Directory Authorities")], [tr$1("compare.rowRouting", "Routing"), tr$1("compare.torRoutingVal", "3-hop circuit (slow)")], [tr$1("compare.rowCentralFail", "Central failure"), tr$1("compare.torCentralFailVal", "Directory Authorities")], [tr$1("compare.rowIfOrg", "If org disappears"), tr$1("compare.torOrgVal", "Network degrades")]],
+      callout: tr$1("compare.torCallout", "9 organizations control the network's directory. Compromise or block them and Tor falls.")
     },
     {
       logo: CmpLogos.nodes,
-      title: "Other on-chain P2P networks",
-      sub: "Cross-protocol comparison",
-      fail: "Company servers",
-      rows: [["Discovery", "Centralized API servers"], ["Node registry", "Company-operated"], ["If company disappears", "Network dies"], ["Open client SDK", "Proprietary or limited"]],
-      callout: "Discovery and coordination still depend on company-operated servers. Not truly decentralized at the networking layer."
+      title: tr$1("compare.otherTitle", "Other on-chain P2P networks"),
+      sub: tr$1("compare.otherSub", "Cross-protocol comparison"),
+      fail: tr$1("compare.otherFail", "Company servers"),
+      rows: [[tr$1("compare.rowDiscovery", "Discovery"), tr$1("compare.otherDiscoveryVal", "Centralized API servers")], [tr$1("compare.rowRegistry", "Node registry"), tr$1("compare.otherRegistryVal", "Company-operated")], [tr$1("compare.rowIfCompany", "If company disappears"), tr$1("compare.otherOrgVal", "Network dies")], [tr$1("compare.rowOpenSdk", "Open client SDK"), tr$1("compare.otherSdkVal", "Proprietary or limited")]],
+      callout: tr$1("compare.otherCallout", "Discovery and coordination still depend on company-operated servers. Not truly decentralized at the networking layer.")
     },
     {
       logo: CmpLogos.ipfs,
       title: "IPFS / Filecoin",
-      sub: "Decentralized storage",
-      fail: "Hardcoded peers",
-      rows: [["DHT", "Kademlia (libp2p)"], ["Bootstrap", "~6 hardcoded peers"], ["Seeds", "bootstrap.libp2p.io (Protocol Labs)"], ["Sybil resistance", "Weak"]],
-      callout: "Kubo ships with ~6 hardcoded Protocol Labs bootstrap peers; block them, and fresh nodes can’t join the DHT."
+      sub: tr$1("compare.ipfsSub", "Decentralized storage"),
+      fail: tr$1("compare.ipfsFail", "Hardcoded peers"),
+      rows: [["DHT", "Kademlia (libp2p)"], [tr$1("compare.rowBootstrap", "Bootstrap"), tr$1("compare.ipfsBootstrapVal", "~6 hardcoded peers")], [tr$1("compare.rowSeeds", "Seeds"), "bootstrap.libp2p.io (Protocol Labs)"], [tr$1("compare.rowSybil", "Sybil resistance"), tr$1("compare.ipfsSybilVal", "Weak")]],
+      callout: tr$1("compare.ipfsCallout", "Kubo ships with ~6 hardcoded Protocol Labs bootstrap peers; block them, and fresh nodes can’t join the DHT.")
     },
     {
       logo: CmpLogos.bittorrent,
       title: "BitTorrent",
-      sub: "File sharing protocol",
-      fail: "Hardcoded hosts",
-      rows: [["DHT", "Mainline Kademlia"], ["Bootstrap", "~5 hardcoded hosts"], ["Seeds", "router.bittorrent.com, dht.transmissionbt.com..."], ["Sybil resistance", "Weak (free to flood)"]],
-      callout: "Mainline DHT relies on ~5 hardcoded bootstrap hosts; existing clients can persist peers, but blocking those hosts prevents new users from joining."
+      sub: tr$1("compare.btSub", "File sharing protocol"),
+      fail: tr$1("compare.btFail", "Hardcoded hosts"),
+      rows: [["DHT", "Mainline Kademlia"], [tr$1("compare.rowBootstrap", "Bootstrap"), tr$1("compare.btBootstrapVal", "~5 hardcoded hosts")], [tr$1("compare.rowSeeds", "Seeds"), "router.bittorrent.com, dht.transmissionbt.com..."], [tr$1("compare.rowSybil", "Sybil resistance"), tr$1("compare.btSybilVal", "Weak (free to flood)")]],
+      callout: tr$1("compare.btCallout", "Mainline DHT relies on ~5 hardcoded bootstrap hosts; existing clients can persist peers, but blocking those hosts prevents new users from joining.")
     },
     {
       logo: i2pSrc ? /* @__PURE__ */ jsx("img", { src: i2pSrc, alt: "", style: { height: 13, width: "auto", display: "block" } }) : null,
       wideLogo: true,
       title: "I2P",
-      sub: "Invisible Internet Project",
-      fail: "Reseed servers",
-      rows: [["Discovery", "Hardcoded reseed URLs"], ["Bootstrap", "~8 reseed servers"], ["Seeds", "reseed.i2p-projekt.de"], ["If blocked", "New users can't join"]],
-      callout: "Hardcoded reseed URLs. Block ~8 domains and new users cannot bootstrap into the network."
+      sub: tr$1("compare.i2pSub", "Invisible Internet Project"),
+      fail: tr$1("compare.i2pFail", "Reseed servers"),
+      rows: [[tr$1("compare.rowDiscovery", "Discovery"), tr$1("compare.i2pDiscoveryVal", "Hardcoded reseed URLs")], [tr$1("compare.rowBootstrap", "Bootstrap"), tr$1("compare.i2pBootstrapVal", "~8 reseed servers")], [tr$1("compare.rowSeeds", "Seeds"), "reseed.i2p-projekt.de"], [tr$1("compare.rowIfBlocked", "If blocked"), tr$1("compare.i2pBlockedVal", "New users can't join")]],
+      callout: tr$1("compare.i2pCallout", "Hardcoded reseed URLs. Block ~8 domains and new users cannot bootstrap into the network.")
     }
   ];
   const chip = (logo, wide) => /* @__PURE__ */ jsx("span", { style: { minWidth: 36, height: 36, padding: wide ? "0 12px" : 0, width: wide ? "auto" : 36, borderRadius: 11, background: T2.white, border: `1px solid ${T2.strokeOnLight}`, display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }, children: logo });
@@ -2029,8 +1986,8 @@ function CompareSection$1() {
     /* @__PURE__ */ jsx("style", { children: SN_CMP_CSS }),
     /* @__PURE__ */ jsxs("div", { style: { ...A.container, display: "flex", flexDirection: "column", gap: "clamp(28px,3.5vw,40px)" }, children: [
       /* @__PURE__ */ jsxs("div", { style: { ...A.sectionHead, maxWidth: 940, gap: 16 }, children: [
-        /* @__PURE__ */ jsx("h2", { style: { ...A.h1Light, maxWidth: 940 }, children: "How Sentinel's architecture compares to leading P2P networks." }),
-        /* @__PURE__ */ jsx("p", { style: { ...A.leadLight, maxWidth: 760 }, children: "Take away the founding organization. Block the bootstrap servers. What keeps running?" })
+        /* @__PURE__ */ jsx("h2", { style: { ...A.h1Light, maxWidth: 940 }, children: tr$1("compare.heading", "How Sentinel's architecture compares to leading P2P networks.") }),
+        /* @__PURE__ */ jsx("p", { style: { ...A.leadLight, maxWidth: 760 }, children: tr$1("compare.lead", "Take away the founding organization. Block the bootstrap servers. What keeps running?") })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "sn-cmp-hero", style: { position: "relative", overflow: "hidden", background: "linear-gradient(150deg, #12141b 0%, #0b0c10 55%, #0c1322 100%)", border: "1px solid rgba(38,112,255,0.38)", borderRadius: 26, padding: isMobile ? "22px 20px 20px" : "26px 30px 26px", boxShadow: "0 30px 90px -40px rgba(1,86,252,0.55), 0 18px 50px -30px rgba(0,0,0,0.5)" }, children: [
         /* @__PURE__ */ jsx("div", { "aria-hidden": "true", style: { position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(640px 280px at 12% -10%, rgba(1,86,252,0.24), transparent 62%), radial-gradient(560px 320px at 96% 115%, rgba(38,112,255,0.16), transparent 60%)" } }),
@@ -2042,16 +1999,16 @@ function CompareSection$1() {
             /* @__PURE__ */ jsx("div", { style: { minWidth: 0 }, children: /* @__PURE__ */ jsx("h3", { style: { fontFamily: T2.fontHeading, fontWeight: 500, fontSize: 19, lineHeight: "24px", color: "#ffffff", margin: 0 }, children: sentinel.title }) }),
             !isMobile && /* @__PURE__ */ jsxs("a", { className: "sn-cmp-rpc", href: "https://peers.suchnode.net/", target: "_blank", rel: "noopener noreferrer", style: { marginLeft: "auto", boxSizing: "border-box", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10, padding: "11px 20px", borderRadius: 999, background: "rgba(1,86,252,0.20)", border: "1px solid rgba(94,148,255,0.48)", boxShadow: "0 8px 26px -12px rgba(1,86,252,0.55)", textDecoration: "none" }, children: [
               /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { width: 8, height: 8, borderRadius: "50%", background: "#00e05c", boxShadow: "0 0 12px rgba(0,224,92,0.9)", animation: "sn-cmp-pulse 1.8s ease-in-out infinite", flexShrink: 0 } }),
-              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontHeading, fontSize: 13, fontWeight: 800, letterSpacing: "0.08em", color: "#e2ecff", whiteSpace: "nowrap" }, children: "VIEW LIVE RPC LIST" }),
+              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontHeading, fontSize: 13, fontWeight: 800, letterSpacing: "0.08em", color: "#e2ecff", whiteSpace: "nowrap" }, children: tr$1("compare.viewLiveRpc", "VIEW LIVE RPC LIST") }),
               /* @__PURE__ */ jsxs("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "#b6cdff", strokeWidth: "2.4", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0 }, children: [
                 /* @__PURE__ */ jsx("path", { d: "M7 17 17 7" }),
                 /* @__PURE__ */ jsx("path", { d: "M9 7h8v8" })
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "repeat(2, minmax(0,1fr))" : "repeat(4, minmax(0,1fr))", gap: "0 26px" }, children: sentinel.rows.map(([k, v]) => /* @__PURE__ */ jsxs("div", { style: { padding: "9px 0 10px", borderTop: "1px solid rgba(255,255,255,0.08)" }, children: [
+          /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "repeat(2, minmax(0,1fr))" : "repeat(4, minmax(0,1fr))", gap: "0 26px" }, children: sentinel.rows.map(([k, v], ri) => /* @__PURE__ */ jsxs("div", { style: { padding: "9px 0 10px", borderTop: "1px solid rgba(255,255,255,0.08)" }, children: [
             /* @__PURE__ */ jsx("span", { style: { display: "block", ...keyDark, marginBottom: 3 }, children: k }),
-            /* @__PURE__ */ jsx("span", { style: k === "Verdict" ? { ...valDark, color: "#9dbcff", fontWeight: 700 } : valDark, children: v })
+            /* @__PURE__ */ jsx("span", { style: ri === sentinel.rows.length - 1 ? { ...valDark, color: "#9dbcff", fontWeight: 700 } : valDark, children: v })
           ] }, k)) }),
           /* @__PURE__ */ jsxs("div", { style: { display: "flex", gap: 11, alignItems: "flex-start", justifyContent: "center", borderRadius: 14, background: "rgba(1,86,252,0.12)", border: "1px solid rgba(94,148,255,0.28)", padding: "12px 18px" }, children: [
             /* @__PURE__ */ jsxs("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "#9dbcff", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", style: { flexShrink: 0, marginTop: 2 }, children: [
@@ -2083,10 +2040,7 @@ function CompareSection$1() {
           /* @__PURE__ */ jsx("span", { style: valLight, children: v })
         ] }, k)) }),
         /* @__PURE__ */ jsxs("div", { style: { marginTop: "auto", borderLeft: "2px solid rgba(216,4,4,0.5)", padding: "2px 0 2px 13px" }, children: [
-          /* @__PURE__ */ jsxs("span", { style: { display: "block", fontFamily: T2.fontMono, fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T2.danger700, marginBottom: 4 }, children: [
-            "Failure mode · ",
-            item.fail
-          ] }),
+          /* @__PURE__ */ jsx("span", { style: { display: "block", fontFamily: T2.fontMono, fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: T2.danger700, marginBottom: 4 }, children: tr$1("compare.failureMode", "Failure mode") + " · " + item.fail }),
           /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontBody, fontSize: 11.5, lineHeight: "18px", color: T2.onLight60 }, children: item.callout })
         ] })
       ] }, item.title)) }),
@@ -2094,12 +2048,7 @@ function CompareSection$1() {
         /* @__PURE__ */ jsx("div", { "aria-hidden": "true", style: { position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(720px 300px at 50% -20%, rgba(1,86,252,0.26), transparent 65%), radial-gradient(560px 320px at 96% 115%, rgba(38,112,255,0.12), transparent 60%)" } }),
         /* @__PURE__ */ jsx("div", { "aria-hidden": "true", style: { position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.4px)", backgroundSize: "26px 26px", maskImage: "linear-gradient(180deg, black, transparent 75%)", WebkitMaskImage: "linear-gradient(180deg, black, transparent 75%)" } }),
         /* @__PURE__ */ jsx("div", { "aria-hidden": "true", style: { position: "absolute", top: 0, left: 30, right: 30, height: 1, background: "linear-gradient(90deg, transparent, rgba(94,148,255,0.7), transparent)" } }),
-        /* @__PURE__ */ jsxs("p", { style: { position: "relative", fontFamily: T2.fontHeading, fontWeight: 500, fontSize: "clamp(21px,2.9vw,31px)", lineHeight: 1.45, letterSpacing: "-0.01em", color: "rgba(234,234,234,0.92)", margin: "0 auto", maxWidth: 920 }, children: [
-          "Most networks rely on fixed entry points that censors can block. Sentinel uses ",
-          /* @__PURE__ */ jsx("span", { style: { color: "#9dbcff", fontWeight: 700 }, children: "permissionless RPC endpoints" }),
-          " — anyone can run one, anywhere. As long as one endpoint is reachable, ",
-          /* @__PURE__ */ jsx("span", { style: { color: "#9dbcff", fontWeight: 700 }, children: "the network remains accessible." })
-        ] })
+        /* @__PURE__ */ jsx("p", { style: { position: "relative", fontFamily: T2.fontHeading, fontWeight: 500, fontSize: "clamp(21px,2.9vw,31px)", lineHeight: 1.45, letterSpacing: "-0.01em", color: "rgba(234,234,234,0.92)", margin: "0 auto", maxWidth: 920 }, children: tr$1("compare.closing", "Most networks rely on fixed entry points that censors can block. Sentinel uses permissionless RPC endpoints — anyone can run one, anywhere. As long as one endpoint is reachable, the network remains accessible.") })
       ] })
     ] })
   ] });
@@ -2107,13 +2056,13 @@ function CompareSection$1() {
 function TrustCompareStrip() {
   const isMobile = useIsMobile();
   const pairs = [
-    ["All user traffic passes through company infrastructure.", "Traffic routes directly to your chosen node — no relay layer."],
-    ['"No-log" is a legal promise, not a technical guarantee.', "No company exists that could log your traffic."],
-    ["Server software is proprietary and unauditable.", "All code open source — node, client, protocol, SDK."],
-    ["Subject to subpoenas, gag orders, FISA, NSLs.", "No single jurisdiction governs the network."],
-    ["Can be compelled to install logging silently.", "On-chain session authorization — cryptographic, not corporate."],
-    ["Auto-update is a trusted code execution path.", "Protocol governed by validators, not a board."],
-    ["Corporate acquisition can change policies overnight.", "WireGuard / V2Ray end-to-end — keys never leave your device."]
+    [tr$1("trustCompare.bad1", "All user traffic passes through company infrastructure."), tr$1("trustCompare.good1", "Traffic routes directly to your chosen node — no relay layer.")],
+    [tr$1("trustCompare.bad2", '"No-log" is a legal promise, not a technical guarantee.'), tr$1("trustCompare.good2", "No company exists that could log your traffic.")],
+    [tr$1("trustCompare.bad3", "Server software is proprietary and unauditable."), tr$1("trustCompare.good3", "All code open source — node, client, protocol, SDK.")],
+    [tr$1("trustCompare.bad4", "Subject to subpoenas, gag orders, FISA, NSLs."), tr$1("trustCompare.good4", "No single jurisdiction governs the network.")],
+    [tr$1("trustCompare.bad5", "Can be compelled to install logging silently."), tr$1("trustCompare.good5", "On-chain session authorization — cryptographic, not corporate.")],
+    [tr$1("trustCompare.bad6", "Auto-update is a trusted code execution path."), tr$1("trustCompare.good6", "Protocol governed by validators, not a board.")],
+    [tr$1("trustCompare.bad7", "Corporate acquisition can change policies overnight."), tr$1("trustCompare.good7", "WireGuard / V2Ray end-to-end — keys never leave your device.")]
   ];
   const ServerMark = () => /* @__PURE__ */ jsxs("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "#e0413c", strokeWidth: "1.7", strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true", children: [
     /* @__PURE__ */ jsx("rect", { x: "3", y: "3.5", width: "18", height: "7", rx: "1.6" }),
@@ -2131,9 +2080,9 @@ function TrustCompareStrip() {
     /* @__PURE__ */ jsxs("div", { style: { padding: isMobile ? "20px 18px 16px" : "26px 30px 22px" }, children: [
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: isMobile ? 14 : 18 }, children: [
         /* @__PURE__ */ jsx("span", { style: { width: isMobile ? 44 : 50, height: isMobile ? 44 : 50, borderRadius: 14, flexShrink: 0, display: "inline-flex", alignItems: "center", justifyContent: "center", background: bad ? "rgba(224,65,60,0.10)" : T2.white, border: bad ? "1px solid rgba(224,65,60,0.20)" : "1px solid rgba(255,255,255,0.45)" }, children: bad ? /* @__PURE__ */ jsx(ServerMark, {}) : /* @__PURE__ */ jsx(window.SentinelMark, { size: 24, color: "#0156FC" }) }),
-        /* @__PURE__ */ jsx("span", { style: { display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0 }, children: /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontHeading, fontWeight: 600, fontSize: isMobile ? 22 : 28, lineHeight: 1.08, letterSpacing: "-0.01em", color: bad ? T2.fog : "#ffffff" }, children: bad ? "Centralized VPN" : "Sentinel dVPN" }) })
+        /* @__PURE__ */ jsx("span", { style: { display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0 }, children: /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontHeading, fontWeight: 600, fontSize: isMobile ? 22 : 28, lineHeight: 1.08, letterSpacing: "-0.01em", color: bad ? T2.fog : "#ffffff" }, children: bad ? tr$1("trustCompare.centralizedHead", "Centralized VPN") : tr$1("trustCompare.sentinelHead", "Sentinel dVPN") }) })
       ] }),
-      /* @__PURE__ */ jsx("span", { style: { display: "block", fontFamily: T2.fontHeading, fontWeight: 500, fontSize: isMobile ? 14.5 : 16, lineHeight: 1.45, letterSpacing: "0.005em", marginTop: isMobile ? 9 : 11, paddingLeft: isMobile ? 0 : 68, color: bad ? "rgba(255,255,255,0.70)" : "rgba(255,255,255,0.94)" }, children: bad ? "One entity controls every server, every key, every log." : "No single entity exists that could compromise the network." })
+      /* @__PURE__ */ jsx("span", { style: { display: "block", fontFamily: T2.fontHeading, fontWeight: 500, fontSize: isMobile ? 14.5 : 16, lineHeight: 1.45, letterSpacing: "0.005em", marginTop: isMobile ? 9 : 11, paddingLeft: isMobile ? 0 : 68, color: bad ? "rgba(255,255,255,0.70)" : "rgba(255,255,255,0.94)" }, children: bad ? tr$1("trustCompare.centralizedSub", "One entity controls every server, every key, every log.") : tr$1("trustCompare.sentinelSub", "No single entity exists that could compromise the network.") })
     ] })
   );
   const rowL = { padding: isMobile ? "12px 18px" : "14px 30px", display: "flex", gap: 12, alignItems: "flex-start", background: "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.055)" };
@@ -2142,8 +2091,8 @@ function TrustCompareStrip() {
   const txtR = { fontFamily: T2.fontBody, fontSize: 14, lineHeight: "21px", margin: "2px 0 0", color: "rgba(255,255,255,0.92)" };
   return /* @__PURE__ */ jsx("section", { id: "dvpn-vs-vpn", style: { background: "transparent", padding: "clamp(34px,4.5vw,58px) 24px 0", scrollMarginTop: 90 }, children: /* @__PURE__ */ jsxs("div", { style: { ...A.container, display: "flex", flexDirection: "column", gap: "clamp(18px,2.6vw,28px)" }, children: [
     /* @__PURE__ */ jsxs("div", { style: { ...A.sectionHead, gap: 12 }, children: [
-      /* @__PURE__ */ jsx("h2", { style: { ...A.h1Dark, fontSize: "clamp(26px,3.4vw,40px)", maxWidth: 780 }, children: "You can't trust centralized VPNs." }),
-      /* @__PURE__ */ jsx("p", { style: { ...A.leadDark, maxWidth: 860 }, children: "A centralized VPN only moves your trust from your ISP to a VPN company — a single point of control that now sees all of your traffic, not just some of it." })
+      /* @__PURE__ */ jsx("h2", { style: { ...A.h1Dark, fontSize: "clamp(26px,3.4vw,40px)", maxWidth: 780 }, children: tr$1("centralized.heading", "You can't trust centralized VPNs.") }),
+      /* @__PURE__ */ jsx("p", { style: { ...A.leadDark, maxWidth: 860 }, children: tr$1("trustCompare.lead", "A centralized VPN only moves your trust from your ISP to a VPN company — a single point of control that now sees all of your traffic, not just some of it.") })
     ] }),
     isMobile ? /* @__PURE__ */ jsxs("div", { style: { border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, overflow: "hidden" }, children: [
       /* @__PURE__ */ jsx("div", { style: { background: "rgba(255,255,255,0.02)" }, children: /* @__PURE__ */ jsx(Head, { bad: true }) }),
@@ -2185,19 +2134,19 @@ function EcoOSIcon({ k }) {
 function EcosystemGrid() {
   const isMobile = useIsMobile();
   const apps = [
-    { logo: window.__resources.ecoIndependent, name: "Independent VPN", body: "Free Decentralized VPN on Sentinel-WireGuard & V2Ray; Android & iOS.", href: L2.independent, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=com.bagimsizvpn.app" }, { k: "apple", label: "iOS", href: "https://apps.apple.com/us/app/independent-dvpn/id6468454526" }] },
-    { logo: window.__resources.ecoRyn, name: "Ryn VPN", body: "Sentinel-powered privacy VPN with a clean minimalist interface and a user base of over 10 million people.", href: L2.rynVpn, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=com.secure.cryptovpn" }, { k: "apple", label: "iOS", href: "https://apps.apple.com/app/apple-store/id1493328027" }] },
-    { logo: window.__resources.ecoSentinelShield, name: "Sentinel Shield", body: "Flagship open-source dVPN by Sentinel P2P, WireGuard & V2Ray; Android & iOS.", href: L2.sentinelShield, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=co.sentinel.dvpnapp" }, { k: "apple", label: "iOS & macOS", href: "https://apps.apple.com/us/app/sentinel-shield-dvpn/id6657986086" }] },
-    { logo: window.__resources.ecoNorse, name: "DVPN by NORSE", body: "Decentralized VPN experience wrapped into user-friendly apps for all platforms.", href: L2.norse, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=io.norselabs.dvpn" }, { k: "apple", label: "iOS & macOS", href: "https://apps.apple.com/us/app/dvpn-decentralized-vpn/id6553963594" }, { k: "windows", label: "Windows", href: "https://apps.microsoft.com/detail/9ph6snjxz1v1" }, { k: "linux", label: "Linux", href: "https://norselabs.io/products/dvpn" }] },
-    { logo: window.__resources.ecoValt, name: "VALT", body: "VALT is the only app available that allows you to capture and protect the data you create everyday.", href: L2.valt, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=com.hashcash.breadcrumbs" }, { k: "apple", label: "iOS", href: "https://apps.apple.com/us/app/valt-dvpn/id1630660373" }] },
-    { logo: window.__resources.ecoMeile, name: "MeileVPN", body: "Sentinel-powered desktop dVPN for macOS, Linux & Windows.", href: L2.meile, builds: [{ k: "apple", label: "macOS", href: "https://github.com/MathNodes/meile-gui/releases" }, { k: "windows", label: "Windows", href: "https://github.com/MathNodes/meile-gui/releases" }, { k: "linux", label: "Linux", href: "https://github.com/MathNodes/meile-gui/releases" }] }
+    { logo: window.__resources.ecoIndependent, name: "Independent VPN", body: tr$1("ecosystem.independentBody", "Free Decentralized VPN on Sentinel-WireGuard & V2Ray; Android & iOS."), href: L2.independent, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=com.bagimsizvpn.app" }, { k: "apple", label: "iOS", href: "https://apps.apple.com/us/app/independent-dvpn/id6468454526" }] },
+    { logo: window.__resources.ecoRyn, name: "Ryn VPN", body: tr$1("ecosystem.rynBody", "Sentinel-powered privacy VPN with a clean minimalist interface and a user base of over 10 million people."), href: L2.rynVpn, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=com.secure.cryptovpn" }, { k: "apple", label: "iOS", href: "https://apps.apple.com/app/apple-store/id1493328027" }] },
+    { logo: window.__resources.ecoSentinelShield, name: "Sentinel Shield", body: tr$1("ecosystem.shieldBody", "Flagship open-source dVPN by Sentinel P2P, WireGuard & V2Ray; Android & iOS."), href: L2.sentinelShield, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=co.sentinel.dvpnapp" }, { k: "apple", label: "iOS & macOS", href: "https://apps.apple.com/us/app/sentinel-shield-dvpn/id6657986086" }] },
+    { logo: window.__resources.ecoNorse, name: "DVPN by NORSE", body: tr$1("ecosystem.norseBody", "Decentralized VPN experience wrapped into user-friendly apps for all platforms."), href: L2.norse, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=io.norselabs.dvpn" }, { k: "apple", label: "iOS & macOS", href: "https://apps.apple.com/us/app/dvpn-decentralized-vpn/id6553963594" }, { k: "windows", label: "Windows", href: "https://apps.microsoft.com/detail/9ph6snjxz1v1" }, { k: "linux", label: "Linux", href: "https://norselabs.io/products/dvpn" }] },
+    { logo: window.__resources.ecoValt, name: "VALT", body: tr$1("ecosystem.valtBody", "VALT is the only app available that allows you to capture and protect the data you create everyday."), href: L2.valt, builds: [{ k: "android", label: "Android", href: "https://play.google.com/store/apps/details?id=com.hashcash.breadcrumbs" }, { k: "apple", label: "iOS", href: "https://apps.apple.com/us/app/valt-dvpn/id1630660373" }] },
+    { logo: window.__resources.ecoMeile, name: "MeileVPN", body: tr$1("ecosystem.meileBody", "Sentinel-powered desktop dVPN for macOS, Linux & Windows."), href: L2.meile, builds: [{ k: "apple", label: "macOS", href: "https://github.com/MathNodes/meile-gui/releases" }, { k: "windows", label: "Windows", href: "https://github.com/MathNodes/meile-gui/releases" }, { k: "linux", label: "Linux", href: "https://github.com/MathNodes/meile-gui/releases" }] }
   ];
   return /* @__PURE__ */ jsxs("section", { id: "use-dvpn", style: { background: "transparent", ...A.section, scrollMarginTop: 90 }, children: [
     /* @__PURE__ */ jsx("style", { children: ".sn-eco-dl { transition:border-color 200ms cubic-bezier(.22,.61,.36,1), background 200ms cubic-bezier(.22,.61,.36,1), color 200ms cubic-bezier(.22,.61,.36,1), transform 200ms cubic-bezier(.22,.61,.36,1); } .sn-eco-dl:hover { border-color:rgba(94,148,255,0.55); background:rgba(38,112,255,0.14); color:#fff; transform:translateY(-1px); }" }),
     /* @__PURE__ */ jsxs("div", { style: { ...A.container, display: "flex", flexDirection: "column", gap: "clamp(36px,5vw,64px)" }, children: [
       /* @__PURE__ */ jsx("div", { style: { display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", alignItems: isMobile ? "stretch" : "flex-end", gap: isMobile ? 22 : 56 }, children: /* @__PURE__ */ jsxs("div", { style: { ...A.sectionHead, flex: "1 1 auto", minWidth: 0, marginBottom: 0 }, children: [
-        /* @__PURE__ */ jsx("h2", { style: { ...A.h1Dark }, children: "Don't trust a centralized VPN, trust a decentralized VPN Built on Sentinel" }),
-        /* @__PURE__ */ jsx("p", { style: { ...A.leadDark }, children: "dVPN Applications built on Sentinel are used by 1.4M+ users." })
+        /* @__PURE__ */ jsx("h2", { style: { ...A.h1Dark }, children: tr$1("ecosystem.heading", "Don't trust a centralized VPN, trust a decentralized VPN Built on Sentinel") }),
+        /* @__PURE__ */ jsx("p", { style: { ...A.leadDark }, children: tr$1("ecosystem.lead", "dVPN Applications built on Sentinel are used by 1.4M+ users.") })
       ] }) }),
       /* @__PURE__ */ jsxs("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(4,1fr)", gap: 14 }, children: [
         apps.map((a) => /* @__PURE__ */ jsxs(
@@ -2215,7 +2164,7 @@ function EcosystemGrid() {
               ] }),
               /* @__PURE__ */ jsx("p", { style: { fontFamily: T2.fontBody, fontSize: 13, lineHeight: "20px", color: T2.onDark, margin: 0, flex: 1 }, children: a.body }),
               /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 9, marginTop: 2 }, children: [
-                /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: T2.onDark60 }, children: "Download App:" }),
+                /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontMono, fontSize: 10, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: T2.onDark60 }, children: tr$1("ecosystem.downloadLabel", "Download App:") }),
                 /* @__PURE__ */ jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: 8 }, children: (a.builds || []).map((b) => /* @__PURE__ */ jsx(
                   "a",
                   {
@@ -2244,10 +2193,10 @@ function EcosystemGrid() {
             children: [
               /* @__PURE__ */ jsxs("div", { "data-mark": "sn-eco-v2", style: { display: "flex", alignItems: "center", gap: 13 }, children: [
                 /* @__PURE__ */ jsx("div", { style: { width: 56, height: 56, borderRadius: 15, background: "#0f0f10", border: "1px solid rgba(255,255,255,0.10)", display: "grid", placeItems: "center", flexShrink: 0 }, children: /* @__PURE__ */ jsx("svg", { width: "32", height: "32", viewBox: "8 14 84 70", fill: "#0156fc", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "m81 16.082h-62c-5.8906 0-10.668 4.7773-10.668 10.668v46.5c0 2.8281 1.125 5.543 3.125 7.543s4.7148 3.125 7.543 3.125h62c5.8906 0 10.668-4.7773 10.668-10.668v-46.5c0-5.8906-4.7773-10.668-10.668-10.668zm4.832 57.168c0 2.668-2.1641 4.832-4.832 4.832h-62c-2.668 0-4.832-2.1641-4.832-4.832v-46.5c0-2.668 2.1641-4.832 4.832-4.832h62c1.2812 0 2.5117 0.50781 3.418 1.4141s1.4141 2.1367 1.4141 3.418zm-59.289-26.668c-1.8867 1.8867-1.8867 4.9492 0 6.8359l10 10.043v-0.003907c0.57031 0.54297 0.89062 1.2969 0.89062 2.0859 0 0.78516-0.32031 1.5391-0.89062 2.082-0.53906 0.58203-1.293 0.91406-2.0859 0.91406-0.78906 0-1.5469-0.33203-2.082-0.91406l-10.043-10c-4.1641-4.1641-4.1641-10.918 0-15.082l10.043-10c0.53516-0.58203 1.293-0.91406 2.082-0.91406 0.79297 0 1.5469 0.33203 2.0859 0.91406 0.57031 0.54297 0.89062 1.293 0.89062 2.082s-0.32031 1.5391-0.89062 2.082zm51.043-4.168-0.003907 0.003907c4.1641 4.1641 4.1641 10.918 0 15.082l-10.043 10h0.003907c-0.53906 0.58203-1.293 0.91406-2.0859 0.91406-0.78906 0-1.5469-0.33203-2.082-0.91406-0.57031-0.54297-0.89453-1.2969-0.89453-2.082 0-0.78906 0.32422-1.543 0.89453-2.0859l10-10.043v0.003907c1.8867-1.8867 1.8867-4.9492 0-6.8359l-10-10.043v0.003907c-0.57031-0.54297-0.89453-1.2969-0.89453-2.0859 0-0.78516 0.32422-1.5391 0.89453-2.082 0.53516-0.58203 1.293-0.91406 2.082-0.91406 0.79297 0 1.5469 0.33203 2.0859 0.91406z" }) }) }),
-                /* @__PURE__ */ jsx("h3", { style: { fontFamily: T2.fontHeading, fontWeight: 600, fontSize: 17.5, lineHeight: 1.2, color: "#ffffff", letterSpacing: "-0.01em", margin: 0 }, children: "Make your own dVPN" })
+                /* @__PURE__ */ jsx("h3", { style: { fontFamily: T2.fontHeading, fontWeight: 600, fontSize: 17.5, lineHeight: 1.2, color: "#ffffff", letterSpacing: "-0.01em", margin: 0 }, children: tr$1("ecosystem.ctaTitle", "Make your own dVPN") })
               ] }),
-              /* @__PURE__ */ jsx("p", { style: { fontFamily: T2.fontBody, fontSize: 13, lineHeight: "20px", color: T2.onDark, margin: 0, flex: 1 }, children: "Use the Sentinel SDK to ship your own decentralized VPN — your brand, your protocol, your distribution." }),
-              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontBody, fontWeight: 500, fontSize: 13, color: T2.onDark60 }, children: "Start building →" })
+              /* @__PURE__ */ jsx("p", { style: { fontFamily: T2.fontBody, fontSize: 13, lineHeight: "20px", color: T2.onDark, margin: 0, flex: 1 }, children: tr$1("ecosystem.ctaBody", "Use the Sentinel SDK to ship your own decentralized VPN — your brand, your protocol, your distribution.") }),
+              /* @__PURE__ */ jsx("span", { style: { fontFamily: T2.fontBody, fontWeight: 500, fontSize: 13, color: T2.onDark60 }, children: tr$1("ecosystem.ctaStart", "Start building →") })
             ]
           }
         )
@@ -2276,6 +2225,7 @@ const L3 = window.SENTINEL_LINKS;
 const { SentinelMark} = window;
 const { useState: useS } = React;
 const useIsMobileO = window.useIsMobile;
+const tr = (k, f) => typeof window !== "undefined" && window.T ? window.T(k, f) : f != null ? f : k;
 function CommunityCard({ icon, name, handle, color, href }) {
   const [hovered, setHovered] = useS(false);
   return /* @__PURE__ */ jsxs(
@@ -2385,12 +2335,12 @@ function ContactSection$1() {
   return /* @__PURE__ */ jsx("section", { style: { background: "radial-gradient(900px 420px at 86% -6%, rgba(1,86,252,0.05), transparent 60%), linear-gradient(180deg, #fbfbfb 0%, #f3f5fa 100%)", padding: "clamp(56px,8vw,120px) 0" }, children: /* @__PURE__ */ jsx("div", { style: { maxWidth: 1320, margin: "0 auto", padding: "0 clamp(16px, 2.5vw, 24px)", boxSizing: "border-box" }, children: /* @__PURE__ */ jsxs("div", { style: { background: T3.white, borderRadius: 24, padding: "clamp(28px, 5vw, 56px) clamp(22px, 5vw, 64px)", display: "grid", gridTemplateColumns: "1fr" , gap: isMobile ? 44 : "clamp(32px, 5vw, 64px)", maxWidth: 880, margin: "0 auto", boxSizing: "border-box" }, children: [
     /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 28 }, children: [
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 10, textAlign: "center" }, children: [
-        /* @__PURE__ */ jsx("h2", { style: { fontFamily: T3.fontHeading, fontWeight: 700, fontSize: "clamp(31px,6vw,48px)", lineHeight: 1.12, color: "rgba(0,0,0,0.8)", margin: 0, letterSpacing: "-0.005em" }, children: "Join the Community" }),
-        /* @__PURE__ */ jsx("p", { style: { fontFamily: T3.fontBody, fontSize: 16, lineHeight: "22px", color: "rgba(0,0,0,0.5)", margin: 0 }, children: "The Sentinel community goes beyond the chain." })
+        /* @__PURE__ */ jsx("h2", { style: { fontFamily: T3.fontHeading, fontWeight: 700, fontSize: "clamp(31px,6vw,48px)", lineHeight: 1.12, color: "rgba(0,0,0,0.8)", margin: 0, letterSpacing: "-0.005em" }, children: tr("community.heading", "Join the Community") }),
+        /* @__PURE__ */ jsx("p", { style: { fontFamily: T3.fontBody, fontSize: 16, lineHeight: "22px", color: "rgba(0,0,0,0.5)", margin: 0 }, children: tr("community.subtitle", "The Sentinel community goes beyond the chain.") })
       ] }),
       /* @__PURE__ */ jsx("div", { style: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 12 }, children: primary.map((c) => /* @__PURE__ */ jsx(CommunityCard, { icon: c.icon, name: c.name, handle: c.handle, color: c.color, href: c.href }, c.name)) }),
       /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }, children: [
-        /* @__PURE__ */ jsx("span", { style: { fontFamily: T3.fontBody, fontWeight: 600, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(0,0,0,0.35)" }, children: "More from the community" }),
+        /* @__PURE__ */ jsx("span", { style: { fontFamily: T3.fontBody, fontWeight: 600, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(0,0,0,0.35)" }, children: tr("community.more", "More from the community") }),
         /* @__PURE__ */ jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }, children: secondary.map((c) => /* @__PURE__ */ jsx(CommunityPill, { icon: c.icon, label: c.label, color: c.color, href: c.href }, c.label)) })
       ] })
     ] }),
@@ -2400,41 +2350,41 @@ function ContactSection$1() {
 function Footer$1() {
   const isMobile = useIsMobileO();
   const cols = [
-    { head: "Explore", links: [
-      ["Network Statistics", L3.stats],
-      ["Node Dashboard", L3.nodes],
-      ["Node Map", L3.nodeMap],
-      ["Explorer", L3.explorer]
+    { head: "Explore", headKey: "nav.explore", links: [
+      ["Network Statistics", L3.stats, "footer.exploreStats"],
+      ["Node Dashboard", L3.nodes, "footer.exploreDashboard"],
+      ["Node Map", L3.nodeMap, "footer.exploreNodeMap"],
+      ["Explorer", L3.explorer, "footer.exploreExplorer"]
     ] },
-    { head: "dVPN", links: [
-      ["Sentinel Shield", L3.sentinelShield],
-      ["Independent VPN", L3.independent],
-      ["DVPN by NORSE", L3.norse],
-      ["VALT", L3.valt],
-      ["Ryn dVPN", L3.rynVpn],
-      ["Meile dVPN (beta)", L3.meile]
+    { head: "dVPN", headKey: "nav.dvpn", links: [
+      ["Sentinel Shield", L3.sentinelShield, "footer.dvpnShield"],
+      ["Independent VPN", L3.independent, "footer.dvpnIndependent"],
+      ["DVPN by NORSE", L3.norse, "footer.dvpnNorse"],
+      ["VALT", L3.valt, "footer.dvpnValt"],
+      ["Ryn dVPN", L3.rynVpn, "footer.dvpnRyn"],
+      ["Meile dVPN (beta)", L3.meile, "footer.dvpnMeile"]
     ] },
-    { head: "Build", links: [
-      ["Plan Manager", L3.planManager],
-      ["SDKs", L3.sdkDocs],
-      ["Configure Payment", L3.subplanDocs],
-      ["Run a Node", L3.hostNode],
-      ["Earn from dVPN", L3.nodeEarnings],
-      ["Learn", L3.docs]
+    { head: "Build", headKey: "nav.build", links: [
+      ["Plan Manager", L3.planManager, "footer.buildPlanManager"],
+      ["SDKs", L3.sdkDocs, "footer.buildSdks"],
+      ["Configure Payment", L3.subplanDocs, "footer.buildPayments"],
+      ["Run a Node", L3.hostNode, "footer.buildRunNode"],
+      ["Earn from dVPN", L3.nodeEarnings, "footer.buildEarn"],
+      ["Learn", L3.docs, "footer.buildLearn"]
     ] },
-    { head: "More", links: [
-      ["dVPN Docs", L3.docs],
-      ["x402 Payments", L3.x402],
-      ["Sentinel Node Tester", L3.testNode],
-      ["Contact Us", L3.telegram]
+    { head: "More", headKey: "nav.more", links: [
+      ["dVPN Docs", L3.docs, "footer.moreDocs"],
+      ["x402 Payments", L3.x402, "footer.moreX402"],
+      ["Sentinel Node Tester", L3.testNode, "footer.moreNodeTester"],
+      ["Contact Us", L3.telegram, "footer.moreContact"]
     ] }
   ];
   return /* @__PURE__ */ jsx("footer", { style: { background: `url("${window.__resources && window.__resources.meshBg || "../../assets/textures/mesh-bg-faint.png"}") center/cover no-repeat, url("${window.__resources && window.__resources.noiseBg || "../../assets/textures/noise-bg.png"}") center/cover no-repeat, radial-gradient(ellipse at center, #1c1c1c 0%, #0c0c0c 100%)`, position: "relative", overflow: "hidden", paddingTop: 80, paddingBottom: 0 }, children: /* @__PURE__ */ jsxs("div", { style: { position: "relative", maxWidth: 1440, margin: "0 auto", padding: "0 clamp(20px, 3vw, 40px)", boxSizing: "border-box" }, children: [
     /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? 32 : 48, marginBottom: isMobile ? 48 : 64 }, children: [
       /* @__PURE__ */ jsx("div", { style: { flexShrink: 0 }, children: /* @__PURE__ */ jsx(SentinelMark, { size: 42, color: "#0156FC" }) }),
       /* @__PURE__ */ jsx("div", { style: { flex: 1, display: "grid", gridTemplateColumns: isMobile ? "repeat(2,1fr)" : "repeat(4,1fr)", gap: isMobile ? "28px 20px" : 32 }, children: cols.map((c) => /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("div", { style: { fontFamily: T3.fontHeading, fontWeight: 500, fontSize: 15, color: "rgba(234,234,234,0.9)", marginBottom: 18, letterSpacing: "0.02em" }, children: c.head }),
-        c.links.map(([label, url]) => /* @__PURE__ */ jsx(
+        /* @__PURE__ */ jsx("div", { style: { fontFamily: T3.fontHeading, fontWeight: 500, fontSize: 15, color: "rgba(234,234,234,0.9)", marginBottom: 18, letterSpacing: "0.02em" }, children: tr(c.headKey, c.head) }),
+        c.links.map(([label, url, labelKey]) => /* @__PURE__ */ jsx(
           "a",
           {
             href: url,
@@ -2443,7 +2393,7 @@ function Footer$1() {
             style: { display: "block", fontFamily: T3.fontBody, fontSize: 14, lineHeight: "26px", color: "rgba(234,234,234,0.55)", textDecoration: "none", padding: "3px 0", transition: "color 200ms" },
             onMouseEnter: (e) => e.target.style.color = "rgba(234,234,234,0.9)",
             onMouseLeave: (e) => e.target.style.color = "rgba(234,234,234,0.55)",
-            children: label
+            children: tr(labelKey, label)
           },
           label
         ))
@@ -2452,9 +2402,9 @@ function Footer$1() {
     /* @__PURE__ */ jsx("div", { style: { fontFamily: T3.fontHeading, fontWeight: 600, fontSize: "clamp(48px,16vw,220px)", lineHeight: 1, color: "rgba(234,234,234,0.9)", letterSpacing: "-0.02em", textAlign: "center", userSelect: "none", marginTop: 8, paddingBottom: 16 }, children: "Sentinel" }),
     /* @__PURE__ */ jsxs("div", { style: { display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: isMobile ? "flex-start" : "center", justifyContent: "space-between", gap: isMobile ? 16 : 0, paddingTop: 18, borderTop: "1px solid rgba(255,255,255,0.06)", paddingBottom: 28 }, children: [
       /* @__PURE__ */ jsx("div", { style: { display: "flex", gap: 22, alignItems: "center" }, children: [
-        ["Sentinel © 2026", L3.home],
-        ["Privacy Policy", L3.privacy]
-      ].map(([label, url]) => /* @__PURE__ */ jsx("a", { href: url, target: "_blank", rel: "noopener", style: { fontFamily: T3.fontBody, fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none" }, children: label }, label)) }),
+        ["Sentinel © 2026", L3.home, "footer.copyright"],
+        ["Privacy Policy", L3.privacy, "footer.privacyPolicy"]
+      ].map(([label, url, labelKey]) => /* @__PURE__ */ jsx("a", { href: url, target: "_blank", rel: "noopener", style: { fontFamily: T3.fontBody, fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none" }, children: tr(labelKey, label) }, label)) }),
       /* @__PURE__ */ jsx("div", { style: { display: "flex", gap: 16, alignItems: "center" }, children: [
         { label: "X / Twitter", path: "M16.6 0h3.2l-7 8 8.3 11h-6.5l-5.1-6.7L3.7 19H.4l7.6-8.7L0 0h6.7l4.6 6.1L16.6 0zm-1.1 17.2h1.8L5.7 1.8H3.8l11.7 15.4z" },
         { label: "Telegram", path: "M21.6 1.3 18.5 18c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.3-4.9 9-8.1c.4-.3-.1-.5-.6-.2L5.9 11.7l-4.7-1.5C.2 9.8.2 9.1 1.4 8.6L20.3.7c.9-.3 1.7.3 1.3 2z" }
@@ -12006,10 +11956,10 @@ const $$Astro = createAstro();
 const $$Index = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Index;
-  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "App", App, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/Connect/Desktop/sentinel-homepage/website/src/components/App.tsx", "client:component-export": "default" })} ` })}`;
-}, "C:/Users/Connect/Desktop/sentinel-homepage/website/src/pages/index.astro", void 0);
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {}, { "default": ($$result2) => renderTemplate` ${renderComponent($$result2, "App", App, { "client:load": true, "client:component-hydration": "load", "client:component-path": "C:/Users/Connect/AppData/Local/Temp/main-website-pr/src/components/App.tsx", "client:component-export": "default" })} ` })}`;
+}, "C:/Users/Connect/AppData/Local/Temp/main-website-pr/src/pages/index.astro", void 0);
 
-const $$file = "C:/Users/Connect/Desktop/sentinel-homepage/website/src/pages/index.astro";
+const $$file = "C:/Users/Connect/AppData/Local/Temp/main-website-pr/src/pages/index.astro";
 const $$url = "";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

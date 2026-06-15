@@ -11,6 +11,12 @@ const T = window.SENTINEL;
 const L = window.SENTINEL_LINKS;
 const { useState, useEffect, useRef } = React;
 
+/* ── i18n: translate a key at render time. window.T is reassigned per request
+   by the SSR middleware (and seeded per locale on the client), so we must
+   dereference it on every call rather than capture it at module load. The
+   second argument is the inline English fallback. ── */
+const tr = (k, f) => (typeof window !== 'undefined' && window.T ? window.T(k, f) : (f != null ? f : k));
+
 /* ── Responsive hook (shared across all section files via window) ── */
 function useIsMobile(bp = 768) {
   const [m, setM] = useState(typeof window !== 'undefined' ? window.innerWidth <= bp : false);
@@ -78,43 +84,51 @@ function CodeWindow() {
 }
 
 /* ── Header ──────────────────────────────────────────────── */
+// Maps each NAV_MENUS key (a stable identifier, kept in English so item
+// lookups/anchors don't shift per locale) to its i18n key for display.
+const NAV_LABEL_KEYS = {
+  Explore: 'nav.explore',
+  dVPN: 'nav.dvpn',
+  Build: 'nav.build',
+  More: 'nav.more',
+};
 const NAV_MENUS = {
   Explore: {
     cols: 2, width: 660,
     items: [
-      { title:'Network Statistics', desc:'Monitor real-time network performance and metrics.', href:L.stats    },
-      { title:'Node Dashboard',     desc:'Manage and monitor your node operations.',           href:L.nodes    },
-      { title:'Explorer',           desc:'Search and explore network transactions.',           href:L.explorer },
-      { title:'Ecosystem',          desc:'Discover apps and services in our ecosystem.',       href:L.dapps    },
+      { tk:'nav.explore.statsTitle',     dk:'nav.explore.statsDesc',     title:'Network Statistics', desc:'Monitor real-time network performance and metrics.', href:L.stats    },
+      { tk:'nav.explore.dashboardTitle', dk:'nav.explore.dashboardDesc', title:'Node Dashboard',     desc:'Manage and monitor your node operations.',           href:L.nodes    },
+      { tk:'nav.explore.explorerTitle',  dk:'nav.explore.explorerDesc',  title:'Explorer',           desc:'Search and explore network transactions.',           href:L.explorer },
+      { tk:'nav.explore.ecosystemTitle', dk:'nav.explore.ecosystemDesc', title:'Ecosystem',          desc:'Discover apps and services in our ecosystem.',       href:L.dapps    },
     ],
   },
   dVPN: {
     cols: 2, width: 660,
     items: [
-      { title:'Download Apps', desc:'Sentinel Shield, Norse, Valt, Meile and more.',    href:L.dapps        },
-      { title:'Coverage',      desc:'110+ Countries, 430+ Cities.',                     href:L.nodeMap      },
-      { title:'Learn',         desc:'Explore guides, documentation, and more.',         href:L.docs         },
-      { title:'Run a Node',    desc:'Support the network and earn rewards.',            href:L.hostNode     },
-      { title:'Build',         desc:'Create your own applications on the network.',     href:L.sdkDocs      },
-      { title:'Earn',          desc:'Monetize your bandwidth and more.',                href:L.nodeEarnings },
+      { tk:'nav.dvpn.downloadTitle', dk:'nav.dvpn.downloadDesc', title:'Download Apps', desc:'Sentinel Shield, Norse, Valt, Meile and more.',    href:L.dapps        },
+      { tk:'nav.dvpn.coverageTitle', dk:'nav.dvpn.coverageDesc', title:'Coverage',      desc:'110+ Countries, 430+ Cities.',                     href:L.nodeMap      },
+      { tk:'nav.dvpn.learnTitle',    dk:'nav.dvpn.learnDesc',    title:'Learn',         desc:'Explore guides, documentation, and more.',         href:L.docs         },
+      { tk:'nav.dvpn.runNodeTitle',  dk:'nav.dvpn.runNodeDesc',  title:'Run a Node',    desc:'Support the network and earn rewards.',            href:L.hostNode     },
+      { tk:'nav.dvpn.buildTitle',    dk:'nav.dvpn.buildDesc',    title:'Build',         desc:'Create your own applications on the network.',     href:L.sdkDocs      },
+      { tk:'nav.dvpn.earnTitle',     dk:'nav.dvpn.earnDesc',     title:'Earn',          desc:'Monetize your bandwidth and more.',                href:L.nodeEarnings },
     ],
   },
   Build: {
     cols: 2, width: 680,
     items: [
-      { title:'Plan Manager',       desc:'Turn raw bandwidth into priced subscription plans.', href:L.planManager },
-      { title:'SDK',                desc:'Native bindings for iOS, Android, Web & desktop.',  href:L.sdkDocs    },
-      { title:'Configure Payments', desc:'Stripe, USDC, BTC, on-ramps — wire any gateway per plan.', href:L.planManager },
-      { title:'x402 Payments',      desc:'Per-byte agentic payments — no API keys, no accounts.', href:L.x402 },
-      { title:'VPN Protocols',      desc:'WireGuard, V2Ray, OpenVPN — pick what your users need.', href:L.vpnProtocols },
-      { title:'Developer Docs',     desc:'API reference, quickstarts, and architecture guides.', href:L.docs },
+      { tk:'nav.build.planManagerTitle', dk:'nav.build.planManagerDesc', title:'Plan Manager',       desc:'Turn raw bandwidth into priced subscription plans.', href:L.planManager },
+      { tk:'nav.build.sdkTitle',         dk:'nav.build.sdkDesc',         title:'SDK',                desc:'Native bindings for iOS, Android, Web & desktop.',  href:L.sdkDocs    },
+      { tk:'nav.build.paymentsTitle',    dk:'nav.build.paymentsDesc',    title:'Configure Payments', desc:'Stripe, USDC, BTC, on-ramps — wire any gateway per plan.', href:L.planManager },
+      { tk:'nav.build.x402Title',        dk:'nav.build.x402Desc',        title:'x402 Payments',      desc:'Per-byte agentic payments — no API keys, no accounts.', href:L.x402 },
+      { tk:'nav.build.protocolsTitle',   dk:'nav.build.protocolsDesc',   title:'VPN Protocols',      desc:'WireGuard, V2Ray, OpenVPN — pick what your users need.', href:L.vpnProtocols },
+      { tk:'nav.build.docsTitle',        dk:'nav.build.docsDesc',        title:'Developer Docs',     desc:'API reference, quickstarts, and architecture guides.', href:L.docs },
     ],
   },
   More: {
     cols: 1, width: 380,
     items: [
-      { title:'dVPN Docs',   desc:'Clients, nodes, protocols, FAQs.', href:L.docs     },
-      { title:'Contacts Us', desc:'Question or support — get in touch.', href:L.telegram },
+      { tk:'nav.more.docsTitle',    dk:'nav.more.docsDesc',    title:'dVPN Docs',   desc:'Clients, nodes, protocols, FAQs.', href:L.docs     },
+      { tk:'nav.more.contactTitle', dk:'nav.more.contactDesc', title:'Contacts Us', desc:'Question or support — get in touch.', href:L.telegram },
     ],
   },
 };
@@ -136,8 +150,8 @@ function DropdownPanel({ menu }) {
       }}>
         {menu.items.map(it => (
           <a key={it.title} href={it.href || '#'} target="_blank" rel="noopener" className="sn-dd-item">
-            <div className="sn-dd-title">{it.title}</div>
-            <div className="sn-dd-desc">{it.desc}</div>
+            <div className="sn-dd-title">{it.tk ? tr(it.tk, it.title) : it.title}</div>
+            <div className="sn-dd-desc">{it.dk ? tr(it.dk, it.desc) : it.desc}</div>
           </a>
         ))}
       </div>
@@ -155,11 +169,75 @@ const BUY_LOGOS = {
 const buyLogo = (src, r) => (<img src={src} alt="" width="22" height="22" style={{ display:'block', flexShrink:0, borderRadius:r }}/>);
 const buyCoin = (src, pad) => (<span style={{ width:22, height:22, borderRadius:'50%', background:'#fff', display:'inline-flex', alignItems:'center', justifyContent:'center', flexShrink:0, overflow:'hidden' }}><img src={src} alt="" width={22 - pad * 2} height={22 - pad * 2} style={{ display:'block' }}/></span>);
 const BUY_VENUES = [
-  { name:'MEXC',    tag:'P2P/USDT spot',    href:'https://www.mexc.com/exchange/P2P_USDT', logo:buyLogo(BUY_LOGOS.mexc, '50%') },
-  { name:'KuCoin',  tag:'P2P/USDT spot',    href:'https://www.kucoin.com/trade/P2P-USDT',  logo:buyCoin(BUY_LOGOS.kucoin, 4) },
-  { name:'Osmosis', tag:'Swap on-chain',    href:'https://app.osmosis.zone/?to=P2P',       logo:buyLogo(BUY_LOGOS.osmosis, 0) },
-  { name:'Skip Go', tag:'Cross-chain swap', href:'https://swap.sentinel.co',               logo:buyLogo(BUY_LOGOS.skip, 6) },
+  { name:'MEXC',    tagKey:'buy.mexcTag',    tag:'P2P/USDT spot',    href:'https://www.mexc.com/exchange/P2P_USDT', logo:buyLogo(BUY_LOGOS.mexc, '50%') },
+  { name:'KuCoin',  tagKey:'buy.mexcTag',    tag:'P2P/USDT spot',    href:'https://www.kucoin.com/trade/P2P-USDT',  logo:buyCoin(BUY_LOGOS.kucoin, 4) },
+  { name:'Osmosis', tagKey:'buy.osmosisTag', tag:'Swap on-chain',    href:'https://app.osmosis.zone/?to=P2P',       logo:buyLogo(BUY_LOGOS.osmosis, 0) },
+  { name:'Skip Go', tagKey:'buy.skipTag',    tag:'Cross-chain swap', href:'https://swap.sentinel.co',               logo:buyLogo(BUY_LOGOS.skip, 6) },
 ];
+
+/* ── Language switcher ───────────────────────────────────────
+   Globe button + dropdown of locale endonyms. Picking a locale writes the
+   `sn-locale` cookie and reloads; the SSR middleware reads the cookie on the
+   next request and renders the page in that language (no path prefix). The
+   active locale comes from window.__locale, which the server stamps into the
+   page and lib/globals.ts re-applies on hydration — so the initial label
+   matches between server and client (no hydration mismatch). ── */
+function LangSwitcher() {
+  const meta = (typeof window !== 'undefined' && window.__i18n) || {
+    cookie: 'sn-locale',
+    locales: ['en'],
+    names: { en: 'English' },
+    isRtl: () => false,
+  };
+  const current = (typeof window !== 'undefined' && window.__locale) || 'en';
+  const [open, setOpen] = useState(false);
+  const closeT = useRef(null);
+  const enter = () => { if (closeT.current) clearTimeout(closeT.current); setOpen(true); };
+  const leave = () => { if (closeT.current) clearTimeout(closeT.current); closeT.current = setTimeout(() => setOpen(false), 350); };
+  useEffect(() => () => { if (closeT.current) clearTimeout(closeT.current); }, []);
+
+  const choose = (loc) => {
+    if (loc === current) { setOpen(false); return; }
+    // 1 year, site-wide. Reloading lets the server re-render in the new locale.
+    document.cookie = `${meta.cookie}=${encodeURIComponent(loc)}; path=/; max-age=31536000; samesite=lax`;
+    window.location.reload();
+  };
+
+  return (
+    <div style={{ position:'relative' }} onMouseEnter={enter} onMouseLeave={leave}>
+      <button type="button" aria-haspopup="true" aria-expanded={open} aria-label={tr('lang.label', 'Language')}
+        onClick={() => setOpen(o => !o)}
+        style={{ display:'inline-flex', alignItems:'center', gap:7, height:34, padding:'0 12px', borderRadius:999, cursor:'pointer', background:'rgba(255,255,255,0.05)', border:'1px solid rgba(255,255,255,0.14)', fontFamily:T.fontHeading, fontWeight:500, fontSize:13.5, color:'rgba(234,234,234,0.92)', transition:'background 160ms, border-color 160ms' }}
+        onMouseOver={e => { e.currentTarget.style.background='rgba(255,255,255,0.08)'; }}
+        onMouseOut={e => { e.currentTarget.style.background='rgba(255,255,255,0.05)'; }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg>
+        <span>{meta.names[current] || current}</span>
+        <svg width="8" height="5" viewBox="0 0 9 6" fill="none" style={{ transform:open?'rotate(180deg)':'none', transition:'transform 220ms' }} aria-hidden="true"><path d="M0.5 1L4.5 5L8.5 1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>
+      </button>
+      {open && (
+        <div style={{ position:'absolute', top:'100%', right:0, paddingTop:8, zIndex:70, animation:'sn-buy-in 200ms cubic-bezier(.22,.61,.36,1) both' }}>
+        <div role="menu" style={{ minWidth:180, padding:6, borderRadius:14, background:'rgba(18,18,20,0.96)', border:'1px solid rgba(255,255,255,0.1)', backdropFilter:'blur(16px)', boxShadow:'0 18px 50px -16px rgba(0,0,0,0.7)' }}>
+          {meta.locales.map((loc) => {
+            const active = loc === current;
+            return (
+              <button key={loc} type="button" role="menuitemradio" aria-checked={active}
+                dir={meta.isRtl(loc) ? 'rtl' : 'ltr'}
+                onClick={() => choose(loc)}
+                className="sn-buy-row"
+                style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10, width:'100%', boxSizing:'border-box', padding:'9px 12px', borderRadius:9, border:'none', cursor:'pointer', background:active?'rgba(1,86,252,0.18)':'transparent', fontFamily:T.fontBody, fontSize:14, color:active?'#9cc0ff':'rgba(234,234,234,0.82)', textAlign:'start' }}>
+                <span>{meta.names[loc] || loc}</span>
+                {active && (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                )}
+              </button>
+            );
+          })}
+        </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function BuyP2P() {
   const [open, setOpen] = useState(false);
@@ -172,7 +250,7 @@ function BuyP2P() {
       <style>{`.sn-buy-row { transition:background 160ms; } .sn-buy-row:hover { background:rgba(255,255,255,0.06); } @keyframes sn-buy-in { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }`}</style>
       <button aria-haspopup="true" aria-expanded={open} onClick={() => setOpen(o => !o)}
         style={{ display:'inline-flex', alignItems:'center', gap:7, height:34, padding:'0 14px', borderRadius:999, cursor:'pointer', background:'#0156FC', border:'1px solid rgba(255,255,255,0.14)', fontFamily:T.fontHeading, fontWeight:500, fontSize:14, color:'#fff' }}>
-        Buy P2P
+        {tr('nav.buyP2P', 'Buy P2P')}
         <svg width="8" height="5" viewBox="0 0 9 6" fill="none" style={{ transform:open?'rotate(180deg)':'none', transition:'transform 220ms' }}><path d="M0.5 1L4.5 5L8.5 1" stroke="white" strokeWidth="1.2" strokeLinecap="round"/></svg>
       </button>
       {open && (
@@ -238,13 +316,13 @@ function Header() {
               const menu = NAV_MENUS[l];
               const isOpen = acc === l;
               if (!menu) return (
-                <a key={l} href="#" onClick={() => setMobileOpen(false)} style={{ fontFamily:T.fontHeading, fontWeight:500, fontSize:20, color:'#fff', textDecoration:'none', padding:'16px 4px', borderBottom:'1px solid rgba(255,255,255,0.07)' }}>{l}</a>
+                <a key={l} href="#" onClick={() => setMobileOpen(false)} style={{ fontFamily:T.fontHeading, fontWeight:500, fontSize:20, color:'#fff', textDecoration:'none', padding:'16px 4px', borderBottom:'1px solid rgba(255,255,255,0.07)' }}>{tr(NAV_LABEL_KEYS[l] || '', l)}</a>
               );
               return (
                 <div key={l} style={{ borderBottom:'1px solid rgba(255,255,255,0.07)' }}>
                   <button onClick={() => setAcc(isOpen ? null : l)} aria-expanded={isOpen}
                     style={{ width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', background:'transparent', border:'none', cursor:'pointer', padding:'16px 4px', fontFamily:T.fontHeading, fontWeight:500, fontSize:20, color:'#fff' }}>
-                    {l}
+                    {tr(NAV_LABEL_KEYS[l] || '', l)}
                     <svg width="14" height="9" viewBox="0 0 14 9" fill="none" style={{ transform:isOpen?'rotate(180deg)':'none', transition:'transform 220ms' }}><path d="M1 1l6 6 6-6" stroke="rgba(255,255,255,0.6)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   </button>
                   {isOpen && (
@@ -265,8 +343,9 @@ function Header() {
               <a className="sn-header-icon" aria-label="GitHub" href="https://github.com/sentinel-official" target="_blank" rel="noopener" onClick={() => setMobileOpen(false)} style={{ textDecoration:'none' }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
               </a>
+              <LangSwitcher />
             </div>
-            <span style={{ fontFamily:T.fontMono, fontSize:11, fontWeight:600, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(255,255,255,0.45)', marginTop:18, padding:'0 4px' }}>Buy P2P</span>
+            <span style={{ fontFamily:T.fontMono, fontSize:11, fontWeight:600, letterSpacing:'0.14em', textTransform:'uppercase', color:'rgba(255,255,255,0.45)', marginTop:18, padding:'0 4px' }}>{tr('nav.buyP2P', 'Buy P2P')}</span>
             <div style={{ display:'flex', alignItems:'center', gap:8, marginTop:8, padding:'0 4px', flexWrap:'wrap' }}>
               {BUY_VENUES.map(v => (
                 <a key={v.name} href={v.href} target="_blank" rel="noopener" onClick={() => setMobileOpen(false)}
@@ -296,7 +375,7 @@ function Header() {
             return (
               <a key={l} href="#" className="sn-nav-link" data-open={open===l ? 'true' : 'false'}
                  onMouseEnter={() => setOpen(hasMenu ? l : null)}>
-                {l}
+                {tr(NAV_LABEL_KEYS[l] || '', l)}
                 {hasMenu && (
                   <svg className="sn-caret" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true">
                     <path d="M0.5 1L4.5 5L8.5 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
@@ -315,6 +394,7 @@ function Header() {
           <a className="sn-header-icon" aria-label="GitHub" href="https://github.com/sentinel-official" target="_blank" rel="noopener" style={{ textDecoration:'none' }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.76.12 3.05.73.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
           </a>
+          <LangSwitcher />
           <BuyP2P />
         </div>
       </div>
@@ -326,10 +406,10 @@ function Header() {
 function HeroBulletList({ compact }) {
   const bold = { color:T.fog, fontWeight:600 };
   const POINTS = [
-    (<span>A <strong style={bold}>perpetual, on-chain DHT</strong> — consensus-protected, censorship-resistant.</span>),
-    (<span><strong style={bold}>Zero bootstrap nodes</strong>, zero central servers to seize.</span>),
-    (<span>Bandwidth contributed by <strong style={bold}>independent operators in 70+ countries</strong>.</span>),
-    (<span>Any client can join with <strong style={bold}>nothing more than an RPC endpoint</strong>.</span>),
+    (<span>{tr('hero.bullet1', 'A perpetual, on-chain DHT — consensus-protected, censorship-resistant.')}</span>),
+    (<span>{tr('hero.bullet2', 'Zero bootstrap nodes, zero central servers to seize.')}</span>),
+    (<span>{tr('hero.bullet3', 'Bandwidth contributed by independent operators in 70+ countries.')}</span>),
+    (<span>{tr('hero.bullet4', 'Any client can join with nothing more than an RPC endpoint.')}</span>),
   ];
   return (
     <ul style={{ listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap: compact ? 14 : 18 }}>
@@ -361,7 +441,7 @@ function HeroNetworkStats({ hideBullets }) {
       <div style={{ display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
         <span aria-hidden="true" style={{ width:8, height:8, borderRadius:9999, background:'#0156FC', boxShadow:'0 0 9px rgba(1,86,252,0.9)', animation:'snHeroPulse 1.6s ease-in-out infinite', flexShrink:0, display:'inline-block' }} />
         <span style={{ fontFamily:T.fontHeading, fontWeight:400, fontSize:'clamp(30px,4vw,40px)', lineHeight:1.05, letterSpacing:'-0.01em', color:T.fog, fontVariantNumeric:'tabular-nums' }}>{count.toLocaleString('en-US')}</span>
-        <span style={{ fontFamily:T.fontBody, fontSize:'clamp(16px,1.8vw,19px)', lineHeight:1.4, color:'rgba(234,234,234,0.82)' }}>people use dVPN apps built on Sentinel</span>
+        <span style={{ fontFamily:T.fontBody, fontSize:'clamp(16px,1.8vw,19px)', lineHeight:1.4, color:'rgba(234,234,234,0.82)' }}>{tr('hero.usersCounter', 'people use dVPN apps built on Sentinel')}</span>
       </div>
     </div>
   );
@@ -370,14 +450,31 @@ function HeroNetworkStats({ hideBullets }) {
 /* ── Hero ────────────────────────────────────────────────── */
 function Hero() {
   const isMobile = useIsMobile();
+  // Hero video src is attached on the client AFTER hydration, never in SSR
+  // markup. Reason: with src in the SSR HTML, the browser begins loading the
+  // <video> immediately; then React's client:load hydration of this island
+  // tears the element down and remounts it, forcing a SECOND resource load —
+  // the visible "flashes twice" on first paint. Rendering the element src-less
+  // on the server (and on the very first client render, so hydration matches)
+  // then setting src once in an effect yields exactly one load, one paint.
+  const videoRef = useRef(null);
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || v.getAttribute('src')) return;
+    v.src = window.__resources.heroVideo;
+    // autoPlay attribute alone won't fire after a late src assignment; nudge it.
+    const p = v.play();
+    if (p && typeof p.catch === 'function') p.catch((err) => {
+      console.warn('[hero] autoplay rejected after src attach:', err && err.name);
+    });
+  }, []);
   return (<>
     <section style={{ position:'relative', overflow:'hidden', minHeight:'100vh', display:'flex', alignItems:'center', background:'#0b0c10' }}>
-      <video style={ isMobile
-               ? { position:'absolute', top:0, left:0, width:'100%', height:'72svh', objectFit:'cover', objectPosition:'center top', zIndex:0 }
-               : { position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center', zIndex:0 } }
-             autoPlay muted loop playsInline preload="metadata">
-        <source src={window.__resources.heroVideo} type="video/mp4" />
-      </video>
+      <video ref={videoRef}
+             style={ isMobile
+               ? { position:'absolute', top:0, left:0, width:'100%', height:'72svh', objectFit:'cover', objectPosition:'center top', zIndex:0, backgroundColor:'#0b0c10' }
+               : { position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center', zIndex:0, backgroundColor:'#0b0c10' } }
+             autoPlay muted loop playsInline preload="auto" suppressHydrationWarning />
       <div style={ isMobile
              ? { position:'absolute', top:0, left:0, right:0, height:'72svh', zIndex:1, background:'linear-gradient(to bottom, rgba(11,12,16,0.38) 0%, rgba(11,12,16,0.08) 30%, rgba(11,12,16,0.55) 78%, rgba(11,12,16,1) 100%)', pointerEvents:'none' }
              : { position:'absolute', inset:0, zIndex:1, background:'linear-gradient(to right, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0) 100%)', pointerEvents:'none' } } />
@@ -386,12 +483,12 @@ function Hero() {
             ? { display:'flex', flexDirection:'column', justifyContent:'flex-end', gap:18, maxWidth:640, minHeight:'100svh', boxSizing:'border-box', paddingTop:'2svh', paddingBottom:36 }
             : { display:'flex', flexDirection:'column', gap:'clamp(28px,4.5vw,42px)', maxWidth:640 } }>
           <h1 style={{ fontFamily:T.fontHeading, fontWeight:400, fontSize:'clamp(38px,7.5vw,64px)', lineHeight:1.08, letterSpacing:'-0.01em', color:T.fog, margin:0 }}>
-            Build your own decentralized VPN.
+            {tr('hero.title', 'Build your own decentralized VPN.')}
           </h1>
           <p style={{ fontFamily:T.fontBody, fontSize:'clamp(16px,2vw,20px)', lineHeight:1.5, color:T.onDark, margin:0, maxWidth:560 }}>
-            The most resilient peer-to-peer networking protocol designed to be censorship-resistant for any geography.{' '}
+            {tr('hero.subtitle', 'The most resilient peer-to-peer networking protocol designed to be censorship-resistant for any geography.')}{' '}
             <a href="#network-compare" className="sn-readmore" style={{ position:'relative', display:'inline-flex', alignItems:'center', gap:7, verticalAlign:'baseline', fontFamily:T.fontHeading, fontWeight:600, fontSize:'0.78em', letterSpacing:'0.02em', color:'#9cc0ff', textDecoration:'none', whiteSpace:'nowrap', paddingBottom:3, marginLeft:12 }}>
-              Read more
+              {tr('hero.readMore', 'Read more')}
               <span className="sn-readmore-arrow" aria-hidden="true" style={{ display:'inline-block', fontSize:'0.92em', opacity:0.85, lineHeight:1 }}>↓</span>
             </a>
           </p>
@@ -415,9 +512,9 @@ function Hero() {
               .sn-cta-glass:hover { transform:translateY(-2px); background:rgba(255,255,255,0.08); border-color:rgba(38,112,255,0.55); color:#fff; }
               @media (max-width: 560px) { .sn-hero-cta { flex:1 1 100%; font-size:13.5px; gap:6px; padding:0 12px; border-radius:12px; } }
             `}</style>
-            <a href="#use-dvpn" className="sn-hero-cta sn-cta-blue">Use a dVPN App <span className="sn-cta-arrow" aria-hidden="true">→</span></a>
-            <a href="#build-dvpn" className="sn-hero-cta sn-cta-glass">Build a dVPN App <span className="sn-cta-arrow" aria-hidden="true">→</span></a>
-            <a href="#host-dvpn" className="sn-hero-cta sn-cta-glass">Host a dVPN Node <span className="sn-cta-arrow" aria-hidden="true">→</span></a>
+            <a href="#use-dvpn" className="sn-hero-cta sn-cta-blue">{tr('hero.ctaUse', 'Use a dVPN App')} <span className="sn-cta-arrow" aria-hidden="true">→</span></a>
+            <a href="#build-dvpn" className="sn-hero-cta sn-cta-glass">{tr('hero.ctaBuild', 'Build a dVPN App')} <span className="sn-cta-arrow" aria-hidden="true">→</span></a>
+            <a href="#host-dvpn" className="sn-hero-cta sn-cta-glass">{tr('hero.ctaHost', 'Host a dVPN Node')} <span className="sn-cta-arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </div>
@@ -519,10 +616,10 @@ function StatValue({ value }) {
 function StatsStrip() {
   const isMobile = useIsMobile();
   const stats = [
-    { v:'8+',    l:'dApps built on Sentinel' },
-    { v:'1.4M+', l:'Total Users'             },
-    { v:'1500+', l:'P2P Bandwidth Providers' },
-    { v:'6+ PB', l:'Data Consumed'           },
+    { v:'8+',    l:tr('stats.dapps', 'dApps built on Sentinel') },
+    { v:'1.4M+', l:tr('stats.totalUsers', 'Total Users')        },
+    { v:'1500+', l:tr('stats.providers', 'P2P Bandwidth Providers') },
+    { v:'6+ PB', l:tr('stats.data', 'Data Consumed')            },
   ];
   const hairline = 'rgba(255,255,255,0.07)';
   const dividers = i => isMobile
@@ -549,7 +646,7 @@ function StatsStrip() {
             <span style={{ width:38, height:38, borderRadius:11, flexShrink:0, background:'rgba(1,86,252,0.12)', border:'1px solid rgba(94,148,255,0.30)', display:'inline-flex', alignItems:'center', justifyContent:'center' }}>
               <SentinelMark size={20} color="#2670FF" />
             </span>
-            <span className="sn-stats-cta-label" style={{ fontFamily:T.fontHeading, fontWeight:600, fontSize:15, lineHeight:1, color:T.fog, whiteSpace:'nowrap' }}>View Network Stats</span>
+            <span className="sn-stats-cta-label" style={{ fontFamily:T.fontHeading, fontWeight:600, fontSize:15, lineHeight:1, color:T.fog, whiteSpace:'nowrap' }}>{tr('stats.viewNetworkStats', 'View Network Stats')}</span>
             <span className="sn-stats-cta-arrow" aria-hidden="true" style={{ fontSize:15, fontWeight:600, lineHeight:1, color:'#2670FF', flexShrink:0 }}>↗</span>
           </a>
         </div>
@@ -629,67 +726,67 @@ function BuilderStackSection() {
   const ic = { fill:'none', stroke:'#9dbcff', strokeWidth:1.7, strokeLinecap:'round', strokeLinejoin:'round' };
   const steps = [
     {
-      n:'01', title:'Direct Node Probe',
+      n:'01', title:tr('builderStack.step1Title', 'Direct Node Probe'),
       icon:(<svg width="18" height="18" viewBox="0 0 24 24" {...ic} aria-hidden="true"><circle cx="12" cy="12" r="1.6" fill="#9dbcff" stroke="none"/><path d="M8.5 15.5a5 5 0 0 1 0-7"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M5.6 18.4a9 9 0 0 1 0-12.8"/><path d="M18.4 5.6a9 9 0 0 1 0 12.8"/></svg>),
-      body:'HTTPS request directly to the node’s remote address. Returns live status: protocol type, peer count, location, bandwidth. Peer-to-peer, no relay.',
+      body:tr('builderStack.step1Body', 'HTTPS request directly to the node’s remote address. Returns live status: protocol type, peer count, location, bandwidth. Peer-to-peer, no relay.'),
     },
     {
-      n:'02', title:'On-Chain Session',
+      n:'02', title:tr('builderStack.step2Title', 'On-Chain Session'),
       icon:(<svg width="18" height="18" viewBox="0 0 24 24" {...ic} aria-hidden="true"><path d="M12 2.5 21 7.5v9l-9 5-9-5v-9z"/><path d="M12 12.2 21 7.5M12 12.2 3 7.5M12 12.2V21.5"/></svg>),
-      body:'Signed transaction creates an immutable session record on the blockchain. Session ID, node address, account address — all consensus-validated.',
+      body:tr('builderStack.step2Body', 'Signed transaction creates an immutable session record on the blockchain. Session ID, node address, account address — all consensus-validated.'),
     },
     {
-      n:'03', title:'Verified Handshake',
+      n:'03', title:tr('builderStack.step3Title', 'Verified Handshake'),
       icon:(<svg width="18" height="18" viewBox="0 0 24 24" {...ic} aria-hidden="true"><path d="M12 2.8 20 6v6c0 5-3.4 8.3-8 9.2C7.4 20.3 4 17 4 12V6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></svg>),
-      body:'Node receives request, queries the chain to verify the session matches. Only then generates VPN credentials. Authorization is on-chain.',
+      body:tr('builderStack.step3Body', 'Node receives request, queries the chain to verify the session matches. Only then generates VPN credentials. Authorization is on-chain.'),
     },
     {
-      n:'04', title:'Encrypted Tunnel',
+      n:'04', title:tr('builderStack.step4Title', 'Encrypted Tunnel'),
       icon:(<svg width="18" height="18" viewBox="0 0 24 24" {...ic} aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/><circle cx="12" cy="15.5" r="1.4" fill="#9dbcff" stroke="none"/></svg>),
-      body:'WireGuard (Curve25519) or V2Ray (VLess/VMess) tunnel established directly between client and node. End-to-end encrypted. Zero intermediaries.',
+      body:tr('builderStack.step4Body', 'WireGuard (Curve25519) or V2Ray (VLess/VMess) tunnel established directly between client and node. End-to-end encrypted. Zero intermediaries.'),
     },
   ];
   const layers = [ // sn-resil-1line — bullets condensed to one-liners
     {
-      title:'The blockchain IS the backend',
+      title:tr('resilience.blockchainTitle', 'The blockchain IS the backend'),
       icon:(<svg width="22" height="22" viewBox="0 0 24 24" {...ic} aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="10" y="10" width="4" height="4"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>),
       points:[
-        'Every node, session, and account lives on-chain.',
-        'Discovery is a chain query — nothing to take down.',
-        'Finality, Sybil resistance, and governance built in.',
+        tr('resilience.blockchainPoint1', 'Every node, session, and account lives on-chain.'),
+        tr('resilience.blockchainPoint2', 'Discovery is a chain query — nothing to take down.'),
+        tr('resilience.blockchainPoint3', 'Finality, Sybil resistance, and governance built in.'),
       ],
       extra:(
         <div style={{ display:'flex', flexDirection:'column', gap:18 }}>
-          {actionRow('View Real-Time Transactions', 'https://p2pscan.com/transactions')}
+          {actionRow(tr('resilience.blockchainAction', 'View Real-Time Transactions'), 'https://p2pscan.com/transactions')}
         </div>
       ),
     },
     {
-      title:'Validators provide the compute',
+      title:tr('resilience.validatorsTitle', 'Validators provide the compute'),
       icon:(<svg width="22" height="22" viewBox="0 0 24 24" {...ic} aria-hidden="true"><path d="M12 2 20.5 7v10L12 22 3.5 17V7Z"/><path d="M12 22V12M12 12 3.5 7M12 12l8.5-5"/></svg>),
       points:[
-        'Sessions, plans, and payouts verified by Sentinel’s validators.',
-        'That consensus compute is your backend: no servers to run.',
-        'Every state change is final and tamper-proof.',
+        tr('resilience.validatorsPoint1', 'Sessions, plans, and payouts verified by Sentinel’s validators.'),
+        tr('resilience.validatorsPoint2', 'That consensus compute is your backend: no servers to run.'),
+        tr('resilience.validatorsPoint3', 'Every state change is final and tamper-proof.'),
       ],
       extra:(
         <div style={{ display:'flex', flexDirection:'column', gap:18 }}>
-          {actionRow('View Validators', 'https://p2pscan.com/validators')}
+          {actionRow(tr('resilience.validatorsAction', 'View Validators'), 'https://p2pscan.com/validators')}
         </div>
       ),
     },
     {
-      title:'Pay for bandwidth directly in P2P',
+      title:tr('resilience.bandwidthTitle', 'Pay for bandwidth directly in P2P'),
       icon:(<SentinelMark size={24} color="#9dbcff" />),
       points:[
-        'Wallets pay node operators directly on-chain — no invoices.',
-        'Pick nodes by country, price, or protocol.',
-        'Pay in P2P for bandwidth, Sentinel’s native token.',
+        tr('resilience.bandwidthPoint1', 'Wallets pay node operators directly on-chain — no invoices.'),
+        tr('resilience.bandwidthPoint2', 'Pick nodes by country, price, or protocol.'),
+        tr('resilience.bandwidthPoint3', 'Pay in P2P for bandwidth, Sentinel’s native token.'),
       ],
       extra:(
         <div style={{ display:'flex', flexDirection:'column', gap:18 }}>
           <span style={{ ...actionStyle, cursor:'default' }}>
-            Buy P2P
+            {tr('nav.buyP2P', 'Buy P2P')}
             <span aria-hidden="true" style={{ display:'inline-flex' }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
             </span>
@@ -700,7 +797,7 @@ function BuilderStackSection() {
                 <span style={logoTile}>{v.logo}</span>
                 <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0 }}>
                   <span style={chipName}>{v.name}</span>
-                  <span style={chipSub}>{v.tag}</span>
+                  <span style={chipSub}>{v.tagKey ? tr(v.tagKey, v.tag) : v.tag}</span>
                 </span>
               </a>
             ))}
@@ -709,29 +806,29 @@ function BuilderStackSection() {
       ),
     },
     {
-      title:'1500+ servers, zero server ops',
+      title:tr('resilience.serversTitle', '1500+ servers, zero server ops'),
       icon:(<svg width="22" height="22" viewBox="0 0 24 24" {...ic} aria-hidden="true"><circle cx="12" cy="18" r="1.6"/><path d="M8.5 14.5a5 5 0 0 1 7 0M5.6 11.6a9 9 0 0 1 12.8 0M2.8 8.7a13 13 0 0 1 18.4 0"/></svg>),
       points:[
-        'Bandwidth from 1500+ servers run by independent operators.',
-        '90+ countries across six continents.',
-        'Racking, patching, and scaling — abstracted away entirely.',
+        tr('resilience.serversPoint1', 'Bandwidth from 1500+ servers run by independent operators.'),
+        tr('resilience.serversPoint2', '90+ countries across six continents.'),
+        tr('resilience.serversPoint3', 'Racking, patching, and scaling — abstracted away entirely.'),
       ],
       extra:(
         <div style={{ display:'flex', flexDirection:'column', gap:18 }}>
-          {actionRow('View Global Node Map', 'https://map.suchnode.net/')}
+          {actionRow(tr('resilience.serversAction', 'View Global Node Map'), 'https://map.suchnode.net/')}
           <div className="sn-tile-grid">
             <span style={{ ...rowChip }}>
               <span style={logoTile}><WireGuardMark size={22} /></span>
               <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0 }}>
                 <span style={chipName}>WireGuard</span>
-                <span style={{ ...chipSub, whiteSpace:'nowrap' }}>Kernel-fast encrypted tunnels</span>
+                <span style={{ ...chipSub, whiteSpace:'nowrap' }}>{tr('resilience.wireguardSub', 'Kernel-fast encrypted tunnels')}</span>
               </span>
             </span>
             <span style={{ ...rowChip }}>
               <span style={logoTile}><V2RayMark size={22} /></span>
               <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0 }}>
                 <span style={chipName}>V2Ray</span>
-                <span style={{ ...chipSub, whiteSpace:'nowrap' }}>VMess / VLESS · anti-censorship</span>
+                <span style={{ ...chipSub, whiteSpace:'nowrap' }}>{tr('resilience.v2raySub', 'VMess / VLESS · anti-censorship')}</span>
               </span>
             </span>
           </div>
@@ -739,7 +836,7 @@ function BuilderStackSection() {
             ? { display:'flex', flexWrap:'wrap', gap:'12px 14px', alignItems:'center', justifyContent:'center' }
             : { display:'flex', flexWrap:'wrap', gap:'12px 18px', alignItems:'center' } }>
             <FlagChip code="US" name="United States" /><FlagChip code="JP" name="Japan" /><FlagChip code="DE" name="Germany" /><FlagChip code="BR" name="Brazil" /><FlagChip code="GB" name="United Kingdom" /><FlagChip code="SE" name="Sweden" /><FlagChip code="NL" name="Netherlands" /><FlagChip code="SG" name="Singapore" /><FlagChip code="CH" name="Switzerland" />
-            <span title="90+ countries across six continents" style={{ display:'inline-flex', alignItems:'center', background:'rgba(94,148,255,0.08)', border:'1px solid rgba(125,160,255,0.32)', borderRadius:999, padding:'4px 8px', fontFamily:T.fontHeading, fontWeight:600, fontSize:12.5, color:'#9dbcff', whiteSpace:'nowrap' }}>+ 80 more</span>
+            <span title={tr('resilience.moreCountriesTitle', '90+ countries across six continents')} style={{ display:'inline-flex', alignItems:'center', background:'rgba(94,148,255,0.08)', border:'1px solid rgba(125,160,255,0.32)', borderRadius:999, padding:'4px 8px', fontFamily:T.fontHeading, fontWeight:600, fontSize:12.5, color:'#9dbcff', whiteSpace:'nowrap' }}>{tr('resilience.moreCountries', '+ 80 more')}</span>
           </div>
         </div>
       ),
@@ -749,9 +846,9 @@ function BuilderStackSection() {
     <section id="builder-stack" style={{ background:'transparent', paddingTop:'clamp(8px,2vw,24px)', paddingBottom:'clamp(40px,5vw,64px)', scrollMarginTop:90 }}>
       <div style={{ ...atomStyles.container }}>
         <div style={{ ...atomStyles.sectionHead, alignItems:'center', textAlign:'center', gap:18, margin:'0 auto clamp(34px,4.5vw,54px)' }}>
-          <h2 style={{ ...atomStyles.h1Dark, maxWidth:820 }}>Everything a dVPN builder needs. Handled.</h2>
+          <h2 style={{ ...atomStyles.h1Dark, maxWidth:820 }}>{tr('sdk.heading', 'Everything a dVPN builder needs. Handled.')}</h2>
           <p style={{ ...atomStyles.leadDark, maxWidth:680, margin:0 }}>
-            Compute, bandwidth, payments, security — the Sentinel protocol runs the entire white-label stack underneath your brand. You build the app. The network does the rest.
+            {tr('builderStack.sdkBody', 'Compute, bandwidth, payments, security — the Sentinel protocol runs the entire white-label stack underneath your brand. You build the app. The network does the rest.')}
           </p>
         </div>
         {/* connection pipeline */}
@@ -772,8 +869,8 @@ function BuilderStackSection() {
         <div style={{ position:'relative', display:'flex', flexDirection:'column', alignItems:'center', gap:20, textAlign:'center', margin:'clamp(30px,4vw,46px) 0 clamp(36px,4.5vw,56px)' }}>
           <div aria-hidden="true" style={{ width:'min(560px,90%)', height:1, background:'linear-gradient(90deg, transparent, rgba(94,148,255,0.55), transparent)' }} />
           <h3 style={{ margin:0, fontFamily:T.fontHeading, fontWeight:500 }}>
-            <span style={{ display:'block', fontSize:'clamp(16px,2vw,20px)', lineHeight:1.4, letterSpacing:'0.01em', color:'rgba(214,222,240,0.82)' }}>No centralized server is involved at any step.</span>
-            <span style={{ display:'block', marginTop:8, fontWeight:600, fontSize:'clamp(25px,3.4vw,36px)', lineHeight:1.2, letterSpacing:'-0.01em', background:'linear-gradient(90deg, #9dbcff, #5e94ff 55%, #b9ceff)', WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent' }}>The blockchain is the backend.</span>
+            <span style={{ display:'block', fontSize:'clamp(16px,2vw,20px)', lineHeight:1.4, letterSpacing:'0.01em', color:'rgba(214,222,240,0.82)' }}>{tr('builderStack.closing1', 'No centralized server is involved at any step.')}</span>
+            <span style={{ display:'block', marginTop:8, fontWeight:600, fontSize:'clamp(25px,3.4vw,36px)', lineHeight:1.2, letterSpacing:'-0.01em', background:'linear-gradient(90deg, #9dbcff, #5e94ff 55%, #b9ceff)', WebkitBackgroundClip:'text', backgroundClip:'text', color:'transparent' }}>{tr('builderStack.closing2', 'The blockchain is the backend.')}</span>
           </h3>
         </div>
         {/* sn-layer-align: subgrid rows keep the footer dividers level across each card row */}
@@ -818,8 +915,8 @@ function LangBadge({ mark, name }) {
 function OpenSourceSection() {
   const isMobile = useIsMobile();
   const stats = [
-    { v:'4', l:'SDK languages' },
-    { v:'41,000+', l:'lines of open code' },
+    { v:'4', l:tr('oss.sdkLanguagesStat', 'SDK languages') },
+    { v:'41,000+', l:tr('oss.linesOfCodeStat', 'lines of open code') },
   ];
   const langs = [
     { name:'JavaScript', mark:(
@@ -836,10 +933,10 @@ function OpenSourceSection() {
     ) },
   ];
   const stack = [
-    { k:'SDKs',          d:'Client libraries in JavaScript, C#, Go & Swift' },
-    { k:'Protocol',      d:'WireGuard & V2Ray session layer' },
-    { k:'Chain',         d:'Sentinel Hub, built on the Cosmos SDK' },
-    { k:'Node software', d:'The dVPN node anyone can run and inspect' },
+    { k:tr('oss.sdksLabel', 'SDKs'),              d:tr('oss.sdksDesc', 'Client libraries in JavaScript, C#, Go & Swift') },
+    { k:tr('oss.protocolLabel', 'Protocol'),      d:tr('oss.protocolDesc', 'WireGuard & V2Ray session layer') },
+    { k:tr('oss.chainLabel', 'Chain'),            d:tr('oss.chainDesc', 'Sentinel Hub, built on the Cosmos SDK') },
+    { k:tr('oss.nodeLabel', 'Node software'),     d:tr('oss.nodeDesc', 'The dVPN node anyone can run and inspect') },
   ];
   const ossColHead = { margin:0, fontFamily:T.fontHeading, fontWeight:600, fontSize:'clamp(16.5px,1.7vw,19px)', lineHeight:1.3, letterSpacing:'-0.005em', color:T.fog };
   const ossColSub = { margin:0, fontFamily:T.fontBody, fontSize:13.5, lineHeight:'20px', color:T.onDark60 };
@@ -863,22 +960,22 @@ function OpenSourceSection() {
           {/* header row: statement left, GitHub CTA pinned right */}
           <div style={{ position:'relative', display:'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', gap: isMobile ? 16 : 'clamp(24px,3vw,44px)' }}>
             <h2 style={{ flex:1, minWidth:0, fontFamily:T.fontHeading, fontWeight:600, fontSize:'clamp(18px,1.9vw,23px)', lineHeight:1.45, letterSpacing:'-0.01em', color:T.fog, margin:0, maxWidth:760 }}>
-              <span style={{ color:T.onDark60 }}>Closed-source VPNs ask for your trust.</span>{' '}
-              Sentinel is the only open-source, decentralized framework to build a VPN application on — full transparency into the application-side code and the server-side code alike.
+              <span style={{ color:T.onDark60 }}>{tr('oss.closedSource', 'Closed-source VPNs ask for your trust.')}</span>{' '}
+              {tr('oss.openStatement', 'Sentinel is the only open-source, decentralized framework to build a VPN application on — full transparency into the application-side code and the server-side code alike.')}
             </h2>
             <BtnPrimary href={L.github} style={ isMobile
               ? { gap:10, height:'auto', minHeight:52, padding:'13px 18px', fontSize:15, lineHeight:1.3, whiteSpace:'normal', textAlign:'center', alignSelf:'stretch', width:'100%', maxWidth:'100%', boxSizing:'border-box' }
               : { gap:12, height:58, padding:'0 34px', fontSize:17, flexShrink:0, whiteSpace:'nowrap' } }>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={SN_GH_PATH}/></svg>
-              View open-source code on GitHub
+              {tr('oss.githubCta', 'View open-source code on GitHub')}
             </BtnPrimary>
           </div>
           {/* body: pipeline + languages as equal four-row columns */}
           <div style={{ position:'relative', display:'grid', gridTemplateColumns: isMobile ? '1fr' : '1.15fr 1fr', gap: isMobile ? '22px' : 'clamp(28px,3.4vw,52px)', borderTop:ossDivider, paddingTop:'clamp(18px,2.2vw,26px)' }}>
             <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
               <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
-                <h3 style={ossColHead}>Every layer of Sentinel is open source</h3>
-                <p style={ossColSub}>Nothing in the stack is closed — read, audit, and fork all of it.</p>
+                <h3 style={ossColHead}>{tr('oss.everyLayerHeading', 'Every layer of Sentinel is open source')}</h3>
+                <p style={ossColSub}>{tr('oss.everyLayerSubhead', 'Nothing in the stack is closed — read, audit, and fork all of it.')}</p>
               </div>
               <div style={{ position:'relative', display:'flex', flexDirection:'column', justifyContent:'space-between', gap:13, flex:1 }}>
                 <span aria-hidden="true" style={{ position:'absolute', left:5, top:12, bottom:12, width:2, borderRadius:2, background:'linear-gradient(180deg, rgba(38,112,255,0.85) 0%, rgba(38,112,255,0.2) 100%)' }} />
@@ -895,8 +992,8 @@ function OpenSourceSection() {
             </div>
             <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
               <div style={{ display:'flex', flexDirection:'column', gap:5 }}>
-                <h3 style={ossColHead}>Build in the language you already use</h3>
-                <p style={ossColSub}>Four official SDKs — every one of them open source.</p>
+                <h3 style={ossColHead}>{tr('oss.buildLanguageHeading', 'Build in the language you already use')}</h3>
+                <p style={ossColSub}>{tr('oss.buildLanguageSubhead', 'Four official SDKs — every one of them open source.')}</p>
               </div>
               <div style={{ display:'flex', flexDirection:'column', justifyContent:'space-between', gap:10, flex:1 }}>
                 {langs.map(l => <LangBadge key={l.name} mark={l.mark} name={l.name} />)}
@@ -952,16 +1049,16 @@ function StepsSection() {
   return (
     <section style={{ background:'transparent' }}>
       <div style={{ ...atomStyles.container, display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', gap:'clamp(26px,3.6vh,40px)', paddingTop:isMobile?'clamp(44px,10vw,64px)':'clamp(64px,7.5vw,110px)', paddingBottom:isMobile?'clamp(44px,10vw,64px)':'clamp(64px,7.5vw,110px)' }}>
-        <h2 style={{ fontFamily:T.fontHeading, fontWeight:600, fontSize:'clamp(31px,5.2vw,66px)', lineHeight:1.04, letterSpacing:'-0.02em', color:T.fog, margin:0, maxWidth:1000 }}>Three steps from zero to a production dVPN.</h2>
+        <h2 style={{ fontFamily:T.fontHeading, fontWeight:600, fontSize:'clamp(31px,5.2vw,66px)', lineHeight:1.04, letterSpacing:'-0.02em', color:T.fog, margin:0, maxWidth:1000 }}>{tr('steps.heading', 'Three steps from zero to a production dVPN.')}</h2>
         <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:18, maxWidth:780 }}>
           <StepTag n={1} />
-          <h3 style={{ fontFamily:T.fontHeading, fontWeight:600, fontSize:'clamp(22px,2.9vw,36px)', lineHeight:1.18, letterSpacing:'-0.005em', color:T.fog, margin:0 }}>Add nodes to your subscription plan.</h3>
-          <p style={{ fontFamily:T.fontBody, fontSize:16.5, lineHeight:'27px', color:'rgba(234,234,234,0.76)', margin:0, maxWidth:680 }}>Pay dVPN nodes and add them to your subscription plan. Filter by country, encryption protocol and more to find nodes that meet your application’s capacity needs.</p>
+          <h3 style={{ fontFamily:T.fontHeading, fontWeight:600, fontSize:'clamp(22px,2.9vw,36px)', lineHeight:1.18, letterSpacing:'-0.005em', color:T.fog, margin:0 }}>{tr('steps.step1Heading', 'Add nodes to your subscription plan.')}</h3>
+          <p style={{ fontFamily:T.fontBody, fontSize:16.5, lineHeight:'27px', color:'rgba(234,234,234,0.76)', margin:0, maxWidth:680 }}>{tr('steps.step1Body', 'Pay dVPN nodes and add them to your subscription plan. Filter by country, encryption protocol and more to find nodes that meet your application’s capacity needs.')}</p>
         </div>
         <div style={{ width:'100%', maxWidth:960, borderRadius:18, overflow:'hidden', border:'1px solid rgba(255,255,255,0.10)', background:'#0c0c0c', boxShadow:'0 30px 80px rgba(0,0,0,0.45)' }}>
-          <img src={window.__resources.screenPlan2} alt="Adding nodes to a subscription plan in the Plan Manager" style={{ display:'block', width:'100%', height:'auto', maxHeight:'56vh', objectFit:'cover', objectPosition:'top center' }} />
+          <img src={window.__resources.screenPlan2} alt={tr('steps.planManagerAlt', 'Adding nodes to a subscription plan in the Plan Manager')} style={{ display:'block', width:'100%', height:'auto', maxHeight:'56vh', objectFit:'cover', objectPosition:'top center' }} />
         </div>
-        <BtnPrimary light href={L.planManager}>Open Plan Manager</BtnPrimary>
+        <BtnPrimary light href={L.planManager}>{tr('steps.openPlanManager', 'Open Plan Manager')}</BtnPrimary>
       </div>
     </section>
   );
@@ -1032,14 +1129,14 @@ const PlatformIcons = {
 };
 
 const BUILD_PLATFORMS = [
-  { key:'iOS',     name:'iOS',     stack:['Swift', 'React Native'],   desc:'Ship an App Store client. The Network Extension tunnel is already built.' },
-  { key:'Android', name:'Android', stack:['Kotlin', 'React Native'],  desc:'Ship a Play Store app on VpnService. WireGuard and V2Ray included.' },
-  { key:'macOS',   name:'macOS',   stack:['Swift', 'Electron'],       desc:'Build a menu-bar app that tunnels all system traffic.' },
-  { key:'Windows', name:'Windows', stack:['Electron', '.NET'],        desc:'Build a desktop client for the OS most people use.' },
-  { key:'Linux',   name:'Linux',   stack:['CLI', 'daemon'],           desc:'Run headless daemons on servers, routers and homelabs.' },
-  { key:'Web',     name:'Web',     stack:['TypeScript', 'WASM'],      desc:'Build browser extensions and dashboards. Users install nothing.' },
-  { key:'TV',      name:'TV',      stack:['Android TV', 'tvOS'],      desc:'Build TV apps designed for the remote control.' },
-  { key:'Server',  name:'Server',  stack:['Node', 'Go'],              desc:'Route traffic from code. Bots, backends and AI agents.' },
+  { key:'iOS',     name:'iOS',     descKey:'sdk.iosDesc',     stack:['Swift', 'React Native'],   desc:'Ship an App Store client. The Network Extension tunnel is already built.' },
+  { key:'Android', name:'Android', descKey:'sdk.androidDesc', stack:['Kotlin', 'React Native'],  desc:'Ship a Play Store app on VpnService. WireGuard and V2Ray included.' },
+  { key:'macOS',   name:'macOS',   descKey:'sdk.macosDesc',   stack:['Swift', 'Electron'],       desc:'Build a menu-bar app that tunnels all system traffic.' },
+  { key:'Windows', name:'Windows', descKey:'sdk.windowsDesc', stack:['Electron', '.NET'],        desc:'Build a desktop client for the OS most people use.' },
+  { key:'Linux',   name:'Linux',   descKey:'sdk.linuxDesc',   stack:['CLI', 'daemon'],           desc:'Run headless daemons on servers, routers and homelabs.' },
+  { key:'Web',     name:'Web',     descKey:'sdk.webDesc',     stack:['TypeScript', 'WASM'],      desc:'Build browser extensions and dashboards. Users install nothing.' },
+  { key:'TV',      name:'TV',      descKey:'sdk.tvDesc',      stack:['Android TV', 'tvOS'],      desc:'Build TV apps designed for the remote control.' },
+  { key:'Server',  name:'Server',  descKey:'sdk.serverDesc',  stack:['Node', 'Go'],              desc:'Route traffic from code. Bots, backends and AI agents.' },
 ];
 
 function SDKSection() {
@@ -1060,8 +1157,8 @@ function SDKSection() {
         {/* Text header */}
         <div style={{ display:'flex', flexDirection:'column', gap:18, maxWidth:720 }}>
           <StepTag n={2} light />
-          <h2 style={{ ...atomStyles.h1Light, fontSize:'clamp(26px,3.2vw,38px)', margin:0 }}>Build a dVPN for Any Platform</h2>
-          <p style={{ ...atomStyles.leadLight, maxWidth:680 }}>The Sentinel SDK runs on phones, desktops, browsers, TVs and servers. You build the app and own the brand. The network handles bandwidth, routing and payments.</p>
+          <h2 style={{ ...atomStyles.h1Light, fontSize:'clamp(26px,3.2vw,38px)', margin:0 }}>{tr('sdk.buildPlatformHeading', 'Build a dVPN for Any Platform')}</h2>
+          <p style={{ ...atomStyles.leadLight, maxWidth:680 }}>{tr('sdk.buildPlatformBody', 'The Sentinel SDK runs on phones, desktops, browsers, TVs and servers. You build the app and own the brand. The network handles bandwidth, routing and payments.')}</p>
         </div>
         {/* Platform grid — seamless hairline cells, aligned rows */}
         <div className="sn-build-grid">
@@ -1073,7 +1170,7 @@ function SDKSection() {
                 <span className="sn-build-name" style={{ fontFamily:T.fontHeading, fontWeight:600, fontSize:20, lineHeight:1.2, color:T.onLight85 }}>{p.name}</span>
                 <span className="sn-build-arrow" aria-hidden="true" style={{ marginLeft:'auto', color:T.blue, fontSize:17, lineHeight:1 }}>↗</span>
               </div>
-              <p style={{ margin:0, fontFamily:T.fontBody, fontSize:14, lineHeight:1.55, color:T.onLight60, flex:1 }}>{p.desc}</p>
+              <p style={{ margin:0, fontFamily:T.fontBody, fontSize:14, lineHeight:1.55, color:T.onLight60, flex:1 }}>{p.descKey ? tr(p.descKey, p.desc) : p.desc}</p>
               <div style={{ borderTop:`1px solid ${T.line200}`, paddingTop:14, display:'flex', flexWrap:'wrap', gap:6 }}>
                 {p.stack.map(s => (
                   <span key={s} style={{ fontFamily:T.fontMono, fontSize:11, letterSpacing:'0.02em', padding:'4px 10px', borderRadius:7, background:T.snow, color:T.onLight60, whiteSpace:'nowrap' }}>{s}</span>
@@ -1083,8 +1180,8 @@ function SDKSection() {
           ))}
         </div>
         <div style={{ display:'flex', alignItems:'stretch', flexWrap:'wrap', gap:'clamp(12px,2vw,28px)', justifyContent:'center' }}>
-          <BtnPrimary light href={L.sdkDocs} style={{ borderColor:'#d9d9d9' }}>SDK Docs</BtnPrimary>
-          <BtnGhost dark={false} href={L.github}>View on GitHub</BtnGhost>
+          <BtnPrimary light href={L.sdkDocs} style={{ borderColor:'#d9d9d9' }}>{tr('sdk.docsButton', 'SDK Docs')}</BtnPrimary>
+          <BtnGhost dark={false} href={L.github}>{tr('sdk.githubButton', 'View on GitHub')}</BtnGhost>
         </div>
       </div>
     </section>
@@ -1116,16 +1213,16 @@ function PaymentRailsSection() {
     </span>
   );
   const fiatTiles = [
-    { name:'Credit / Debit Card', marks:['visa','mc'],
-      desc:'Sell dVPN access with Visa, Mastercard, Amex and more — through any payment processor you choose.' },
-    { name:'Apple Pay / Google Pay', marks:['applepay','googlepay'],
-      desc:'Charge for your dVPN with one-tap Apple Pay or Google Pay checkout, on the web or in your app.' },
-    { name:'Stripe', marks:['stripe'],
-      desc:'Bill your dVPN through Stripe Checkout or Billing — payment confirmed by webhook, access granted in the same flow.' },
-    { name:'Digital Currencies', marks:['btc','sol','zec'],
-      desc:'Accept BTC, SOL, ZEC or any other chain for dVPN access, via the processor of your choice.' },
-    { name:'Free VPN', marks:['free'],
-      desc:'Grant free dVPN access on any condition you set — ads watched, offers completed, referrals made.' },
+    { name:tr('payments.creditName', 'Credit / Debit Card'), marks:['visa','mc'],
+      desc:tr('payments.creditDesc', 'Sell dVPN access with Visa, Mastercard, Amex and more — through any payment processor you choose.') },
+    { name:tr('payments.walletName', 'Apple Pay / Google Pay'), marks:['applepay','googlepay'],
+      desc:tr('payments.walletDesc', 'Charge for your dVPN with one-tap Apple Pay or Google Pay checkout, on the web or in your app.') },
+    { name:tr('payments.stripeName', 'Stripe'), marks:['stripe'],
+      desc:tr('payments.stripeDesc', 'Bill your dVPN through Stripe Checkout or Billing — payment confirmed by webhook, access granted in the same flow.') },
+    { name:tr('payments.cryptoName', 'Digital Currencies'), marks:['btc','sol','zec'],
+      desc:tr('payments.cryptoDesc', 'Accept BTC, SOL, ZEC or any other chain for dVPN access, via the processor of your choice.') },
+    { name:tr('payments.freeName', 'Free VPN'), marks:['free'],
+      desc:tr('payments.freeDesc', 'Grant free dVPN access on any condition you set — ads watched, offers completed, referrals made.') },
   ];
   return (
     <section style={{ background:'linear-gradient(180deg, #fbfbfb 0%, #f6f8fc 78%, #edf1f9 100%)', ...atomStyles.section, paddingTop:0 }}>
@@ -1137,8 +1234,8 @@ function PaymentRailsSection() {
           <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, flexWrap:'wrap' }}>
             <Mark big id="visa" /><Mark big id="applepay" /><Mark big id="stripe" /><Mark big id="btc" />
           </div>
-          <h2 style={{ ...atomStyles.h1Light, fontSize:'clamp(26px,3.2vw,38px)', margin:0, maxWidth:780 }}>Integrate Any Payment Rails</h2>
-          <p style={{ fontFamily:T.fontBody, fontSize:15, lineHeight:1.65, color:T.onLight50, maxWidth:760, margin:0 }}>Accept fiat payments, crypto payments, or set any conditional trigger to authorize a user for free VPN services.</p>
+          <h2 style={{ ...atomStyles.h1Light, fontSize:'clamp(26px,3.2vw,38px)', margin:0, maxWidth:780 }}>{tr('payments.heading','Integrate Any Payment Rails')}</h2>
+          <p style={{ fontFamily:T.fontBody, fontSize:15, lineHeight:1.65, color:T.onLight50, maxWidth:760, margin:0 }}>{tr('payments.subhead','Accept fiat payments, crypto payments, or set any conditional trigger to authorize a user for free VPN services.')}</p>
         </div>
         </div>
         {/* Fiat rail tiles — informational only, not clickable */}
@@ -1155,7 +1252,7 @@ function PaymentRailsSection() {
           ))}
         </div>
         <div style={{ display:'flex', alignItems:'stretch', flexWrap:'wrap', gap:'clamp(12px,2vw,28px)', justifyContent:'center' }}>
-          <BtnPrimary light href="https://plan.sentinel.co/pricing">Integrate Any Payment Rail into your dVPN</BtnPrimary>
+          <BtnPrimary light href="https://plan.sentinel.co/pricing">{tr('payments.cta','Integrate Any Payment Rail into your dVPN')}</BtnPrimary>
         </div>
       </div>
     </section>
